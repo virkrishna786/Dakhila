@@ -1,0 +1,432 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0BD3AFD7DEE6B8BBA75206EC /* Pods_Dakhila.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B1796EB7935E5B2349E19D4 /* Pods_Dakhila.framework */; };
+		B782B52E1EF42EF400DED466 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B782B52D1EF42EF400DED466 /* AppDelegate.swift */; };
+		B782B5301EF42EF400DED466 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B782B52F1EF42EF400DED466 /* ViewController.swift */; };
+		B782B5331EF42EF500DED466 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B782B5311EF42EF500DED466 /* Main.storyboard */; };
+		B782B5351EF42EF500DED466 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B782B5341EF42EF500DED466 /* Assets.xcassets */; };
+		B782B5381EF42EF500DED466 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B782B5361EF42EF500DED466 /* LaunchScreen.storyboard */; };
+		B782B5451EF5AFC400DED466 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B782B5441EF5AFC400DED466 /* ForgotPasswordViewController.swift */; };
+		B782B5471EF5AFD700DED466 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B782B5461EF5AFD700DED466 /* SignUpViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4189411A6711149F9CD10F1F /* Pods-Dakhila.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dakhila.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dakhila/Pods-Dakhila.debug.xcconfig"; sourceTree = "<group>"; };
+		6B1796EB7935E5B2349E19D4 /* Pods_Dakhila.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dakhila.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B782B52A1EF42EF400DED466 /* Dakhila.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dakhila.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B782B52D1EF42EF400DED466 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B782B52F1EF42EF400DED466 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ../../ViewController.swift; sourceTree = "<group>"; };
+		B782B5321EF42EF500DED466 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B782B5341EF42EF500DED466 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B782B5371EF42EF500DED466 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B782B5391EF42EF500DED466 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B782B5441EF5AFC400DED466 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
+		B782B5461EF5AFD700DED466 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		E7CF47B526A745DDF04940C4 /* Pods-Dakhila.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dakhila.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dakhila/Pods-Dakhila.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B782B5271EF42EF400DED466 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0BD3AFD7DEE6B8BBA75206EC /* Pods_Dakhila.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		320CEA19A89C9599D12CFA0C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6B1796EB7935E5B2349E19D4 /* Pods_Dakhila.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B782B5211EF42EF300DED466 = {
+			isa = PBXGroup;
+			children = (
+				B782B52C1EF42EF400DED466 /* Dakhila */,
+				B782B52B1EF42EF400DED466 /* Products */,
+				DC068C2E48CCFDA056A09F31 /* Pods */,
+				320CEA19A89C9599D12CFA0C /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		B782B52B1EF42EF400DED466 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B782B52A1EF42EF400DED466 /* Dakhila.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B782B52C1EF42EF400DED466 /* Dakhila */ = {
+			isa = PBXGroup;
+			children = (
+				B782B5411EF5AC2C00DED466 /* Modal */,
+				B782B5421EF5AC2C00DED466 /* View */,
+				B782B5401EF5AC1900DED466 /* Controller */,
+				B782B53F1EF5AC1000DED466 /* SInglton */,
+				B782B52D1EF42EF400DED466 /* AppDelegate.swift */,
+				B782B5311EF42EF500DED466 /* Main.storyboard */,
+				B782B5341EF42EF500DED466 /* Assets.xcassets */,
+				B782B5361EF42EF500DED466 /* LaunchScreen.storyboard */,
+				B782B5391EF42EF500DED466 /* Info.plist */,
+			);
+			path = Dakhila;
+			sourceTree = "<group>";
+		};
+		B782B53F1EF5AC1000DED466 /* SInglton */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = SInglton;
+			sourceTree = "<group>";
+		};
+		B782B5401EF5AC1900DED466 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				B782B5431EF5AF8900DED466 /* LoginAndSignUp */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		B782B5411EF5AC2C00DED466 /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Modal;
+			sourceTree = "<group>";
+		};
+		B782B5421EF5AC2C00DED466 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B782B5431EF5AF8900DED466 /* LoginAndSignUp */ = {
+			isa = PBXGroup;
+			children = (
+				B782B52F1EF42EF400DED466 /* ViewController.swift */,
+				B782B5441EF5AFC400DED466 /* ForgotPasswordViewController.swift */,
+				B782B5461EF5AFD700DED466 /* SignUpViewController.swift */,
+			);
+			path = LoginAndSignUp;
+			sourceTree = "<group>";
+		};
+		DC068C2E48CCFDA056A09F31 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4189411A6711149F9CD10F1F /* Pods-Dakhila.debug.xcconfig */,
+				E7CF47B526A745DDF04940C4 /* Pods-Dakhila.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B782B5291EF42EF400DED466 /* Dakhila */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B782B53C1EF42EF500DED466 /* Build configuration list for PBXNativeTarget "Dakhila" */;
+			buildPhases = (
+				320ECA42C03BA39F93C173D8 /* [CP] Check Pods Manifest.lock */,
+				B782B5261EF42EF400DED466 /* Sources */,
+				B782B5271EF42EF400DED466 /* Frameworks */,
+				B782B5281EF42EF400DED466 /* Resources */,
+				C45DD002ABEC577C0C76509C /* [CP] Embed Pods Frameworks */,
+				7FC0F7296FC1C5742CEE6AA8 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Dakhila;
+			productName = Dakhila;
+			productReference = B782B52A1EF42EF400DED466 /* Dakhila.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B782B5221EF42EF300DED466 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "Krishan Vir";
+				TargetAttributes = {
+					B782B5291EF42EF400DED466 = {
+						CreatedOnToolsVersion = 8.3.3;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = B782B5251EF42EF300DED466 /* Build configuration list for PBXProject "Dakhila" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B782B5211EF42EF300DED466;
+			productRefGroup = B782B52B1EF42EF400DED466 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B782B5291EF42EF400DED466 /* Dakhila */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B782B5281EF42EF400DED466 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B782B5381EF42EF500DED466 /* LaunchScreen.storyboard in Resources */,
+				B782B5351EF42EF500DED466 /* Assets.xcassets in Resources */,
+				B782B5331EF42EF500DED466 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		320ECA42C03BA39F93C173D8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		7FC0F7296FC1C5742CEE6AA8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Dakhila/Pods-Dakhila-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C45DD002ABEC577C0C76509C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Dakhila/Pods-Dakhila-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B782B5261EF42EF400DED466 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B782B5301EF42EF400DED466 /* ViewController.swift in Sources */,
+				B782B52E1EF42EF400DED466 /* AppDelegate.swift in Sources */,
+				B782B5471EF5AFD700DED466 /* SignUpViewController.swift in Sources */,
+				B782B5451EF5AFC400DED466 /* ForgotPasswordViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		B782B5311EF42EF500DED466 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B782B5321EF42EF500DED466 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		B782B5361EF42EF500DED466 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B782B5371EF42EF500DED466 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B782B53A1EF42EF500DED466 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B782B53B1EF42EF500DED466 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B782B53D1EF42EF500DED466 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4189411A6711149F9CD10F1F /* Pods-Dakhila.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Dakhila/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.osxkernel.Dakhila;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		B782B53E1EF42EF500DED466 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E7CF47B526A745DDF04940C4 /* Pods-Dakhila.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Dakhila/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.osxkernel.Dakhila;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B782B5251EF42EF300DED466 /* Build configuration list for PBXProject "Dakhila" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B782B53A1EF42EF500DED466 /* Debug */,
+				B782B53B1EF42EF500DED466 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B782B53C1EF42EF500DED466 /* Build configuration list for PBXNativeTarget "Dakhila" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B782B53D1EF42EF500DED466 /* Debug */,
+				B782B53E1EF42EF500DED466 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B782B5221EF42EF300DED466 /* Project object */;
+}
