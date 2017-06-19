@@ -15,6 +15,14 @@
 		B782B5381EF42EF500DED466 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B782B5361EF42EF500DED466 /* LaunchScreen.storyboard */; };
 		B782B5451EF5AFC400DED466 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B782B5441EF5AFC400DED466 /* ForgotPasswordViewController.swift */; };
 		B782B5471EF5AFD700DED466 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B782B5461EF5AFD700DED466 /* SignUpViewController.swift */; };
+		B782B54F1EF6A01700DED466 /* MenuTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B782B5481EF6A01700DED466 /* MenuTVC.swift */; };
+		B782B5501EF6A01700DED466 /* ParentClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B782B5491EF6A01700DED466 /* ParentClass.swift */; };
+		B782B5511EF6A01700DED466 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B782B54A1EF6A01700DED466 /* Validator.swift */; };
+		B782B5521EF6A01700DED466 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = B782B54B1EF6A01700DED466 /* Network.swift */; };
+		B782B5531EF6A01700DED466 /* CommonClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B782B54C1EF6A01700DED466 /* CommonClass.swift */; };
+		B782B5541EF6A01700DED466 /* JHProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = B782B54D1EF6A01700DED466 /* JHProgressHUD.swift */; };
+		B782B5551EF6A01700DED466 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = B782B54E1EF6A01700DED466 /* Config.swift */; };
+		B782B5581EF6E52500DED466 /* DashBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B782B5571EF6E52500DED466 /* DashBoardViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +37,14 @@
 		B782B5391EF42EF500DED466 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B782B5441EF5AFC400DED466 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		B782B5461EF5AFD700DED466 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		B782B5481EF6A01700DED466 /* MenuTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTVC.swift; sourceTree = "<group>"; };
+		B782B5491EF6A01700DED466 /* ParentClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentClass.swift; sourceTree = "<group>"; };
+		B782B54A1EF6A01700DED466 /* Validator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
+		B782B54B1EF6A01700DED466 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		B782B54C1EF6A01700DED466 /* CommonClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonClass.swift; sourceTree = "<group>"; };
+		B782B54D1EF6A01700DED466 /* JHProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JHProgressHUD.swift; sourceTree = "<group>"; };
+		B782B54E1EF6A01700DED466 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		B782B5571EF6E52500DED466 /* DashBoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashBoardViewController.swift; sourceTree = "<group>"; };
 		E7CF47B526A745DDF04940C4 /* Pods-Dakhila.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dakhila.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dakhila/Pods-Dakhila.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -73,10 +89,10 @@
 		B782B52C1EF42EF400DED466 /* Dakhila */ = {
 			isa = PBXGroup;
 			children = (
+				B782B53F1EF5AC1000DED466 /* SInglton */,
 				B782B5411EF5AC2C00DED466 /* Modal */,
 				B782B5421EF5AC2C00DED466 /* View */,
 				B782B5401EF5AC1900DED466 /* Controller */,
-				B782B53F1EF5AC1000DED466 /* SInglton */,
 				B782B52D1EF42EF400DED466 /* AppDelegate.swift */,
 				B782B5311EF42EF500DED466 /* Main.storyboard */,
 				B782B5341EF42EF500DED466 /* Assets.xcassets */,
@@ -89,6 +105,13 @@
 		B782B53F1EF5AC1000DED466 /* SInglton */ = {
 			isa = PBXGroup;
 			children = (
+				B782B5481EF6A01700DED466 /* MenuTVC.swift */,
+				B782B5491EF6A01700DED466 /* ParentClass.swift */,
+				B782B54A1EF6A01700DED466 /* Validator.swift */,
+				B782B54B1EF6A01700DED466 /* Network.swift */,
+				B782B54C1EF6A01700DED466 /* CommonClass.swift */,
+				B782B54D1EF6A01700DED466 /* JHProgressHUD.swift */,
+				B782B54E1EF6A01700DED466 /* Config.swift */,
 			);
 			path = SInglton;
 			sourceTree = "<group>";
@@ -96,6 +119,7 @@
 		B782B5401EF5AC1900DED466 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				B782B5561EF6E50B00DED466 /* DashBoardHome */,
 				B782B5431EF5AF8900DED466 /* LoginAndSignUp */,
 			);
 			path = Controller;
@@ -123,6 +147,14 @@
 				B782B5461EF5AFD700DED466 /* SignUpViewController.swift */,
 			);
 			path = LoginAndSignUp;
+			sourceTree = "<group>";
+		};
+		B782B5561EF6E50B00DED466 /* DashBoardHome */ = {
+			isa = PBXGroup;
+			children = (
+				B782B5571EF6E52500DED466 /* DashBoardViewController.swift */,
+			);
+			path = DashBoardHome;
 			sourceTree = "<group>";
 		};
 		DC068C2E48CCFDA056A09F31 /* Pods */ = {
@@ -258,9 +290,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				B782B5301EF42EF400DED466 /* ViewController.swift in Sources */,
+				B782B54F1EF6A01700DED466 /* MenuTVC.swift in Sources */,
+				B782B5521EF6A01700DED466 /* Network.swift in Sources */,
+				B782B5581EF6E52500DED466 /* DashBoardViewController.swift in Sources */,
 				B782B52E1EF42EF400DED466 /* AppDelegate.swift in Sources */,
+				B782B5551EF6A01700DED466 /* Config.swift in Sources */,
 				B782B5471EF5AFD700DED466 /* SignUpViewController.swift in Sources */,
+				B782B5511EF6A01700DED466 /* Validator.swift in Sources */,
+				B782B5541EF6A01700DED466 /* JHProgressHUD.swift in Sources */,
+				B782B5501EF6A01700DED466 /* ParentClass.swift in Sources */,
 				B782B5451EF5AFC400DED466 /* ForgotPasswordViewController.swift in Sources */,
+				B782B5531EF6A01700DED466 /* CommonClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

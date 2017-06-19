@@ -12,10 +12,23 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var navigationController: UINavigationController?
+    var menuTableViewController = MenuTVC()
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        window = UIWindow(frame: UIScreen.main.bounds)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let myVC = storyboard.instantiateViewController(withIdentifier: "first")
+        
+        navigationController = UINavigationController(rootViewController:self.menuTableViewController)
+        navigationController?.navigationBar.isHidden = false
+        navigationController?.pushViewController(myVC, animated:false)
+        navigationController?.interactivePopGestureRecognizer!.isEnabled=false
+        window!.backgroundColor = UIColor.white
+        window!.rootViewController = navigationController
+        window!.makeKeyAndVisible()
         return true
     }
 

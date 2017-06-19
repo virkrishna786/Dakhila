@@ -10,6 +10,52 @@ import UIKit
 
 class SignUpViewController: UIViewController {
 
+    @IBOutlet weak var myScroolView: UIScrollView!
+    @IBOutlet weak var playSchoolButton: UIButton!
+    
+    @IBOutlet weak var daySchoolButton: UIButton!
+    
+    @IBOutlet weak var daysBoardingSchoolButotn: UIButton!
+    
+    @IBOutlet weak var resedentailSchoolButton: UIButton!
+    
+    @IBOutlet weak var schoolNameTextField: UITextField!
+    
+    @IBOutlet weak var schoolEmailIdTextField: UITextField!
+    
+    @IBOutlet weak var schoolCOntactNumberTextField: UITextField!
+    
+    @IBOutlet weak var stateButton: UIButton!
+   
+    @IBOutlet weak var cityButton: UIButton!
+    
+    @IBOutlet weak var lcoalityButton: UIButton!
+    
+    @IBAction func playSchoolButttonAction(_ sender: UIButton) {
+    }
+    
+    @IBAction func dayschoolButtonAction(_ sender: UIButton) {
+    }
+    
+    @IBAction func dayBoardingSchoolButtonAction(_ sender: UIButton) {
+    }
+    
+    
+    @IBAction func resedentailSchoolButtonAction(_ sender: UIButton) {
+    }
+    
+    @IBAction func stateButtonAction(_ sender: UIButton) {
+    }
+    
+    
+    @IBAction func cityButtonAction(_ sender: UIButton) {
+    }
+    
+    @IBAction func localityButtonAction(_ sender: UIButton) {
+    }
+    
+    @IBAction func registerButtonAction(_ sender: UIButton) {
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
