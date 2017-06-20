@@ -64,12 +64,12 @@ override func viewDidLoad() {
     let leftView = UIView()
     leftView.addSubview(leftImageView)
     
-    leftView.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-    leftImageView.frame = CGRect(x: 5, y: 0, width :20, height: 23)
+    leftView.frame = CGRect(x: 0, y: 0, width: 30, height: 45)
+    leftView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+    leftImageView.frame = CGRect(x: 5, y: 10, width :20, height: 23)
     
     self.userNameTextField.leftView = leftView
     self.userNameTextField.leftViewMode = .always
-    
     
     let leftImageView1 = UIImageView()
     leftImageView1.image = UIImage(named: "password")
@@ -77,8 +77,9 @@ override func viewDidLoad() {
     let leftView1 = UIView()
     leftView1.addSubview(leftImageView1)
     
-    leftView1.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-    leftImageView1.frame = CGRect(x: 5, y: 0, width :20, height: 23)
+    leftView1.frame = CGRect(x: 0, y: 0, width: 30, height: 45)
+    leftView1.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+    leftImageView1.frame = CGRect(x: 5, y: 10, width :20, height: 23)
     
     self.passwordTextField.leftView = leftView1
     self.passwordTextField.leftViewMode = .always
@@ -99,19 +100,19 @@ override func viewDidLoad() {
     //MARK: -  Naviagtion to HomeView on already logged in
     
     // let nameString =  defaults.value(forKey: "user_name") as? String
-    let userdskf = defaults.string(forKey: "user_name")
+    let userdskf = defaults.string(forKey: "SchoolName")
     
     guard let usridsd = userdskf, !usridsd.isEmpty else {
         print("bla bla")
         return
     }
-    self.performSegue(withIdentifier: "HomeView", sender: self)
+    self.performSegue(withIdentifier: "home", sender: self)
     
     // Do any additional setup after loading the view, typically from a nib.
 }
     
     func forgetButtonAction(){
-        self.performSegue(withIdentifier: "home", sender: self)
+        self.performSegue(withIdentifier: "forgot", sender: self)
     }
 
 override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -152,38 +153,41 @@ func apiCall(){
                     
                     print("result %@",response.result.value! )
                     
+                    let responseCode = JSON["ResponseCode"] as! String
                     let responseMessage = JSON["ReturnMessage"] as! String
-                    print("response message \(responseMessage)")
+                    print("response message \(responseCode)")
                     
-                    if responseMessage == "Login successfuly" {
+                    if responseCode == "200" {
                         hudClass.hide()
                         print("success");
                         
-                        let userIdString = JSON["user_id"] as! NSNumber
-                        let userNameSavedString = JSON["u_name"] as! String
-                        let userEmailString = JSON["email"] as! String
-                        let interestType = JSON["interest"] as! String
-                        defaults.set(interestType, forKey: "interest")
-                        defaults.set(userIdString, forKey: "userId")
-                        defaults.set(userNameSavedString, forKey: "user_name")
-                        defaults.set(userEmailString, forKey: "user_email")
+                        let schoolId = JSON["Schoolid"] as! String
+                        let schoolNameSavedString = JSON["SchoolName"] as! String
+                        let SchoolEmailString = JSON["SchoolEmail"] as! String
+                        let TypeOfSchool = JSON["TypeOfSchool"] as! String
+                        let mobileNumber = JSON["MobileNo"] as! String
+                        defaults.set(TypeOfSchool, forKey: "typeOfSchool")
+                        defaults.set(schoolId, forKey: "schoolId")
+                        defaults.set(schoolNameSavedString, forKey: "school_name")
+                        defaults.set(SchoolEmailString, forKey: "school_email")
+                        defaults.set(mobileNumber, forKey: "mobileNumber")
                         defaults.synchronize()
                         self.userNameTextField.text = ""
                         self.passwordTextField.text = ""
-                        self.performSegue(withIdentifier: "preHomeView", sender: self)
+                        self.performSegue(withIdentifier: "home", sender: self)
                         
-                    }else if responseMessage == "Email id and Password Does Not Match"{
-                        
-                        hudClass.hide()
-                        parentClass.showAlertWithApiMessage(message: responseMessage)
-                        
-                    }else if responseMessage == "-Wrong ID or Password !"{
+                    }else if responseCode == "500" {
                         hudClass.hide()
                         
                         let alertVC = UIAlertController(title: "Alert", message: "Please enter valid email and password", preferredStyle: .alert)
                         let okAction = UIAlertAction(title: "OK",style:.default,handler: nil)
                         alertVC.addAction(okAction)
                         self.present(alertVC, animated: true, completion: nil)
+                    }else {
+                        
+                        hudClass.hide()
+                        parentClass.showAlertWithApiMessage(message: responseMessage)
+                        
                     }
                     print("json \(JSON)")
                     

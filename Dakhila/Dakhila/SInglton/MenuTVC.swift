@@ -17,9 +17,9 @@ class MenuTVC: UITableViewController {
  
     let LeftMenuWidth = 100.0
     var headerView:UIView?
-    var  imageIcon=UIImageView()
-    var SA_Choice = ["App Notifier","360 Banner","Events","Add Offers","Admission Advantage","Admission Leads","Admission Form List","Invite Parents","Advertisements","Support Ticket","Admission Alert","Change Password","Logout"]
-    var SA_Icons = ["home","profile","riskProfile","rateImage","changePassword","logout","","","","","","",""]
+    var  imageIcon=UIButton()
+    var SA_Choice = ["App Notifier","360 Banner","Events","Add Offers","Admission Advantage","Admission Leads","Admission Form List","Invite Parents","Advertisements","Support Ticket","Admission Alert","Change Password","Logout","",""]
+    var SA_Icons = ["","profile","riskProfile","rateImage","changePassword","logout","","","","","","","","",""]
    var  nameLabel=UILabel()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,13 +39,10 @@ class MenuTVC: UITableViewController {
     func actOnSpecialNotification() {
         let value: String = defaults.value(forKey: "user_name") as! String
         self.nameLabel.text = value
-        
-    
     }
     
     
     func setSideMenuOutSide() {
-        
         let customView = UIView()
         customView.frame = CGRect(x:200, y: self.tableView.frame.origin.y-20, width: self.view.frame.size.width, height: self.tableView.frame.size.height)
         customView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
@@ -73,23 +70,24 @@ class MenuTVC: UITableViewController {
     }
     func setTableviewHeader(){
         //let headerView=UIView()
-        headerView!.frame=CGRect(x: 0, y: 0, width: 100, height: 80)//CGRect(0, 0, 220, 200)
+        headerView!.frame=CGRect(x: 0, y: 0, width: 100, height: 120)//CGRect(0, 0, 220, 200)
         
-        
-        imageIcon.frame=CGRect(x: 30, y: 5, width: 80, height: 80)//CGRect(53,9,150,145)
+        imageIcon.frame=CGRect(x: 30, y: 20, width: 60, height: 60)//CGRect(53,9,150,145)
         imageIcon.layer.borderWidth = 1
         imageIcon.layer.masksToBounds = false
         imageIcon.layer.borderColor = UIColor.white.cgColor
         imageIcon.layer.cornerRadius = imageIcon.frame.height/2
         imageIcon.clipsToBounds = true
+        imageIcon.addTarget(self, action: #selector(MenuTVC.homeButtonAction), for: UIControlEvents.touchUpInside)
 
         
         let imageString = defaults.value(forKey: "profile_image") as? String
         print("imageString : \(String(describing: imageString))")
         
         if imageString == nil {
-            self.imageIcon.image = UIImage(named: "aboutUs")
+            self.imageIcon.setImage(UIImage(named:"home"), for: UIControlState.normal)
         }else {
+            self.imageIcon.setImage(UIImage(named:"home"), for: UIControlState.normal)
            // self.downloadImage(string: imageString)
         }
         
@@ -105,18 +103,62 @@ class MenuTVC: UITableViewController {
         
         let emailLabel = UILabel()
         emailLabel.frame = CGRect(x: 15, y: 50, width: 200, height: 30)
-        let email =  defaults.value(forKey: "user_email") as? String
-        emailLabel.text = email
+       // let email =  defaults.value(forKey: "user_email") as? String
+        emailLabel.text = ""
         emailLabel.textColor = UIColor(red: 169/255, green: 230/255, blue: 254.0/255, alpha: 1.0)
         emailLabel.textAlignment = NSTextAlignment.left
         emailLabel.font = emailLabel.font.withSize(12)
         headerView?.addSubview(emailLabel)
         
-      //  headerView!.addSubview(imageIcon)
+        headerView!.addSubview(imageIcon)
         headerView?.addSubview(nameLabel)
         headerView!.clipsToBounds=true
         self.tableView.tableHeaderView=headerView
         
+    }
+    
+    func homeButtonAction(){
+        
+                    hideMenu()
+                   let firstView:DashBoardViewController
+                    = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "Dashboard") as! DashBoardViewController
+                    //            let firstView:HomeViewController = HomeViewController(nibName:"HomeViewController",bundle:Bundle.main)
+                    var fcheck=Bool()
+                    fcheck=false
+                    let viewArray=self.navigationController?.viewControllers as NSArray!
+                    if((viewArray) != nil){
+                        if !((viewArray?.lastObject! as! UIViewController) .isKind(of: DashBoardViewController.self)){
+        
+                            for views in self.navigationController?.viewControllers as NSArray!
+                            {
+                                if((views as! UIViewController) .isKind(of: DashBoardViewController.self))
+                                {
+                                    fcheck=true
+                                    _ = navigationController?.popToViewController(views as! UIViewController, animated: false)
+        
+        
+        
+        
+                                }
+                            }
+                            if(fcheck==false){
+        
+                                self.navigationController?.pushViewController(firstView, animated: true)
+                            }
+                        }
+                        else{
+        
+                            //reset button
+                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
+                             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetStaticView"), object: nil)
+                        }
+                    }
+                    else{
+                        
+                        appDelegate.navigationController?.pushViewController(firstView, animated: true)
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
+                    }
+   
     }
     // MARK: - Table view data source
     
@@ -398,49 +440,49 @@ class MenuTVC: UITableViewController {
 //                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
 //            }
             
-        }else if (indexPath.row == 5) {
-//            hideMenu()
-//            let firstView:ViewController
-//                = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "first") as! ViewController
-//           // self.navigationController?.pushViewController(firstView, animated: true)
-//
-//            var fcheck=Bool()
-//            fcheck=false
-//            let viewArray=self.navigationController?.viewControllers as NSArray!
-//            if((viewArray) != nil){
-//                if !((viewArray?.lastObject! as! UIViewController) .isKind(of: ViewController.self)){
-//                    
-//                    for views in self.navigationController?.viewControllers as NSArray!
-//                    {
-//                        if((views as! UIViewController) .isKind(of: ViewController.self))
-//                        {
-//                            fcheck=true
-//                            _ = navigationController?.popToViewController(views as! UIViewController, animated: false)
-//                            
-//                        }
-//                    }
-//                    if(fcheck==false){
-//                        
-//                        self.navigationController?.pushViewController(firstView, animated: true)
-//                    }
-//                }
-//                else{
-//                    
-//                    //reset button
-//                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
-//                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetStaticView"), object: nil)
-//
-//                }
-//            }
-//            else{
-//                
-//                //reset button
-//                appDelegate.navigationController?.pushViewController(firstView, animated: true)
-//                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
-//            }
-//            parentClass.logout()
-//        }
-    }
+        }else if (indexPath.row == 12) {
+            hideMenu()
+            let firstView:ViewController
+                = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "first") as! ViewController
+           // self.navigationController?.pushViewController(firstView, animated: true)
+
+            var fcheck=Bool()
+            fcheck=false
+            let viewArray=self.navigationController?.viewControllers as NSArray!
+            if((viewArray) != nil){
+                if !((viewArray?.lastObject! as! UIViewController) .isKind(of: ViewController.self)){
+                    
+                    for views in self.navigationController?.viewControllers as NSArray!
+                    {
+                        if((views as! UIViewController) .isKind(of: ViewController.self))
+                        {
+                            fcheck=true
+                            _ = navigationController?.popToViewController(views as! UIViewController, animated: false)
+                            
+                        }
+                    }
+                    if(fcheck==false){
+                        
+                        self.navigationController?.pushViewController(firstView, animated: true)
+                    }
+                }
+                else{
+                    
+                    //reset button
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetStaticView"), object: nil)
+
+                }
+            }
+            else{
+                
+                //reset button
+                appDelegate.navigationController?.pushViewController(firstView, animated: true)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
+            }
+            parentClass.logout()
+        }
+    
     }
     
     // Override to support rearranging the table view.
@@ -468,8 +510,8 @@ class MenuTVC: UITableViewController {
     
     
     func downloadImage(string: String) {
-        let uRL = URL(string: "\(string)")
-        self.imageIcon.kf.setImage(with: uRL , placeholder: UIImage(named: "aboutUs"))
+       // let uRL = URL(string: "\(string)")
+       // self.imageIcon.kf.setImage(with: uRL , placeholder: UIImage(named: "aboutUs"))
     }
     
 

@@ -51,11 +51,11 @@ class ParentClass : NSObject {
     
     func logout() {
         
-        defaults.removeObject(forKey: "userId")
-        defaults.removeObject(forKey: "profile_image")
-        defaults.removeObject(forKey: "user_name")
-        defaults.removeObject(forKey: "eventId")
-        defaults.removeObject(forKey: "user_email")
+        defaults.removeObject(forKey: "schoolId")
+        defaults.removeObject(forKey: "SchoolName")
+        defaults.removeObject(forKey: "school_email")
+        defaults.removeObject(forKey: "mobileNumber")
+        defaults.removeObject(forKey: "typeOfSchool")
         
         print("logOut")
         
