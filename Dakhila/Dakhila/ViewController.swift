@@ -100,8 +100,7 @@ override func viewDidLoad() {
     //MARK: -  Naviagtion to HomeView on already logged in
     
     // let nameString =  defaults.value(forKey: "user_name") as? String
-    let userdskf = defaults.string(forKey: "SchoolName")
-    
+    let userdskf = defaults.string(forKey: "school_name")
     guard let usridsd = userdskf, !usridsd.isEmpty else {
         print("bla bla")
         return

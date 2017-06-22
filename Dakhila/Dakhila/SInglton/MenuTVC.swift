@@ -18,8 +18,8 @@ class MenuTVC: UITableViewController {
     let LeftMenuWidth = 100.0
     var headerView:UIView?
     var  imageIcon=UIButton()
-    var SA_Choice = ["App Notifier","360 Banner","Events","Add Offers","Admission Advantage","Admission Leads","Admission Form List","Invite Parents","Advertisements","Support Ticket","Admission Alert","Change Password","Logout","",""]
-    var SA_Icons = ["","profile","riskProfile","rateImage","changePassword","logout","","","","","","","","",""]
+    var SA_Choice = ["App Notifier","360 Banner","Events","Add Offers","Admission Advantage","Admission Leads","Admission Form List","Invite Parents","Advertisements","Support Ticket","Admission Alert","Change Password","Logout",""]
+    var SA_Icons = ["app-notifier","virtual-tour","events","add-offers","admission-advantage","admission-leads","admission-form-list","invite-parents","advertisements-nav","support-ticket","admission-alert","change-password","logout",""]
    var  nameLabel=UILabel()
     override func viewDidLoad() {
         super.viewDidLoad()

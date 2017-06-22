@@ -7,8 +7,39 @@
 //
 
 import UIKit
+import  Alamofire
+import  SwiftyJSON
 
 class DashBoardViewController: UIViewController {
+    
+    
+    @IBOutlet weak var jdVerifiedAccountTypeLabel: UILabel!
+    
+    @IBOutlet weak var virtualActvieLabel: UILabel!
+    
+    @IBOutlet weak var schoolOffersLabel: UILabel!
+    
+    @IBOutlet weak var profielCompleteNessLabel: UILabel!
+    
+    
+    @IBOutlet weak var admissionLeadsLabel: UILabel!
+    
+    @IBOutlet weak var jdApplicationsLabel: UILabel!
+    
+    @IBOutlet weak var eventConsentDetailLabel: UILabel!
+    
+    @IBOutlet weak var admissionLabel: UILabel!
+    
+    @IBOutlet weak var jdSearchLabel: UILabel!
+    
+    @IBOutlet weak var parentNofifierLabel: UILabel!
+    
+    @IBOutlet weak var advertisementsLabel: UILabel!
+    
+    @IBOutlet weak var advertisementGraphLabel: UILabel!
+    
+    
+    
     var boolValue = 0
     @IBAction func menuButtonAction(_ sender: UIButton) {
         if boolValue == 0 {
@@ -24,8 +55,23 @@ class DashBoardViewController: UIViewController {
 
     }
 
+    var schoolType : String?
+    var schoolId : String?
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        let userId = defaults.value(forKey: "schoolId") as? String
+        self.schoolId = userId
+        print("user %@" ,userId!)
+        
+        let interestIdString = defaults.string(forKey: "typeOfSchool")
+        self.schoolType = interestIdString
+        print("dkfkd %@",interestIdString!)
+
+        
+        
+        self.dashBoardCallApi()
 
         // Do any additional setup after loading the view.
     }
@@ -52,6 +98,89 @@ class DashBoardViewController: UIViewController {
     }
     
 
+    func dashBoardCallApi(){
+        
+        if currentReachabilityStatus != .notReachable {
+            hudClass.showInView(view: self.view)
+            let  urlString = "\(baseUrl)/GetSchoolDashboard"
+            
+            
+            let  parameter = ["SchoolId" : self.schoolId!,
+                              "typeofschool" : self.schoolType!
+            ]
+            
+            print("dfd \(parameter)")
+            
+            Alamofire.request(urlString, method: .post, parameters: parameter)
+                .responseJSON { response in
+                    print("Success: \(response.result.isSuccess)")
+                    print("Response String:", response.result.value)
+                    
+                    //to get JSON return value
+                    
+                    if  response.result.isSuccess {
+                        hudClass.hide()
+                        let result = response.result.value
+                        let JSON = result as! NSDictionary
+                        
+                        print("result %@",response.result.value! )
+                        
+                        let responseCode = JSON["ResponseCode"] as! String
+                        print("response message \(responseCode)")
+                        
+                        if responseCode == "200" {
+                            hudClass.hide()
+                            print("success");
+                            
+                            let admissionAlerts = JSON["AdmissionAlerts"] as! String
+                            let admissionLeadCounts = JSON["AdmissionLeadsCount"] as! String
+                            let advertisemsnts = JSON["Advertisement"] as! String
+                            let EventConsentDetails = JSON["EventConsentDetails"] as! String
+                            let Is360ViewActived = JSON["Is360ViewActived"] as! String
+                            let JDApplication = JSON["JDApplication"] as! String
+                            let ParentNotifier = JSON["ParentNotifier"] as! String
+                            let Photo = JSON["Photo"] as! String
+                            let ProfileCompleteness = JSON["ProfileCompleteness"] as! String
+                            let Rate = JSON["Rate"] as! String
+                            let SchoolVerified = JSON["SchoolVerified"] as! String
+                            let TotalSearch = JSON["TotalSearch"] as! String
+                            let live_Offer = JSON["live_Offer"] as! String
+                            
+                            DispatchQueue.main.async {
+                             
+                                self.jdVerifiedAccountTypeLabel.text = ""
+                                self.virtualActvieLabel.text = Is360ViewActived
+                            }
+                            
+                        }else if responseCode == "500" {
+                            hudClass.hide()
+                            
+                            let alertVC = UIAlertController(title: "Alert", message: "Please enter valid email and password", preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "OK",style:.default,handler: nil)
+                            alertVC.addAction(okAction)
+                            self.present(alertVC, animated: true, completion: nil)
+                        }else {
+                            
+                            hudClass.hide()
+                            parentClass.showAlertWithApiMessage(message: "some thing went worng")
+                            
+                        }
+                        print("json \(JSON)")
+                        
+                    }else {
+                        hudClass.hide()
+                        parentClass.showAlertWithApiFailure()
+                    }
+            }
+            
+            
+        }else {
+            hudClass.hide()
+            parentClass.showAlert()
+        }
+        
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
