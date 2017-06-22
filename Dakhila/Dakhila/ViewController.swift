@@ -26,7 +26,8 @@ class ViewController: UIViewController ,UITextFieldDelegate{
         self.present(alertVC, animated: true, completion: nil)
         
     }else{
-        self.apiCall()
+       // self.performSegue(withIdentifier: "home", sender: self)
+      self.apiCall()
     }
     
 }

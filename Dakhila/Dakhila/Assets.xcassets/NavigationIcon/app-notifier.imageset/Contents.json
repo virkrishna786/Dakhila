@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "app-notifier.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "app-notifier.png",
       "scale" : "2x"
     },
     {

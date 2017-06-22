@@ -12,6 +12,7 @@ import  SwiftyJSON
 
 class DashBoardViewController: UIViewController {
     
+    @IBOutlet weak var schoolNameLabel: UILabel!
     
     @IBOutlet weak var jdVerifiedAccountTypeLabel: UILabel!
     
@@ -60,18 +61,20 @@ class DashBoardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         let userId = defaults.value(forKey: "schoolId") as? String
         self.schoolId = userId
-        print("user %@" ,userId!)
+      //  print("user %@" ,userId!)
+        let schoolNameString = defaults.value(forKey: "school_name") as? String
+        self.schoolNameLabel.text = schoolNameString!
         
-        let interestIdString = defaults.string(forKey: "typeOfSchool")
+        
+        let interestIdString = defaults.string(forKey: "typeOfSchool") as? String
         self.schoolType = interestIdString
-        print("dkfkd %@",interestIdString!)
+      //  print("dkfkd %@",interestIdString!)
 
         
         
-        self.dashBoardCallApi()
+       // self.dashBoardCallApi()
 
         // Do any additional setup after loading the view.
     }
@@ -141,15 +144,25 @@ class DashBoardViewController: UIViewController {
                             let ParentNotifier = JSON["ParentNotifier"] as! String
                             let Photo = JSON["Photo"] as! String
                             let ProfileCompleteness = JSON["ProfileCompleteness"] as! String
-                            let Rate = JSON["Rate"] as! String
+                            let Rate = JSON["Rate"] as? String
                             let SchoolVerified = JSON["SchoolVerified"] as! String
                             let TotalSearch = JSON["TotalSearch"] as! String
-                            let live_Offer = JSON["live_Offer"] as! String
+                            let live_Offer = JSON["live_Offer"] as? String
                             
                             DispatchQueue.main.async {
                              
-                                self.jdVerifiedAccountTypeLabel.text = ""
+                                self.jdVerifiedAccountTypeLabel.text = SchoolVerified
                                 self.virtualActvieLabel.text = Is360ViewActived
+                                self.schoolOffersLabel.text = live_Offer
+                                self.profielCompleteNessLabel.text = ProfileCompleteness
+                                self.admissionLeadsLabel.text = admissionLeadCounts
+                                self.jdApplicationsLabel.text = JDApplication
+                                self.eventConsentDetailLabel.text = EventConsentDetails
+                                self.admissionLabel.text = admissionAlerts
+                                self.jdSearchLabel.text = TotalSearch
+                                self.parentNofifierLabel.text = ParentNotifier
+                                self.advertisementGraphLabel.text = "View"
+                                self.advertisementsLabel.text = advertisemsnts
                             }
                             
                         }else if responseCode == "500" {

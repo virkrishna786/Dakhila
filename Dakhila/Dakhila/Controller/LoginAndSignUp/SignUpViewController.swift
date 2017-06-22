@@ -194,7 +194,7 @@ class SignUpViewController: UIViewController ,UITextFieldDelegate , UIPickerView
 
         
         let rightImageView1 = UIImageView()
-        rightImageView1.image = UIImage(named:"username")
+        rightImageView1.image = UIImage(named:"dropDown")
         rightImageView1.frame = CGRect(x: 8, y: 0, width: 30, height: 30)
         let rightView = UIView()
         rightView.frame = CGRect(x: self.stateTextField.frame.size.width - 60, y: 10, width: 40, height: 40)
@@ -217,7 +217,7 @@ class SignUpViewController: UIViewController ,UITextFieldDelegate , UIPickerView
         
         
         let rightImageView4 = UIImageView()
-        rightImageView4.image = UIImage(named:"username")
+        rightImageView4.image = UIImage(named:"dropDown")
         rightImageView4.frame = CGRect(x: 8, y: 0, width: 30, height: 30)
         let rightView4 = UIView()
         rightView4.frame = CGRect(x: self.cityTextField.frame.size.width - 60, y: 10, width: 40, height:  40)
@@ -240,7 +240,7 @@ class SignUpViewController: UIViewController ,UITextFieldDelegate , UIPickerView
         
         
         let rightImageView5 = UIImageView()
-        rightImageView5.image = UIImage(named:"username")
+        rightImageView5.image = UIImage(named:"dropDown")
         rightImageView5.frame = CGRect(x: 8, y: 0, width: 30, height: 30)
         let rightView5 = UIView()
         rightView5.frame = CGRect(x: self.localityTextField.frame.size.width - 60, y: 10, width: 40, height: 40)
@@ -618,9 +618,9 @@ class SignUpViewController: UIViewController ,UITextFieldDelegate , UIPickerView
             let schoolNameString = "\(schoolNameTextField.text!)"
             let schoolEmailString = "\(schoolEmailIdTextField.text!)"
             let schoolContactNumebr = "\(schoolCOntactNumberTextField.text!)"
-            let stateIdString = "\(self.stateIdString!)"
-            let cityIdString = "\(self.cityIdString!)"
-            let localityString = "\(self.localityIdString!)"
+            let stateIdString = "\(self.stateTextField.text!)"
+            let cityIdString = "\(self.cityTextField.text!)"
+            let localityString = "\(self.localityTextField.text!)"
             
             
             let  parameter = ["schoolTypeValu" : self.schoolTypeValue!,

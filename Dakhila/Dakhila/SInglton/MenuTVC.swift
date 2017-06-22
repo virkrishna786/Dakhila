@@ -118,7 +118,6 @@ class MenuTVC: UITableViewController {
     }
     
     func homeButtonAction(){
-        
                     hideMenu()
                    let firstView:DashBoardViewController
                     = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "Dashboard") as! DashBoardViewController
@@ -135,9 +134,6 @@ class MenuTVC: UITableViewController {
                                 {
                                     fcheck=true
                                     _ = navigationController?.popToViewController(views as! UIViewController, animated: false)
-        
-        
-        
         
                                 }
                             }
@@ -210,46 +206,40 @@ class MenuTVC: UITableViewController {
         print("dkdakshgasjkga")
         
         if (indexPath.row == 0) {
-            
-//            hideMenu()
-//           let firstView:HomeViewController
-//            = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "homeView") as! HomeViewController
-//            //            let firstView:HomeViewController = HomeViewController(nibName:"HomeViewController",bundle:Bundle.main)
-//            var fcheck=Bool()
-//            fcheck=false
-//            let viewArray=self.navigationController?.viewControllers as NSArray!
-//            if((viewArray) != nil){
-//                if !((viewArray?.lastObject! as! UIViewController) .isKind(of: HomeViewController.self)){
-//                    
-//                    for views in self.navigationController?.viewControllers as NSArray!
-//                    {
-//                        if((views as! UIViewController) .isKind(of: HomeViewController.self))
-//                        {
-//                            fcheck=true
-//                            _ = navigationController?.popToViewController(views as! UIViewController, animated: false)
-//                           
-//                           
-//  
-//                            
-//                        }
-//                    }
-//                    if(fcheck==false){
-//                        
-//                        self.navigationController?.pushViewController(firstView, animated: true)
-//                    }
-//                }
-//                else{
-//                    
-//                    //reset button
-//                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
-//                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetStaticView"), object: nil)
-//                }
-//            }
-//            else{
-//                
-//                appDelegate.navigationController?.pushViewController(firstView, animated: true)
-//                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
-//            }
+            hideMenu()
+           let firstView:AppNotifierViewController
+            = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "appNotify") as! AppNotifierViewController
+            //            let firstView:HomeViewController = HomeViewController(nibName:"HomeViewController",bundle:Bundle.main)
+            var fcheck=Bool()
+            fcheck=false
+            let viewArray=self.navigationController?.viewControllers as NSArray!
+            if((viewArray) != nil){
+                if !((viewArray?.lastObject! as! UIViewController) .isKind(of: AppNotifierViewController.self)){
+                    for views in self.navigationController?.viewControllers as NSArray!
+                    {
+                        if((views as! UIViewController) .isKind(of: AppNotifierViewController.self))
+                        {
+                            fcheck=true
+                            _ = navigationController?.popToViewController(views as! UIViewController, animated: false)
+                        }
+                    }
+                    if(fcheck==false){
+                        
+                        self.navigationController?.pushViewController(firstView, animated: true)
+                    }
+                }
+                else{
+                    
+                    //reset button
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
+                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetStaticView"), object: nil)
+                }
+            }
+            else{
+                
+                appDelegate.navigationController?.pushViewController(firstView, animated: true)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
+            }
         }else if (indexPath.row == 1) {
             
 //            hideMenu()
@@ -362,83 +352,83 @@ class MenuTVC: UITableViewController {
 //                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
 //            }
             
-        }else if indexPath.row == 2 {
+        }else if indexPath.row == 9 {
             
-//            hideMenu()
-//            let firstView:RiskProfileViewController
-//                = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "riskProfileViewController") as! RiskProfileViewController
-//            //            let firstView:HomeViewController = HomeViewController(nibName:"HomeViewController",bundle:Bundle.main)
-//            var fcheck=Bool()
-//            fcheck=false
-//            let viewArray=self.navigationController?.viewControllers as NSArray!
-//            if((viewArray) != nil){
-//                if !((viewArray?.lastObject! as! UIViewController) .isKind(of: RiskProfileViewController.self)){
-//                    
-//                    for views in self.navigationController?.viewControllers as NSArray!
-//                    {
-//                        if((views as! UIViewController) .isKind(of: RiskProfileViewController.self))
-//                        {
-//                            fcheck=true
-//                            _ = navigationController?.popToViewController(views as! UIViewController, animated: false)
-//                            
-//                        }
-//                    }
-//                    if(fcheck==false){
-//                        self.navigationController?.pushViewController(firstView, animated: true)
-//                    }
-//                }
-//                else{
-//                    
-//                    //reset button
-//                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
-//                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetStaticView"), object: nil)
-//
-//                }
-//            }else{
-//                appDelegate.navigationController?.pushViewController(firstView, animated: true)
-//               // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
-//            }
+            hideMenu()
+            let firstView:SupportTicketViewController
+                = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "supportTicket") as! SupportTicketViewController
+            //            let firstView:HomeViewController = HomeViewController(nibName:"HomeViewController",bundle:Bundle.main)
+            var fcheck=Bool()
+            fcheck=false
+            let viewArray=self.navigationController?.viewControllers as NSArray!
+            if((viewArray) != nil){
+                if !((viewArray?.lastObject! as! UIViewController) .isKind(of: SupportTicketViewController.self)){
+                    
+                    for views in self.navigationController?.viewControllers as NSArray!
+                    {
+                        if((views as! UIViewController) .isKind(of: SupportTicketViewController.self))
+                        {
+                            fcheck=true
+                            _ = navigationController?.popToViewController(views as! UIViewController, animated: false)
+                            
+                        }
+                    }
+                    if(fcheck==false){
+                        self.navigationController?.pushViewController(firstView, animated: true)
+                    }
+                }
+                else{
+                    
+                    //reset button
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetStaticView"), object: nil)
+
+                }
+            }else{
+                appDelegate.navigationController?.pushViewController(firstView, animated: true)
+               // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
+            }
             
-        }else if indexPath.row == 4 {
+        }else if indexPath.row == 11 {
             
-//            hideMenu()
-//            let firstView:ChangePasswordViewController
-//                = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "changePassword") as! ChangePasswordViewController
-//            //            let firstView:HomeViewController = HomeViewController(nibName:"HomeViewController",bundle:Bundle.main)
-//            var fcheck=Bool()
-//            fcheck=false
-//            let viewArray=self.navigationController?.viewControllers as NSArray!
-//            if((viewArray) != nil){
-//                if !((viewArray?.lastObject! as! UIViewController) .isKind(of: ChangePasswordViewController.self)){
-//                    
-//                    for views in self.navigationController?.viewControllers as NSArray!
-//                    {
-//                        if((views as! UIViewController) .isKind(of: ChangePasswordViewController.self))
-//                        {
-//                            fcheck=true
-//                            _ = navigationController?.popToViewController(views as! UIViewController, animated: false)
-//                            
-//                        }
-//                    }
-//                    if(fcheck==false){
-//                        
-//                        self.navigationController?.pushViewController(firstView, animated: true)
-//                    }
-//                }
-//                else{
-//                    
-//                    //reset button
-//                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
-//                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetStaticView"), object: nil)
-//
-//                }
-//            }
-//            else{
-//                
-//                //reset button
-//                appDelegate.navigationController?.pushViewController(firstView, animated: true)
-//                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
-//            }
+            hideMenu()
+            let firstView:ChangePasswordViewController
+                = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "changePassword") as! ChangePasswordViewController
+            //            let firstView:HomeViewController = HomeViewController(nibName:"HomeViewController",bundle:Bundle.main)
+            var fcheck=Bool()
+            fcheck=false
+            let viewArray=self.navigationController?.viewControllers as NSArray!
+            if((viewArray) != nil){
+                if !((viewArray?.lastObject! as! UIViewController) .isKind(of: ChangePasswordViewController.self)){
+                    
+                    for views in self.navigationController?.viewControllers as NSArray!
+                    {
+                        if((views as! UIViewController) .isKind(of: ChangePasswordViewController.self))
+                        {
+                            fcheck=true
+                            _ = navigationController?.popToViewController(views as! UIViewController, animated: false)
+                            
+                        }
+                    }
+                    if(fcheck==false){
+                        
+                        self.navigationController?.pushViewController(firstView, animated: true)
+                    }
+                }
+                else{
+                    
+                    //reset button
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetStaticView"), object: nil)
+
+                }
+            }
+            else{
+                
+                //reset button
+                appDelegate.navigationController?.pushViewController(firstView, animated: true)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
+            }
             
         }else if (indexPath.row == 12) {
             hideMenu()

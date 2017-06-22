@@ -52,7 +52,7 @@ class ParentClass : NSObject {
     func logout() {
         
         defaults.removeObject(forKey: "schoolId")
-        defaults.removeObject(forKey: "SchoolName")
+        defaults.removeObject(forKey: "school_name")
         defaults.removeObject(forKey: "school_email")
         defaults.removeObject(forKey: "mobileNumber")
         defaults.removeObject(forKey: "typeOfSchool")

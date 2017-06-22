@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		0BD3AFD7DEE6B8BBA75206EC /* Pods_Dakhila.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B1796EB7935E5B2349E19D4 /* Pods_Dakhila.framework */; };
+		B70B93DE1EFC31D500C512E2 /* AppNotifierViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B93DD1EFC31D500C512E2 /* AppNotifierViewController.swift */; };
+		B70B93E01EFC4BF300C512E2 /* customCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B70B93DF1EFC4BF300C512E2 /* customCell.xib */; };
+		B70B93E21EFC4C1E00C512E2 /* CustomCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B93E11EFC4C1E00C512E2 /* CustomCellType.swift */; };
+		B70B93E41EFC52AA00C512E2 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B93E31EFC52AA00C512E2 /* ChangePasswordViewController.swift */; };
+		B70B93E61EFC5CEB00C512E2 /* SupportTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B93E51EFC5CEB00C512E2 /* SupportTicketViewController.swift */; };
 		B782B52E1EF42EF400DED466 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B782B52D1EF42EF400DED466 /* AppDelegate.swift */; };
 		B782B5301EF42EF400DED466 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B782B52F1EF42EF400DED466 /* ViewController.swift */; };
 		B782B5331EF42EF500DED466 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B782B5311EF42EF500DED466 /* Main.storyboard */; };
@@ -31,6 +36,11 @@
 /* Begin PBXFileReference section */
 		4189411A6711149F9CD10F1F /* Pods-Dakhila.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dakhila.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dakhila/Pods-Dakhila.debug.xcconfig"; sourceTree = "<group>"; };
 		6B1796EB7935E5B2349E19D4 /* Pods_Dakhila.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dakhila.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B70B93DD1EFC31D500C512E2 /* AppNotifierViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppNotifierViewController.swift; sourceTree = "<group>"; };
+		B70B93DF1EFC4BF300C512E2 /* customCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = customCell.xib; sourceTree = "<group>"; };
+		B70B93E11EFC4C1E00C512E2 /* CustomCellType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCellType.swift; sourceTree = "<group>"; };
+		B70B93E31EFC52AA00C512E2 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
+		B70B93E51EFC5CEB00C512E2 /* SupportTicketViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportTicketViewController.swift; sourceTree = "<group>"; };
 		B782B52A1EF42EF400DED466 /* Dakhila.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dakhila.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B782B52D1EF42EF400DED466 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B782B52F1EF42EF400DED466 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ../../ViewController.swift; sourceTree = "<group>"; };
@@ -141,6 +151,8 @@
 		B782B5421EF5AC2C00DED466 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B70B93DF1EFC4BF300C512E2 /* customCell.xib */,
+				B70B93E11EFC4C1E00C512E2 /* CustomCellType.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -162,6 +174,9 @@
 			isa = PBXGroup;
 			children = (
 				B782B5571EF6E52500DED466 /* DashBoardViewController.swift */,
+				B70B93DD1EFC31D500C512E2 /* AppNotifierViewController.swift */,
+				B70B93E31EFC52AA00C512E2 /* ChangePasswordViewController.swift */,
+				B70B93E51EFC5CEB00C512E2 /* SupportTicketViewController.swift */,
 			);
 			path = DashBoardHome;
 			sourceTree = "<group>";
@@ -239,6 +254,7 @@
 			files = (
 				B782B5381EF42EF500DED466 /* LaunchScreen.storyboard in Resources */,
 				B782B5351EF42EF500DED466 /* Assets.xcassets in Resources */,
+				B70B93E01EFC4BF300C512E2 /* customCell.xib in Resources */,
 				B782B5331EF42EF500DED466 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -301,13 +317,17 @@
 				B782B5301EF42EF400DED466 /* ViewController.swift in Sources */,
 				B782B54F1EF6A01700DED466 /* MenuTVC.swift in Sources */,
 				B782B5521EF6A01700DED466 /* Network.swift in Sources */,
+				B70B93E61EFC5CEB00C512E2 /* SupportTicketViewController.swift in Sources */,
+				B70B93E41EFC52AA00C512E2 /* ChangePasswordViewController.swift in Sources */,
 				B7BE89F91EFA1B46008AFAEE /* Locality.swift in Sources */,
 				B782B5581EF6E52500DED466 /* DashBoardViewController.swift in Sources */,
 				B782B52E1EF42EF400DED466 /* AppDelegate.swift in Sources */,
 				B782B5551EF6A01700DED466 /* Config.swift in Sources */,
+				B70B93E21EFC4C1E00C512E2 /* CustomCellType.swift in Sources */,
 				B782B5471EF5AFD700DED466 /* SignUpViewController.swift in Sources */,
 				B7BE89F71EFA1B2C008AFAEE /* CityArrayClass.swift in Sources */,
 				B782B5511EF6A01700DED466 /* Validator.swift in Sources */,
+				B70B93DE1EFC31D500C512E2 /* AppNotifierViewController.swift in Sources */,
 				B782B5541EF6A01700DED466 /* JHProgressHUD.swift in Sources */,
 				B782B5501EF6A01700DED466 /* ParentClass.swift in Sources */,
 				B7BE89F51EFA1AFC008AFAEE /* StateArrayClass.swift in Sources */,

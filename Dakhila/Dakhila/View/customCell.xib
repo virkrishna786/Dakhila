@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cellIdentifier" id="TGz-ND-4sk" customClass="CustomCellType" customModule="Dakhila" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="117" height="94"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="117" height="94"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FLL-yo-R87">
+                        <rect key="frame" x="0.0" y="4" width="115" height="84"/>
+                    </imageView>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="FLL-yo-R87" secondAttribute="bottom" constant="6" id="LJg-CK-Cws"/>
+                <constraint firstItem="FLL-yo-R87" firstAttribute="leading" secondItem="TGz-ND-4sk" secondAttribute="leading" id="WEE-Wt-Me8"/>
+                <constraint firstAttribute="trailing" secondItem="FLL-yo-R87" secondAttribute="trailing" constant="2" id="afn-Lx-zE4"/>
+                <constraint firstItem="FLL-yo-R87" firstAttribute="top" secondItem="TGz-ND-4sk" secondAttribute="top" constant="4" id="cVP-Er-5aJ"/>
+            </constraints>
+            <size key="customSize" width="117" height="94"/>
+            <connections>
+                <outlet property="photoImageView" destination="FLL-yo-R87" id="6vq-7f-lC7"/>
+            </connections>
+            <point key="canvasLocation" x="346.5" y="76"/>
+        </collectionViewCell>
+    </objects>
+</document>

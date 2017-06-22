@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "admission-leads.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "admission-leads.png",
       "scale" : "2x"
     },
     {
