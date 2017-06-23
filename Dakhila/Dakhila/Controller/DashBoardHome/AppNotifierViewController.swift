@@ -8,11 +8,15 @@
 
 import UIKit
 import MobileCoreServices
+import AVFoundation
 
-class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollViewDelegate,UIImagePickerControllerDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UINavigationControllerDelegate{
+class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollViewDelegate,UIImagePickerControllerDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UINavigationControllerDelegate, AVAudioPlayerDelegate, AVAudioRecorderDelegate{
 
     var videoUrl : URL?
     var imageArray = [UIImage]()
+    var recordingSession: AVAudioSession!
+    var audioRecorder: AVAudioRecorder!
+    
     @IBOutlet weak var myScollView: UIScrollView!
     @IBOutlet weak var dateLabel: UILabel!
     var boolValue = 0
@@ -36,6 +40,7 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
     }
     @IBOutlet weak var audioSlider: UISlider!
     @IBAction func audioButtonAction(_ sender: UIButton) {
+        
     }
     @IBAction func videoShowingButtonAction(_ sender: UIButton) {
     }
@@ -98,16 +103,69 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
         super.viewDidLoad()
         imagePicker.delegate = self
         self.myScollView.delegate = self
-         self.datePicker.isHidden = true
+        self.datePicker.isHidden = true
         self.myScollView.contentSize = CGSize(width: self.view.frame.size.width, height: self.view.frame.size.height + 3000)
         self.myScollView.isScrollEnabled = true
         self.classPickerView.isHidden = true
         self.imageCollectionView.register(UINib(nibName: "customCell", bundle: nil), forCellWithReuseIdentifier: "cellIdentifier")
 
+        
+        // for choosing audio  from iphone
+//        playButton.isEnabled = false
+  //      stopButton.isEnabled = false
+        let fileMgr = FileManager.default
+        let dirPaths = fileMgr.urls(for: .documentDirectory,
+                                    in: .userDomainMask)
+        
+        let soundFileURL = dirPaths[0].appendingPathComponent("sound.caf")
+        
+        let recordSettings =
+            [AVEncoderAudioQualityKey: AVAudioQuality.min.rawValue,
+             AVEncoderBitRateKey: 16,
+             AVNumberOfChannelsKey: 2,
+             AVSampleRateKey: 44100.0] as [String : Any]
+        
+        let audioSession = AVAudioSession.sharedInstance()
+        
+        do {
+            try audioSession.setCategory(
+                AVAudioSessionCategoryPlayAndRecord)
+        } catch let error as NSError {
+            print("audioSession error: \(error.localizedDescription)")
+        }
+        
+        do {
+            try audioRecorder = AVAudioRecorder(url: soundFileURL,
+                                                settings: recordSettings as [String : AnyObject])
+            audioRecorder?.prepareToRecord()
+        } catch let error as NSError {
+            print("audioSession error: \(error.localizedDescription)")
+        }
+        // emd
         self.addChildViewController(appDelegate.menuTableViewController)
 
         // Do any additional setup after loading the view.
     }
+    
+    // deleagte method for audio recodrding 
+    
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        //recordButton.isEnabled = true
+        //stopButton.isEnabled = false
+    }
+    
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        print("Audio Play Decode Error")
+    }
+    
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+    }
+    
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
+        print("Audio Record Encode Error")
+    }
+
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage  {
@@ -182,14 +240,11 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
         
         let data = imageArray[indexPath.row]
         cell.photoImageView.image =  data
-        
-        
         return cell
     }
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField)
