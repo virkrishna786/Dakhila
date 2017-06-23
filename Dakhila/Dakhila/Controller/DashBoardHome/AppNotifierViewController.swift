@@ -17,6 +17,10 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
     var recordingSession: AVAudioSession!
     var audioRecorder: AVAudioRecorder!
     
+    @IBAction func crossButtonAction(_ sender: UIButton) {
+    }
+    @IBOutlet weak var crossButton: UIButton!
+    @IBOutlet weak var runningTimeLabel: UILabel!
     @IBOutlet weak var myScollView: UIScrollView!
     @IBOutlet weak var dateLabel: UILabel!
     var boolValue = 0

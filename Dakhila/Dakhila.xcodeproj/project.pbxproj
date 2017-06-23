@@ -13,6 +13,9 @@
 		B70B93E21EFC4C1E00C512E2 /* CustomCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B93E11EFC4C1E00C512E2 /* CustomCellType.swift */; };
 		B70B93E41EFC52AA00C512E2 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B93E31EFC52AA00C512E2 /* ChangePasswordViewController.swift */; };
 		B70B93E61EFC5CEB00C512E2 /* SupportTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B93E51EFC5CEB00C512E2 /* SupportTicketViewController.swift */; };
+		B70B93E81EFD5A8600C512E2 /* AdmissionAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B93E71EFD5A8600C512E2 /* AdmissionAlertViewController.swift */; };
+		B70B93EA1EFD6F0800C512E2 /* SupporttTickerArrayClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B93E91EFD6F0800C512E2 /* SupporttTickerArrayClass.swift */; };
+		B70B93EC1EFD8C1100C512E2 /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B93EB1EFD8C1100C512E2 /* InviteViewController.swift */; };
 		B782B52E1EF42EF400DED466 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B782B52D1EF42EF400DED466 /* AppDelegate.swift */; };
 		B782B5301EF42EF400DED466 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B782B52F1EF42EF400DED466 /* ViewController.swift */; };
 		B782B5331EF42EF500DED466 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B782B5311EF42EF500DED466 /* Main.storyboard */; };
@@ -41,6 +44,9 @@
 		B70B93E11EFC4C1E00C512E2 /* CustomCellType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCellType.swift; sourceTree = "<group>"; };
 		B70B93E31EFC52AA00C512E2 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		B70B93E51EFC5CEB00C512E2 /* SupportTicketViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportTicketViewController.swift; sourceTree = "<group>"; };
+		B70B93E71EFD5A8600C512E2 /* AdmissionAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdmissionAlertViewController.swift; sourceTree = "<group>"; };
+		B70B93E91EFD6F0800C512E2 /* SupporttTickerArrayClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupporttTickerArrayClass.swift; sourceTree = "<group>"; };
+		B70B93EB1EFD8C1100C512E2 /* InviteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
 		B782B52A1EF42EF400DED466 /* Dakhila.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dakhila.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B782B52D1EF42EF400DED466 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B782B52F1EF42EF400DED466 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ../../ViewController.swift; sourceTree = "<group>"; };
@@ -177,6 +183,9 @@
 				B70B93DD1EFC31D500C512E2 /* AppNotifierViewController.swift */,
 				B70B93E31EFC52AA00C512E2 /* ChangePasswordViewController.swift */,
 				B70B93E51EFC5CEB00C512E2 /* SupportTicketViewController.swift */,
+				B70B93E91EFD6F0800C512E2 /* SupporttTickerArrayClass.swift */,
+				B70B93E71EFD5A8600C512E2 /* AdmissionAlertViewController.swift */,
+				B70B93EB1EFD8C1100C512E2 /* InviteViewController.swift */,
 			);
 			path = DashBoardHome;
 			sourceTree = "<group>";
@@ -317,7 +326,9 @@
 				B782B5301EF42EF400DED466 /* ViewController.swift in Sources */,
 				B782B54F1EF6A01700DED466 /* MenuTVC.swift in Sources */,
 				B782B5521EF6A01700DED466 /* Network.swift in Sources */,
+				B70B93EC1EFD8C1100C512E2 /* InviteViewController.swift in Sources */,
 				B70B93E61EFC5CEB00C512E2 /* SupportTicketViewController.swift in Sources */,
+				B70B93EA1EFD6F0800C512E2 /* SupporttTickerArrayClass.swift in Sources */,
 				B70B93E41EFC52AA00C512E2 /* ChangePasswordViewController.swift in Sources */,
 				B7BE89F91EFA1B46008AFAEE /* Locality.swift in Sources */,
 				B782B5581EF6E52500DED466 /* DashBoardViewController.swift in Sources */,
@@ -329,6 +340,7 @@
 				B782B5511EF6A01700DED466 /* Validator.swift in Sources */,
 				B70B93DE1EFC31D500C512E2 /* AppNotifierViewController.swift in Sources */,
 				B782B5541EF6A01700DED466 /* JHProgressHUD.swift in Sources */,
+				B70B93E81EFD5A8600C512E2 /* AdmissionAlertViewController.swift in Sources */,
 				B782B5501EF6A01700DED466 /* ParentClass.swift in Sources */,
 				B7BE89F51EFA1AFC008AFAEE /* StateArrayClass.swift in Sources */,
 				B782B5451EF5AFC400DED466 /* ForgotPasswordViewController.swift in Sources */,

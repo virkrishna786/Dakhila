@@ -67,14 +67,11 @@ class DashBoardViewController: UIViewController {
         let schoolNameString = defaults.value(forKey: "school_name") as? String
         self.schoolNameLabel.text = schoolNameString!
         
-        
-        let interestIdString = defaults.string(forKey: "typeOfSchool") as? String
+        let interestIdString = defaults.string(forKey: "typeOfSchool")
         self.schoolType = interestIdString
       //  print("dkfkd %@",interestIdString!)
-
         
-        
-       // self.dashBoardCallApi()
+        self.dashBoardCallApi()
 
         // Do any additional setup after loading the view.
     }

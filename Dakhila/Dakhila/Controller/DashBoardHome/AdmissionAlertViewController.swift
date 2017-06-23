@@ -1,5 +1,5 @@
 //
-//  ChangePasswordViewController.swift
+//  AdmissionAlertViewController.swift
 //  Dakhila
 //
 //  Created by Saurabh Mishra on 23/06/17.
@@ -7,15 +7,55 @@
 //
 
 import UIKit
-import Alamofire
-import SwiftyJSON
+import  Alamofire
+import  SwiftyJSON
 
-class ChangePasswordViewController: UIViewController ,UITextFieldDelegate{
-    @IBOutlet weak var myScrollView: UIScrollView!
-    var boolValue = 0
+class AdmissionAlertViewController: UIViewController {
     
-    @IBAction func menuButtonAction(_ sender: UIButton) {
+    var flagValue : Bool?
+    @IBAction func validToButtonAction(_ sender: UIButton) {
+            self.datePicker.isHidden = false
+    }
+    @IBOutlet weak var myScroolView: UIScrollView!
+    @IBAction func datePickerViewAction(_ sender: UIDatePicker) {
+        self.setDate()
+
+    }
+    
+    @IBOutlet weak var datePicker: UIDatePicker!
+    @IBAction func refreshButtonAction(_ sender: UIButton) {
+    }
+
+    @IBAction func submitButton(_ sender: UIButton) {
+    }
+    @IBOutlet weak var descriptionTextView: UITextView!{
+        didSet{
+            self.descriptionTextView.layer.cornerRadius = 1.0
+            self.descriptionTextView.layer.borderColor = UIColor.black.cgColor
+            self.descriptionTextView.layer.borderWidth = 1.0
+        }
+    }
+    
+    let dateFormatter = DateFormatter()
+ 
+    func setDate() {
+        datePicker.minimumDate = NSDate() as Date
+        dateFormatter.dateStyle = DateFormatter.Style.short
+        dateFormatter.dateFormat = "YYYY-MM-dd"
+       // self.timeLimitForOfferTextField.text = dateFormatter.string(from: datePicker.date)
+        self.validToButton.setTitle(dateFormatter.string(from: datePicker.date), for: UIControlState.normal)
+        self.datePicker.isHidden = true
         
+    }
+
+    @IBOutlet weak var validToButton: UIButton!
+    @IBAction func validFromButtonAction(_ sender: UIButton) {
+        self.datePicker.isHidden = false
+    }
+    @IBOutlet weak var validFronButton: UIButton!
+    @IBOutlet weak var newsTitleTextField: UITextField!
+    var boolValue = 0
+    @IBAction func menuButtonAction(_ sender: UIButton) {
         if boolValue == 0 {
             appDelegate.menuTableViewController.showMenu()
             self.view .addSubview(appDelegate.menuTableViewController.view)
@@ -25,21 +65,19 @@ class ChangePasswordViewController: UIViewController ,UITextFieldDelegate{
             self.view .addSubview(appDelegate.menuTableViewController.view)
             boolValue = 0
         }
-    }
-    @IBOutlet weak var otpTextField: UITextField!
-    @IBOutlet weak var confirmPasswordTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
 
+    }
+    
     var schoolId: String?
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.isHidden = true
-        self.otpTextField.delegate = self
-        self.passwordTextField.delegate = self
-        self.confirmPasswordTextField.delegate = self
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ChangePasswordViewController.gestureFunction))
-        myScrollView.addGestureRecognizer(tapGesture)
 
+        self.navigationController?.navigationBar.isHidden = true
+        self.datePicker.isHidden = true
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ChangePasswordViewController.gestureFunction))
+        myScroolView.addGestureRecognizer(tapGesture)
         let userId = defaults.value(forKey: "schoolId") as? String
         self.schoolId = userId
         self.addChildViewController(appDelegate.menuTableViewController)
@@ -47,36 +85,20 @@ class ChangePasswordViewController: UIViewController ,UITextFieldDelegate{
         // Do any additional setup after loading the view.
     }
     
-    @IBAction func submitButtonAction(_ sender: UIButton) {
-        
-        if otpTextField.text == "" || passwordTextField.text == "" || confirmPasswordTextField.text == "" {
-            parentClass.showAlertWithApiMessage(message: "Please enter all fields")
-        }else {
-            
-            self.apiCall()
-        }
+    func gestureFunction(){
+        myScroolView.endEditing(true)
     }
     
-    func gestureFunction(){
-        myScrollView.endEditing(true)
-    }
-
     
     func apiCall(){
         
         if currentReachabilityStatus != .notReachable {
             hudClass.showInView(view: self.view)
             let urlString = "\(baseUrl)/ChangePassword"
-            
-            let otpString = "\(otpTextField.text!)"
-            let passwordString = "\(passwordTextField.text!)"
-            let newPasswordString = "\(confirmPasswordTextField.text!)"
-            
-            let parameter = ["OldPassword" : "\(passwordString)",
+            let newPasswordString = "\(newsTitleTextField.text!)"
+            let parameter = ["OldPassword" : "",
                 "NewPassword" :"\(newPasswordString)",
-                "EmailId" : "\(otpString)"
             ]
-            
             print("dfd \(parameter)")
             
             Alamofire.request(urlString, method: .post, parameters: parameter)
@@ -85,13 +107,12 @@ class ChangePasswordViewController: UIViewController ,UITextFieldDelegate{
                     print("Response String: \(response.result.value)")
                     
                     //to get JSON return value
-                    
                     if  response.result.isSuccess {
                         hudClass.hide()
                         let result = response.result.value
                         let JSON = result as! NSDictionary
                         
-                        let responseCode = JSON["ResponseCode"] as! String
+                        let responseCode = JSON["res_code"] as! String
                         
                         if responseCode == "200" {
                             hudClass.hide()
@@ -116,17 +137,16 @@ class ChangePasswordViewController: UIViewController ,UITextFieldDelegate{
                     }
             }
             
-            
         }else {
             hudClass.hide()
             parentClass.showAlert()
         }
     }
-
+    
     func myFunc(){
         
     }
-
+    
     //MARK: - HANDLE KEYBOARD
     func handleKeyBoardWillShow(notification: NSNotification) {
         
@@ -135,8 +155,8 @@ class ChangePasswordViewController: UIViewController ,UITextFieldDelegate{
         let keyboardSize = (value as AnyObject).cgRectValue.size
         
         let inset = UIEdgeInsetsMake(0.0, 0.0, (keyboardSize.height) + 30, 0.0)
-        myScrollView.contentInset = inset
-        myScrollView.scrollIndicatorInsets = inset
+        myScroolView.contentInset = inset
+        myScroolView.scrollIndicatorInsets = inset
         
     }
     
@@ -144,39 +164,21 @@ class ChangePasswordViewController: UIViewController ,UITextFieldDelegate{
     func handleKeyBoardWillHide(sender: NSNotification) {
         
         let inset1 = UIEdgeInsets.zero
-        myScrollView.contentInset = inset1
-        myScrollView.scrollIndicatorInsets = inset1
-        myScrollView.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
+        myScroolView.contentInset = inset1
+        myScroolView.scrollIndicatorInsets = inset1
+        myScroolView.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
         
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         //myScrollView.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
-        passwordTextField.resignFirstResponder()
-        confirmPasswordTextField.resignFirstResponder()
-        otpTextField.resignFirstResponder()
+        newsTitleTextField.resignFirstResponder()
+        descriptionTextView.resignFirstResponder()
         self.view.endEditing(true)
     }
+
     
-    func textFieldDidBeginEditing(_ textField: UITextField)
-    {
-        if (textField == otpTextField) {
-            myScrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-            
-        }else {
-            myScrollView.setContentOffset(CGPoint(x: 0, y: 150), animated: true)
-        }
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        myScrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
 
 
     override func didReceiveMemoryWarning() {
