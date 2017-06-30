@@ -236,6 +236,10 @@ class SupportTicketViewController: UIViewController ,UITextFieldDelegate , UITab
     func textViewDidEndEditing(_ textView: UITextView) {
         myScroolView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
     }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
     func getCategory(){
         
         if currentReachabilityStatus != .notReachable {

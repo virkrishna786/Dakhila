@@ -9,8 +9,9 @@
 import UIKit
 import MobileCoreServices
 import AVFoundation
-
-class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollViewDelegate,UIImagePickerControllerDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UINavigationControllerDelegate, AVAudioPlayerDelegate, AVAudioRecorderDelegate{
+import Alamofire
+import SwiftyJSON
+class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollViewDelegate,UIImagePickerControllerDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UINavigationControllerDelegate, AVAudioPlayerDelegate, AVAudioRecorderDelegate,UIPickerViewDelegate,UIPickerViewDataSource{
 
     var videoUrl : URL?
     var imageArray = [UIImage]()
@@ -23,6 +24,7 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
     @IBOutlet weak var runningTimeLabel: UILabel!
     @IBOutlet weak var myScollView: UIScrollView!
     @IBOutlet weak var dateLabel: UILabel!
+    var classArray=NSMutableArray()
     var boolValue = 0
     @IBAction func menuButtonAction(_ sender: UIButton) {
         if boolValue == 0 {
@@ -106,6 +108,13 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePicker.delegate = self
+        classArray=["Nursery","LKG","UKG"]
+        classPickerView.frame.size.width=self.view.frame.size.width
+        hitApi()
+        classPickerView.delegate=self
+        classPickerView.dataSource=self
+        datePicker.addTarget(self, action: #selector(AppNotifierViewController.datePickerValueChanged(_:)), for: .valueChanged)
+        //self.datePicker.addTarget(self, action:#selector(AppNotifierViewController.setDate(_:)), for: UIControlEvents.valueChanged)
         self.myScollView.delegate = self
         self.datePicker.isHidden = true
         self.myScollView.contentSize = CGSize(width: self.view.frame.size.width, height: self.view.frame.size.height + 3000)
@@ -153,7 +162,19 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
     
     // deleagte method for audio recodrding 
     
-    
+    func datePickerValueChanged(_ sender: UIDatePicker){
+        
+        let dateFormatter: DateFormatter = DateFormatter()
+        
+        // Set date format
+        dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
+        
+        // Apply date format
+        let selectedDate: String = dateFormatter.string(from: sender.date)
+        notificaitonDateTextField.text=selectedDate
+        notificaitonDateTextField.textColor=UIColor.black
+        datePicker.isHidden=true
+    }
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         //recordButton.isEnabled = true
         //stopButton.isEnabled = false
@@ -255,8 +276,9 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
     {
         if textField == notificationTextField {
             myScollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-        }else {
+        }else if textField==notificaitonDateTextField {
             
+            print("testing")
         }
     }
     
@@ -270,15 +292,133 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        if textField == classTextField || textField == notificaitonDateTextField  {
+        if textField == notificaitonDateTextField  {
+            
+            self.datePicker.backgroundColor=UIColor.orange
+            self.datePicker.isHidden = false
+            self.classPickerView.isHidden=true
+            print("test")
             return false
-        }else {
+        }
+        else if textField == classTextField {
+            
+            //self.datePicker.backgroundColor=UIColor.orange
+            self.datePicker.isHidden = true
+            self.classPickerView.backgroundColor=UIColor.orange
+            self.classPickerView.isHidden=false
+            print("test")
+            return false
+        }
+        else {
             return true
         }
         return true
     }
 
-
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        
+        return classArray.count
+    }
+    
+    
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
+        return (classArray[row] as? NSDictionary)?.value(forKey: "Name") as? String
+//        if stateArray.count > 0 {
+//            if cityArray.count > 0 {
+//                if localityArray.count > 0 {
+//                    return   localityArray[row].localityName!
+//                }else {
+//                    return   cityArray[row].cityName!
+//                }
+//                
+//            }else {
+//                
+//                return  stateArray[row].stateName!
+//            }
+//        }else {
+//            return ""
+//        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        self.classTextField.text = (classArray[row] as? NSDictionary)?.value(forKey: "Name") as? String
+        self.classTextField.textColor=UIColor.black
+        self.classPickerView.isHidden = true
+    }
+    func hitApi(){
+        
+        if currentReachabilityStatus != .notReachable {
+            hudClass.showInView(view: self.view)
+            let sid=defaults.value(forKey: "schoolId") as? String
+            let  urlString = "\(baseUrl)/GetChildClasses?SchoolId=\(sid!)"
+            
+            //let parameter = ["SchoolId" : defaults.value(forKey: "schoolId") as? String]
+            Alamofire.request(urlString, method: .get , parameters : nil)
+                .responseJSON { response in
+                    print("Success: \(response.result.isSuccess)")
+                    // print("Response String:", response.result.value)
+                    
+                    //to get JSON return value
+                    
+                    if  response.result.isSuccess {
+                        hudClass.hide()
+                        let result = JSON(response.result.value!)
+                        //  let JSON = result as! NSDictionary
+                        
+                        print("result %@",response.result.value! )
+                        
+                        let responseCode = "200"//result["ResponseCode"].string
+                        //print("response message \(responseCode!)")
+                        
+                        if responseCode == "200" {
+                            hudClass.hide()
+                            //self.cityArray = []
+                            //self.localityArray = []
+                            
+                            self.classArray=((response.result.value as? NSArray)?.mutableCopy() as? NSMutableArray)!//(response.result.value as? NSArray)!
+                            
+                            DispatchQueue.main.async {
+                                self.classPickerView.reloadAllComponents()
+                                //self.pickerView.isHidden = false
+                            }
+                            print("success");
+                            
+                            
+                        }else if responseCode == "500" {
+                            hudClass.hide()
+                            
+                            let alertVC = UIAlertController(title: "Alert", message: "Soem thing went wrong", preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "OK",style:.default,handler: nil)
+                            alertVC.addAction(okAction)
+                            self.present(alertVC, animated: true, completion: nil)
+                        }else {
+                            
+                            hudClass.hide()
+                            parentClass.showAlertWithApiMessage(message: "Some thing went worng")
+                            
+                        }
+                        
+                    }else {
+                        hudClass.hide()
+                        parentClass.showAlertWithApiFailure()
+                    }
+            }
+            
+            
+        }else {
+            hudClass.hide()
+            parentClass.showAlert()
+        }
+        
+        
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

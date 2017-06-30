@@ -234,7 +234,8 @@
 				TargetAttributes = {
 					B782B5291EF42EF400DED466 = {
 						CreatedOnToolsVersion = 8.3.3;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = 5N58F3Z37S;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -392,9 +393,11 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Arunjit Kaur (5N58F3Z37S)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 5N58F3Z37S;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -414,6 +417,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "2abcd057-aa5c-43e6-a6f9-ab574e54d03e";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -442,9 +446,11 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Arunjit Kaur (5N58F3Z37S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Arunjit Kaur (5N58F3Z37S)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 5N58F3Z37S;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -457,6 +463,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "2abcd057-aa5c-43e6-a6f9-ab574e54d03e";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
@@ -468,6 +475,9 @@
 			baseConfigurationReference = 4189411A6711149F9CD10F1F /* Pods-Dakhila.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Arunjit Kaur (5N58F3Z37S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Arunjit Kaur (5N58F3Z37S)";
+				DEVELOPMENT_TEAM = 5N58F3Z37S;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/Alamofire\"",
@@ -476,10 +486,13 @@
 					"\"$PODS_CONFIGURATION_BUILD_DIR/Pods/Alamofire\"",
 				);
 				INFOPLIST_FILE = Dakhila/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.osxkernel.Dakhila;
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.maintain;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "2abcd057-aa5c-43e6-a6f9-ab574e54d03e";
+				PROVISIONING_PROFILE_SPECIFIER = MART;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -489,6 +502,9 @@
 			baseConfigurationReference = E7CF47B526A745DDF04940C4 /* Pods-Dakhila.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Arunjit Kaur (5N58F3Z37S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Arunjit Kaur (5N58F3Z37S)";
+				DEVELOPMENT_TEAM = 5N58F3Z37S;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/Alamofire\"",
@@ -497,9 +513,12 @@
 					"\"$PODS_CONFIGURATION_BUILD_DIR/Pods/Alamofire\"",
 				);
 				INFOPLIST_FILE = Dakhila/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.osxkernel.Dakhila;
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.maintain;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "2abcd057-aa5c-43e6-a6f9-ab574e54d03e";
+				PROVISIONING_PROFILE_SPECIFIER = MART;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
