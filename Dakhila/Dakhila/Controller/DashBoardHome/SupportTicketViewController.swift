@@ -12,6 +12,7 @@ import  Alamofire
 
 class SupportTicketViewController: UIViewController ,UITextFieldDelegate , UITableViewDataSource, UITableViewDelegate ,UITextViewDelegate ,UIGestureRecognizerDelegate,UIScrollViewDelegate {
 
+    @IBOutlet weak var supportTableView: UITableView!
     @IBOutlet weak var cvategoryTableView: UITableView!
     var boolValue = 0
     @IBAction func refreshButtonAction(_ sender: UIButton) {
@@ -53,6 +54,7 @@ class SupportTicketViewController: UIViewController ,UITextFieldDelegate , UITab
     }
     
     var supportCategoryArray  = [SupporttTickerArrayClass]()
+    var supportTicketArray = [SupprtListArrayClass]()
     var schoolId : String?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,10 +65,17 @@ class SupportTicketViewController: UIViewController ,UITextFieldDelegate , UITab
         self.emailIDTextField.delegate = self
         self.queryTextView.delegate = self
         self.myScroolView.delegate = self
+        self.supportTableView.delegate = self
+        self.supportTableView.dataSource = self
         
         let userId = defaults.value(forKey: "schoolId") as? String
         self.schoolId = userId
-        self.myScroolView.contentSize = CGSize(width: self.view.frame.size.width, height: 2000)
+        self.myScroolView.contentSize = CGSize(width: self.view.frame.size.width, height: 2500)
+        self.supportTableView.register(UINib(nibName: "SupportTicketCellType",bundle: nil), forCellReuseIdentifier: "ticketCell")
+        self.supportTableView.isHidden = true
+        self.supportTicketGet()
+
+        // self.imageCollectionView.register(UINib(nibName: "customCell", bundle: nil), forCellWithReuseIdentifier: "cellIdentifier")
         
 //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ChangePasswordViewController.gestureFunction))
 //        tapGesture.delegate = self
@@ -95,7 +104,6 @@ class SupportTicketViewController: UIViewController ,UITextFieldDelegate , UITab
 //    }
     
     func apiCall(){
-        
         if currentReachabilityStatus != .notReachable {
             hudClass.showInView(view: self.view)
             let urlString = "\(baseUrl)/SchoolSupportTicketInsert"
@@ -119,7 +127,7 @@ class SupportTicketViewController: UIViewController ,UITextFieldDelegate , UITab
             Alamofire.request(urlString, method: .post, parameters: parameter)
                 .responseJSON { response in
                     print("Success: \(response.result.isSuccess)")
-                    print("Response String: \(response.result.value)")
+                    print("Response String: \(String(describing: response.result.value))")
                     
                     //to get JSON return value
                     
@@ -249,12 +257,13 @@ class SupportTicketViewController: UIViewController ,UITextFieldDelegate , UITab
             Alamofire.request(urlString, method: .post)
                 .responseJSON { response in
                     print("Success: \(response.result.isSuccess)")
-                    print("Response String: \(response.result.value)")
+                    print("Response String: \(String(describing: response.result.value))")
                     
                     //to get JSON return value
                     
                     if  response.result.isSuccess {
                         hudClass.hide()
+                        self.supportCategoryArray = []
                         let result = JSON(response.result.value!)
                        // let JSON = result as! NSDictionary
                         
@@ -277,7 +286,7 @@ class SupportTicketViewController: UIViewController ,UITextFieldDelegate , UITab
                             
                         }else if responseCode == "500"{
                             
-                            parentClass.showAlertWithApiMessage(message: "Old Password is not correct.")
+                            parentClass.showAlertWithApiMessage(message: "Some thing went wrong.")
                             
                         }else {
                             hudClass.hide()
@@ -295,6 +304,64 @@ class SupportTicketViewController: UIViewController ,UITextFieldDelegate , UITab
             parentClass.showAlert()
         }
     }
+    
+    
+    func supportTicketGet(){
+        if currentReachabilityStatus != .notReachable {
+            hudClass.showInView(view: self.view)
+            let urlString = "\(baseUrl)/SchoolSupportTicketRepliedList"
+            let parameter = ["SchoolId" : "\(self.schoolId!)"]
+            
+            Alamofire.request(urlString, method: .post, parameters: parameter)
+                .responseJSON { response in
+                    print("Success: \(response.result.isSuccess)")
+                    print("Response String: \(String(describing: response.result.value))")
+                    //to get JSON return value
+                    
+                    if  response.result.isSuccess {
+                        hudClass.hide()
+                        self.supportCategoryArray = []
+                        let result = JSON(response.result.value!)
+                        // let JSON = result as! NSDictionary
+                        let responseCode = result["ResponseCode"].string
+                        
+                        if responseCode == "200" {
+                            hudClass.hide()
+                            let resposneArray = result["SchoolSupportTicketRepliedList"].array
+                            for data in resposneArray! {
+                                let dataArrayClass = SupporttTickerArrayClass()
+                                dataArrayClass.categoryId = data["TicketId"].string
+                                dataArrayClass.categoryName  = data["CategoryName"].string
+                                self.supportCategoryArray.append(dataArrayClass)
+                            }
+                            
+                            DispatchQueue.main.async {
+                                self.supportTableView.reloadData()
+                                self.supportTableView.isHidden = false
+                               // self.supportTableView.frame = CGRect(x: 5, y: , width: <#T##CGFloat#>, height: <#T##CGFloat#>)
+                            }
+                            
+                        }else if responseCode == "500"{
+                            parentClass.showAlertWithApiMessage(message: "Some thing went wrong.")
+                            
+                        }else {
+                            hudClass.hide()
+                            parentClass.showAlertWithApiMessage(message: "Some thing went wrong.")
+                        }
+                    }else {
+                        hudClass.hide()
+                        parentClass.showAlertWithApiFailure()
+                    }
+            }
+            
+            
+        }else {
+            hudClass.hide()
+            parentClass.showAlert()
+        }
+    }
+    
+
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -302,23 +369,51 @@ class SupportTicketViewController: UIViewController ,UITextFieldDelegate , UITab
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
+        if tableView == cvategoryTableView {
         return supportCategoryArray.count
+        }else if tableView == supportTableView {
+            return supportTicketArray.count
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath)
+        let cell = UITableViewCell()
+        if tableView == cvategoryTableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath)
+            let eventData = supportCategoryArray[indexPath.row]
+            cell.textLabel?.text = eventData.categoryName!
+            return cell
+        }else if tableView == supportTableView{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ticketCell", for: indexPath) as! SupportTicketCell
+            let eventData = supportTicketArray[indexPath.row]
+            cell.categoryLabel.text = eventData.categoryName!
+            return cell
+        }
         
-        let eventData = supportCategoryArray[indexPath.row]
-        cell.textLabel?.text = eventData.categoryName!
-        
-        return cell
+       return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if tableView == cvategoryTableView{
+            return 50
+        }else if tableView == supportTableView{
+            return 250
+        }
+        return 30
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let data  = supportCategoryArray[indexPath.row]
-        self.categoryTextField.text = data.categoryName!
-        self.cvategoryTableView.isHidden = true
+        
+        if tableView == cvategoryTableView{
+            let data  = supportCategoryArray[indexPath.row]
+            self.categoryTextField.text = data.categoryName!
+            self.cvategoryTableView.isHidden = true
+        }else if tableView == supportTableView {
+            
+        }
+       
     }
 
 

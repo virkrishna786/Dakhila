@@ -123,6 +123,32 @@ override var preferredStatusBarStyle: UIStatusBarStyle {
 func gestureFunction(){
     myScrollView.endEditing(true)
 }
+    
+    func apiCall1(){
+        let  urlString = "\(baseUrl)/SchoolLogin"
+        let userString = "\(userNameTextField.text!)"
+        let passwordString = "\(passwordTextField.text!)"
+        
+        let  parameter = ["EmailId" : userString,
+                          "Password" : passwordString
+        ]
+        
+        print("dfd \(parameter)")
+
+        if currentReachabilityStatus != .notReachable {
+            ApiWrapperClass.requestPOSTURL(urlString, params: parameter as [String : AnyObject], headers: nil, success: { (JSONResponse) in
+                print("sd",JSONResponse)
+            }, failure: { (error) in
+                print("error",error)
+            })
+            
+        }else {
+            hudClass.hide()
+            parentClass.showAlert()
+        }
+      
+        
+    }
 
 func apiCall(){
     
@@ -142,7 +168,7 @@ func apiCall(){
         Alamofire.request(urlString, method: .post, parameters: parameter)
             .responseJSON { response in
                 print("Success: \(response.result.isSuccess)")
-                print("Response String:", response.result.value)
+              //  print("Response String:", response.result.value!)
                 
                 //to get JSON return value
                 

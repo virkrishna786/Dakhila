@@ -204,6 +204,7 @@ class MenuTVC: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         print("dkdakshgasjkga")
+        let cell = tableView.cellForRow(at: indexPath)
         
         if (indexPath.row == 0) {
             hideMenu()
@@ -241,79 +242,27 @@ class MenuTVC: UITableViewController {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
             }
         }else if (indexPath.row == 1) {
+           
             
-//            hideMenu()
-//            let firstView:EditProfileViewController
-//                = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "editProfile") as! EditProfileViewController
-//            //            let firstView:HomeViewController = HomeViewController(nibName:"HomeViewController",bundle:Bundle.main)
-//            var fcheck=Bool()
-//            fcheck=false
-//            let viewArray=self.navigationController?.viewControllers as NSArray!
-//            if((viewArray) != nil){
-//                if !((viewArray?.lastObject! as! UIViewController) .isKind(of: EditProfileViewController.self)){
-//                    
-//                    for views in self.navigationController?.viewControllers as NSArray!
-//                    {
-//                        if((views as! UIViewController) .isKind(of: EditProfileViewController.self))
-//                        {
-//                            fcheck=true
-//                            _ = navigationController?.popToViewController(views as! UIViewController, animated: false)
-//                        }
-//                    }
-//                    if(fcheck==false){
-//                        
-//                        self.navigationController?.pushViewController(firstView, animated: true)
-//                    }
-//                }
-//                else{
-//                    
-//                    //reset button
-//                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
-//                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetStaticView"), object: nil)
-//
-//                }
-//            }
+        }else if indexPath.row == 2 {
+           // tableView.allowsSelection = false
+            cell?.selectionStyle = .none
+             parentClass.showAlertWithApiMessage(message: "To use this functionality Please login via web application.")
             
         }else if (indexPath.row == 3) {
-           // hideMenu()
-           // let appid = Bundle.main.bundleIdentifier
-          //  print("apapd ",appid!)
-           //  let urlString = URL(string: "itms-apps://itunes.apple.com/app/id951334398")
-         //   UIApplication.shared.openURL(urlString!)
-//            let firstView:MessageListViewControlelr = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "messageList") as! MessageListViewControlelr
-//            var fcheck=Bool()
-//            fcheck=false
-//            let viewArray=self.navigationController?.viewControllers as NSArray!
-//            if((viewArray) != nil){
-//                if !((viewArray?.lastObject! as! UIViewController) .isKind(of: MessageListViewControlelr.self)){
-//                    
-//                    for views in self.navigationController?.viewControllers as NSArray!
-//                    {
-//                        if((views as! UIViewController) .isKind(of: MessageListViewControlelr.self))
-//                        {
-//                            fcheck=true
-//                            _ = navigationController?.popToViewController(views as! UIViewController, animated: false)
-//                            
-//                        }
-//                    }
-//                    if(fcheck==false){
-//                        
-//                        self.navigationController?.pushViewController(firstView, animated: true)
-//                    }
-//                }
-//                else{
-//                    
-//                    //reset button
-//                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
-//                }
-//            }
-//            else{
-//                
-//                //reset button
-//                appDelegate.navigationController?.pushViewController(firstView, animated: true)
-//                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
-//            }
+            cell?.selectionStyle = .none
+             parentClass.showAlertWithApiMessage(message: "To use this functionality Please login via web application.")
+        }else if indexPath.row == 4 {
+            cell?.selectionStyle = .none
+             parentClass.showAlertWithApiMessage(message: "To use this functionality Please login via web application.")
             
+        }else if indexPath.row == 5{
+            cell?.selectionStyle = .none
+             parentClass.showAlertWithApiMessage(message: "To use this functionality Please login via web application.")
+            
+        }else if indexPath.row == 6{
+            cell?.selectionStyle = .none
+             parentClass.showAlertWithApiMessage(message: "To use this functionality Please login via web application.")
             
         }else if (indexPath.row == 7){
             
@@ -351,6 +300,10 @@ class MenuTVC: UITableViewController {
                 appDelegate.navigationController?.pushViewController(firstView, animated: true)
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
             }
+            
+        }else if indexPath.row == 8 {
+            cell?.selectionStyle = .none
+            parentClass.showAlertWithApiMessage(message: "To use this functionality Please login via web application.")
             
         }else if indexPath.row == 9 {
             

@@ -11,12 +11,14 @@ import MobileCoreServices
 import AVFoundation
 import Alamofire
 import SwiftyJSON
+
 class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollViewDelegate,UIImagePickerControllerDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UINavigationControllerDelegate, AVAudioPlayerDelegate, AVAudioRecorderDelegate,UIPickerViewDelegate,UIPickerViewDataSource{
 
     var videoUrl : URL?
     var imageArray = [UIImage]()
     var recordingSession: AVAudioSession!
     var audioRecorder: AVAudioRecorder!
+    var classTypeArray  = [ChildClassArrayClass]()
     
     @IBAction func crossButtonAction(_ sender: UIButton) {
     }
@@ -40,6 +42,7 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
     }
     
     @IBAction func postButtonAction(_ sender: UIButton) {
+        self.postApiCall()
     }
     @IBOutlet weak var timeLabel: UILabel!
     @IBAction func audioSliderAction(_ sender: UISlider) {
@@ -104,60 +107,71 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
         
     }
 
-    
+    var schoolId : String?
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePicker.delegate = self
         classArray=["Nursery","LKG","UKG"]
         classPickerView.frame.size.width=self.view.frame.size.width
-        hitApi()
-        classPickerView.delegate=self
-        classPickerView.dataSource=self
-        datePicker.addTarget(self, action: #selector(AppNotifierViewController.datePickerValueChanged(_:)), for: .valueChanged)
-        //self.datePicker.addTarget(self, action:#selector(AppNotifierViewController.setDate(_:)), for: UIControlEvents.valueChanged)
-        self.myScollView.delegate = self
-        self.datePicker.isHidden = true
-        self.myScollView.contentSize = CGSize(width: self.view.frame.size.width, height: self.view.frame.size.height + 3000)
-        self.myScollView.isScrollEnabled = true
-        self.classPickerView.isHidden = true
-        self.imageCollectionView.register(UINib(nibName: "customCell", bundle: nil), forCellWithReuseIdentifier: "cellIdentifier")
+        
+        let sid=defaults.value(forKey: "schoolId") as? String
+        self.schoolId = sid
+        let timer = Timer.scheduledTimer(timeInterval: 0.4, target: self, selector: #selector(self.update), userInfo: nil, repeats: false)
+        print("\(timer)")
 
-        
-        // for choosing audio  from iphone
-//        playButton.isEnabled = false
-  //      stopButton.isEnabled = false
-        let fileMgr = FileManager.default
-        let dirPaths = fileMgr.urls(for: .documentDirectory,
-                                    in: .userDomainMask)
-        
-        let soundFileURL = dirPaths[0].appendingPathComponent("sound.caf")
-        
-        let recordSettings =
-            [AVEncoderAudioQualityKey: AVAudioQuality.min.rawValue,
-             AVEncoderBitRateKey: 16,
-             AVNumberOfChannelsKey: 2,
-             AVSampleRateKey: 44100.0] as [String : Any]
-        
-        let audioSession = AVAudioSession.sharedInstance()
-        
-        do {
-            try audioSession.setCategory(
-                AVAudioSessionCategoryPlayAndRecord)
-        } catch let error as NSError {
-            print("audioSession error: \(error.localizedDescription)")
-        }
-        
-        do {
-            try audioRecorder = AVAudioRecorder(url: soundFileURL,
-                                                settings: recordSettings as [String : AnyObject])
-            audioRecorder?.prepareToRecord()
-        } catch let error as NSError {
-            print("audioSession error: \(error.localizedDescription)")
-        }
-        // emd
         self.addChildViewController(appDelegate.menuTableViewController)
 
         // Do any additional setup after loading the view.
+    }
+    
+    // Update Method 
+    
+    
+    func update(){
+        DispatchQueue.main.async {
+            self.hitApi()
+            self.classPickerView.delegate=self
+            self.classPickerView.dataSource=self
+            self.datePicker.addTarget(self, action: #selector(AppNotifierViewController.datePickerValueChanged(_:)), for: .valueChanged)
+            self.myScollView.delegate = self
+            self.datePicker.isHidden = true
+            self.myScollView.contentSize = CGSize(width: self.view.frame.size.width, height: self.view.frame.size.height + 3000)
+            self.myScollView.isScrollEnabled = true
+            self.classPickerView.isHidden = true
+            self.imageCollectionView.register(UINib(nibName: "customCell", bundle: nil), forCellWithReuseIdentifier: "cellIdentifier")
+            
+            
+            // for choosing audio  from iphone
+            //        playButton.isEnabled = false
+            //      stopButton.isEnabled = false
+            let fileMgr = FileManager.default
+            let dirPaths = fileMgr.urls(for: .documentDirectory,
+                                        in: .userDomainMask)
+            let soundFileURL = dirPaths[0].appendingPathComponent("sound.caf")
+            let recordSettings =
+                [AVEncoderAudioQualityKey: AVAudioQuality.min.rawValue,
+                 AVEncoderBitRateKey: 16,
+                 AVNumberOfChannelsKey: 2,
+                 AVSampleRateKey: 44100.0] as [String : Any]
+            let audioSession = AVAudioSession.sharedInstance()
+            do {
+                try audioSession.setCategory(
+                    AVAudioSessionCategoryPlayAndRecord)
+            } catch let error as NSError {
+                print("audioSession error: \(error.localizedDescription)")
+            }
+            
+            do {
+                try self.audioRecorder = AVAudioRecorder(url: soundFileURL,
+                                                    settings: recordSettings as [String : AnyObject])
+                self.audioRecorder?.prepareToRecord()
+            } catch let error as NSError {
+                print("audioSession error: \(error.localizedDescription)")
+            }
+            
+  
+        }
+        
     }
     
     // deleagte method for audio recodrding 
@@ -165,10 +179,8 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
     func datePickerValueChanged(_ sender: UIDatePicker){
         
         let dateFormatter: DateFormatter = DateFormatter()
-        
         // Set date format
-        dateFormatter.dateFormat = "MM/dd/yyyy hh:mm a"
-        
+        dateFormatter.dateFormat = "MM-dd-yyyy"
         // Apply date format
         let selectedDate: String = dateFormatter.string(from: sender.date)
         notificaitonDateTextField.text=selectedDate
@@ -204,7 +216,6 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
             let mediaType = info[UIImagePickerControllerMediaURL] as! URL
             print("mediaType",mediaType)
             self.setVideo(video: mediaType)
-            
         }
         dismiss(animated: true, completion: nil)
     }
@@ -320,35 +331,21 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        
-        return classArray.count
+        return classTypeArray.count
     }
-    
     
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
-        return (classArray[row] as? NSDictionary)?.value(forKey: "Name") as? String
-//        if stateArray.count > 0 {
-//            if cityArray.count > 0 {
-//                if localityArray.count > 0 {
-//                    return   localityArray[row].localityName!
-//                }else {
-//                    return   cityArray[row].cityName!
-//                }
-//                
-//            }else {
-//                
-//                return  stateArray[row].stateName!
-//            }
-//        }else {
-//            return ""
-//        }
+        return classTypeArray[row].className
     }
     
+    
+    var classIdString : Int?
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
-        self.classTextField.text = (classArray[row] as? NSDictionary)?.value(forKey: "Name") as? String
+        self.classTextField.text = classTypeArray[row].className
+        self.classIdString = classTypeArray[row].classId
         self.classTextField.textColor=UIColor.black
         self.classPickerView.isHidden = true
     }
@@ -356,11 +353,10 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
         
         if currentReachabilityStatus != .notReachable {
             hudClass.showInView(view: self.view)
-            let sid=defaults.value(forKey: "schoolId") as? String
-            let  urlString = "\(baseUrl)/GetChildClasses?SchoolId=\(sid!)"
+            let  urlString = "\(baseUrl)/GetAllChildClasses"
             
-            //let parameter = ["SchoolId" : defaults.value(forKey: "schoolId") as? String]
-            Alamofire.request(urlString, method: .get , parameters : nil)
+            //let parameter = ["SchoolId" : "\(self.schoolId!)"]
+            Alamofire.request(urlString, method: .get)
                 .responseJSON { response in
                     print("Success: \(response.result.isSuccess)")
                     // print("Response String:", response.result.value)
@@ -374,15 +370,20 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
                         
                         print("result %@",response.result.value! )
                         
-                        let responseCode = "200"//result["ResponseCode"].string
+                        let responseCode =   "200"//result["ResponseCode"].string
                         //print("response message \(responseCode!)")
                         
                         if responseCode == "200" {
                             hudClass.hide()
-                            //self.cityArray = []
-                            //self.localityArray = []
+                            self.classArray = []
+                            let dataArray = result.array
                             
-                            self.classArray=((response.result.value as? NSArray)?.mutableCopy() as? NSMutableArray)!//(response.result.value as? NSArray)!
+                            for data in dataArray! {
+                               let classObject =  ChildClassArrayClass()
+                              classObject.classId = data["ClassId"].int
+                              classObject.className = data["ClassName"].string
+                              self.classTypeArray.append(classObject)
+                            }
                             
                             DispatchQueue.main.async {
                                 self.classPickerView.reloadAllComponents()
@@ -419,6 +420,253 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
         
         
     }
+    
+    // Post notifier api hit 
+   
+    
+    func postApiCall(){
+        
+        if currentReachabilityStatus != .notReachable {
+            hudClass.showInView(view: self.view)
+            let  urlString = "\(baseUrl)/CreateSchoolNotification"
+            
+            let notificationTitle = notificationTextField.text!
+            let notificationMessage = notificationMessageTextField.text!
+            let classString  = "\(self.classIdString!)"
+            let dateString = notificaitonDateTextField.text!
+            
+            let parameter = ["SchoolId": "\(self.schoolId!)",
+                "Title": notificationTitle,
+                "ClassId": classString,
+                "Message" : notificationMessage,
+                "BroadcastDate" : dateString,
+                ]
+
+            
+            print("dfd \(parameter)")
+            
+            Alamofire.request(urlString, method: .post, parameters: parameter)
+                .responseJSON { response in
+                    print("Success: \(response.result.isSuccess)")
+                      //print("Response String:", response.result.value!)
+                    
+                    //to get JSON return value
+                    
+                    if  response.result.isSuccess {
+                        hudClass.hide()
+                        let result = response.result.value
+                        let json = JSON(result!)
+                        
+                        print("result %@",response.result.value! )
+                        let responseCode = json["NotificationId"].int
+                        
+                        if responseCode == 0 {
+                            let alertVC = UIAlertController(title: "Alert", message: "Some thing went wrong.", preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "OK",style:.default,handler: nil)
+                            alertVC.addAction(okAction)
+                            self.present(alertVC, animated: true, completion: nil)
+ 
+                            
+                        }else {
+                            hudClass.hide()
+                            print("success")
+                            let responseMessage = json["ResponseText"].string
+                            let notificationId = "\(json["NotificationId"])"
+                            print("response message \(String(describing: responseMessage))")
+                            print("\(String(describing: notificationId))")
+                            let alertVC = UIAlertController(title: "Alert", message: "Your Notification has been created.", preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "OK",style:.default,handler: { UIAlertAction in
+                            self.uploadImageAPi(notificationId: Int(notificationId)!)
+                                
+                            })
+                            alertVC.addAction(okAction)
+                            self.present(alertVC, animated: true, completion: nil)
+                            
+                        }
+                        
+                    }else {
+                        hudClass.hide()
+                        parentClass.showAlertWithApiFailure()
+                    }
+            }
+            
+            
+        }else {
+            hudClass.hide()
+            parentClass.showAlert()
+        }
+        
+        
+    }
+// app notification
+//    
+//    func postNotifyApiMethod() {
+//        
+//        if currentReachabilityStatus != .notReachable {
+//            let headers: HTTPHeaders = [
+//                "Accept": "application/json"
+//            ]
+//            let notificationTitle = notificationTextField.text!
+//            let notificationMessage = notificationMessageTextField.text!
+//            let classString  = classTextField.text!
+//            let dateString = notificaitonDateTextField.text!
+//            
+//            let parameter = ["SchoolId": "\(self.schoolId!)",
+//                             "Title": notificationTitle,
+//                             "ClassId": classString,
+//                             "Message" : notificationMessage,
+//                             "BroadcastDate" : dateString,
+//                                        ]
+//            
+//            print("param : \(parameter)")
+//            var  image = UIImage(named: "\(String(describing: self.groupImage))")
+//            if image ==  nil {
+//                image = UIImage(named: "aboutUs")
+//            }else {
+//                image = UIImage(named: "\(String(describing: self.groupImage))")
+//            }
+//            
+//            // let image = UIImage(named: "\(self.groupImage)")
+//            // let image = UIImage(named : "aboutUs")
+//            let   imagedata  = UIImageJPEGRepresentation(image!, 0.2)
+//            hudClass.showInView(view: self.view)
+//            
+//            let URL = try! URLRequest(url: "\(baseUrl)CreateSchoolNotification", method: .post, headers: headers)
+//            
+//            Alamofire.upload(multipartFormData: { (multipartFormData) in
+//                multipartFormData.append(imagedata!, withName: "profile_pic", fileName: "krish.jpg", mimeType: "image/png")
+//                
+//                for (key, value) in parameter {
+//                    multipartFormData.append((value.data(using: String.Encoding.utf8)!), withName: key)
+//                }        }, with: URL, encodingCompletion: { (encodingResult) in
+//                    
+//                    switch encodingResult {
+//                    case .success(let upload, _, _):
+//                        print("s")
+//                        upload.responseString {
+//                            response in
+//                            print(response.request! )  // original URL request
+//                            print(response.response! ) // URL response
+//                            print(response.data! )     // server data
+//                            print(response.result)   // result of response serialization
+//                            
+//                            hudClass.hide()
+//                            switch response.result  {
+//                            case .success(let datads) :
+//                                print("dasdfkas \(datads)")
+//                                let dsfs = datads.data(using: String.Encoding.utf8)!
+//                                let json = JSON(data: dsfs)
+//                                //     let responseCode = json["CruzSortMe_app"].dictionary
+//                                //     print("response code \(responseCode)")
+//                                
+//                                let resData = json["CruzSortMe_app"].dictionary
+//                                print("resData \(String(describing: resData))")
+//                                
+//                                let responseMessage = resData?["res_msg"]!.string
+//                                print("response message \(String(describing: responseMessage))")
+//                                
+//                                if responseMessage == "signup Successfully" {
+//                                    hudClass.hide()
+//                                    print("save successFully")
+//                                    let userIdString = resData?["user_id"]!.string
+//                                    let userName = resData?["username"]!.string
+//                                    let profileImageString = resData?["profile_image"]!.string
+//                                    print("userdefaultData \(String(describing: userIdString)) \(String(describing: userName)) \(String(describing: profileImageString))")
+//                                    defaults.set(profileImageString!, forKey: "profile_image")
+//                                    defaults.set(userName!, forKey: "user_name")
+//                                    defaults.set(userIdString!, forKey: "userId")
+//                                    self.performSegue(withIdentifier: "homeView", sender: self)
+//                                }else {
+//                                    hudClass.hide()
+//                                    
+//                                    let alertVC = UIAlertController(title: "Alert", message: "Some thing went wrong", preferredStyle: .alert)
+//                                    let okAction = UIAlertAction(title: "OK",style:.default,handler: nil)
+//                                    alertVC.addAction(okAction)
+//                                    self.present(alertVC, animated: true, completion: nil)
+//                                }
+//                                
+//                            case .failure(let errordarta) :
+//                                hudClass.hide()
+//                                print("err0rdata \(errordarta)")
+//                            }
+//                        }
+//                    case .failure(let encodingError):
+//                        hudClass.hide()
+//                        parentClass.showAlert()
+//                        print(encodingError)
+//                    }
+//            })
+//            
+//        }else {
+//            parentClass.showAlert()
+//        }
+//    }
+    
+    var counter = 0
+    var paramArray : NSMutableArray = []
+    var jsonString : String?
+    
+    func uploadImageAPi(notificationId : Int){
+        
+        if currentReachabilityStatus != .notReachable {
+            hudClass.showInView(view: self.view)
+            let  urlString = "\(baseUrl)/iosImageUpload"
+           
+            
+            for image in self.imageArray {
+                print(image)
+                let dict : NSMutableDictionary! = [:]
+                
+                let name = "ni_" + "\(notificationId)" + "_" + "\(self.schoolId!)" + "_" + "\(self.counter)" + ".png"
+                
+                let imageData: NSData = UIImageJPEGRepresentation(image, 0.4)! as NSData
+                let imageStr = imageData.base64EncodedString(options:.lineLength64Characters)
+                let imagedata = imageStr
+                dict.setValue(name, forKey: "Name")
+                dict.setValue(imagedata, forKey: "Data")
+               self.paramArray.add(dict)
+                counter = counter + 1
+            }
+            
+            print("paramArray :" ,paramArray)
+            
+                let data = try? JSONSerialization.data(withJSONObject: self.paramArray, options: JSONSerialization.WritingOptions.prettyPrinted)
+                let jsonString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue) as String?
+                let url: NSURL = NSURL(string: urlString)!
+                let request:NSMutableURLRequest = NSMutableURLRequest(url:url as URL)
+                let bodyData = jsonString
+                request.httpMethod = "POST"
+                request.addValue("text/plain", forHTTPHeaderField: "Content-Type")
+               // request .setValue(token, forHTTPHeaderField:"tokenValue")
+                request.httpBody = bodyData!.data(using: String.Encoding.utf8);
+                NSURLConnection.sendAsynchronousRequest(request as URLRequest, queue: OperationQueue.main)
+                {
+                    (response, data, error) in
+                    
+                    let responseDic=try? JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
+                    if((responseDic) != nil){
+                        print("\(String(describing: responseDic))")
+                        
+                        if(((responseDic?.value(forKey: "status"))! as! NSObject) as! Decimal==1){
+                            hudClass.hide()
+                            print("success")
+                        }
+                    }else {
+                        hudClass.hide()
+                        print("eroorfd dfs")
+                    }
+                }
+        
+            
+        }else {
+            hudClass.hide()
+            parentClass.showAlert()
+        }
+        
+        
+    }
+
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

@@ -16,6 +16,9 @@
 		B70B93E81EFD5A8600C512E2 /* AdmissionAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B93E71EFD5A8600C512E2 /* AdmissionAlertViewController.swift */; };
 		B70B93EA1EFD6F0800C512E2 /* SupporttTickerArrayClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B93E91EFD6F0800C512E2 /* SupporttTickerArrayClass.swift */; };
 		B70B93EC1EFD8C1100C512E2 /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B93EB1EFD8C1100C512E2 /* InviteViewController.swift */; };
+		B70B93FD1F08F8AE00C512E2 /* SupprtListArrayClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B93FC1F08F8AE00C512E2 /* SupprtListArrayClass.swift */; };
+		B70B93FF1F08F98400C512E2 /* SupportTicketCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B70B93FE1F08F98400C512E2 /* SupportTicketCell.swift */; };
+		B70B94011F08F9A800C512E2 /* SupportTicketCellType.xib in Resources */ = {isa = PBXBuildFile; fileRef = B70B94001F08F9A800C512E2 /* SupportTicketCellType.xib */; };
 		B782B52E1EF42EF400DED466 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B782B52D1EF42EF400DED466 /* AppDelegate.swift */; };
 		B782B5301EF42EF400DED466 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B782B52F1EF42EF400DED466 /* ViewController.swift */; };
 		B782B5331EF42EF500DED466 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B782B5311EF42EF500DED466 /* Main.storyboard */; };
@@ -34,6 +37,8 @@
 		B7BE89F51EFA1AFC008AFAEE /* StateArrayClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE89F41EFA1AFC008AFAEE /* StateArrayClass.swift */; };
 		B7BE89F71EFA1B2C008AFAEE /* CityArrayClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE89F61EFA1B2C008AFAEE /* CityArrayClass.swift */; };
 		B7BE89F91EFA1B46008AFAEE /* Locality.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BE89F81EFA1B46008AFAEE /* Locality.swift */; };
+		B7E13A5F1F096608006D8768 /* ChildClassArrayClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E13A5E1F096608006D8768 /* ChildClassArrayClass.swift */; };
+		B7E13A611F0ABA58006D8768 /* ApiWrapperClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E13A601F0ABA58006D8768 /* ApiWrapperClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +52,9 @@
 		B70B93E71EFD5A8600C512E2 /* AdmissionAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdmissionAlertViewController.swift; sourceTree = "<group>"; };
 		B70B93E91EFD6F0800C512E2 /* SupporttTickerArrayClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupporttTickerArrayClass.swift; sourceTree = "<group>"; };
 		B70B93EB1EFD8C1100C512E2 /* InviteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
+		B70B93FC1F08F8AE00C512E2 /* SupprtListArrayClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupprtListArrayClass.swift; sourceTree = "<group>"; };
+		B70B93FE1F08F98400C512E2 /* SupportTicketCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportTicketCell.swift; sourceTree = "<group>"; };
+		B70B94001F08F9A800C512E2 /* SupportTicketCellType.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SupportTicketCellType.xib; sourceTree = "<group>"; };
 		B782B52A1EF42EF400DED466 /* Dakhila.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dakhila.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B782B52D1EF42EF400DED466 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B782B52F1EF42EF400DED466 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ../../ViewController.swift; sourceTree = "<group>"; };
@@ -67,6 +75,8 @@
 		B7BE89F41EFA1AFC008AFAEE /* StateArrayClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateArrayClass.swift; sourceTree = "<group>"; };
 		B7BE89F61EFA1B2C008AFAEE /* CityArrayClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityArrayClass.swift; sourceTree = "<group>"; };
 		B7BE89F81EFA1B46008AFAEE /* Locality.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Locality.swift; sourceTree = "<group>"; };
+		B7E13A5E1F096608006D8768 /* ChildClassArrayClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildClassArrayClass.swift; sourceTree = "<group>"; };
+		B7E13A601F0ABA58006D8768 /* ApiWrapperClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiWrapperClass.swift; sourceTree = "<group>"; };
 		E7CF47B526A745DDF04940C4 /* Pods-Dakhila.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dakhila.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dakhila/Pods-Dakhila.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -134,6 +144,7 @@
 				B782B54C1EF6A01700DED466 /* CommonClass.swift */,
 				B782B54D1EF6A01700DED466 /* JHProgressHUD.swift */,
 				B782B54E1EF6A01700DED466 /* Config.swift */,
+				B7E13A601F0ABA58006D8768 /* ApiWrapperClass.swift */,
 			);
 			path = SInglton;
 			sourceTree = "<group>";
@@ -159,6 +170,8 @@
 			children = (
 				B70B93DF1EFC4BF300C512E2 /* customCell.xib */,
 				B70B93E11EFC4C1E00C512E2 /* CustomCellType.swift */,
+				B70B93FE1F08F98400C512E2 /* SupportTicketCell.swift */,
+				B70B94001F08F9A800C512E2 /* SupportTicketCellType.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -181,8 +194,10 @@
 			children = (
 				B782B5571EF6E52500DED466 /* DashBoardViewController.swift */,
 				B70B93DD1EFC31D500C512E2 /* AppNotifierViewController.swift */,
+				B7E13A5E1F096608006D8768 /* ChildClassArrayClass.swift */,
 				B70B93E31EFC52AA00C512E2 /* ChangePasswordViewController.swift */,
 				B70B93E51EFC5CEB00C512E2 /* SupportTicketViewController.swift */,
+				B70B93FC1F08F8AE00C512E2 /* SupprtListArrayClass.swift */,
 				B70B93E91EFD6F0800C512E2 /* SupporttTickerArrayClass.swift */,
 				B70B93E71EFD5A8600C512E2 /* AdmissionAlertViewController.swift */,
 				B70B93EB1EFD8C1100C512E2 /* InviteViewController.swift */,
@@ -234,7 +249,6 @@
 				TargetAttributes = {
 					B782B5291EF42EF400DED466 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 5N58F3Z37S;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -263,6 +277,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B782B5381EF42EF500DED466 /* LaunchScreen.storyboard in Resources */,
+				B70B94011F08F9A800C512E2 /* SupportTicketCellType.xib in Resources */,
 				B782B5351EF42EF500DED466 /* Assets.xcassets in Resources */,
 				B70B93E01EFC4BF300C512E2 /* customCell.xib in Resources */,
 				B782B5331EF42EF500DED466 /* Main.storyboard in Resources */,
@@ -325,14 +340,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				B782B5301EF42EF400DED466 /* ViewController.swift in Sources */,
+				B7E13A611F0ABA58006D8768 /* ApiWrapperClass.swift in Sources */,
 				B782B54F1EF6A01700DED466 /* MenuTVC.swift in Sources */,
 				B782B5521EF6A01700DED466 /* Network.swift in Sources */,
+				B7E13A5F1F096608006D8768 /* ChildClassArrayClass.swift in Sources */,
+				B70B93FF1F08F98400C512E2 /* SupportTicketCell.swift in Sources */,
 				B70B93EC1EFD8C1100C512E2 /* InviteViewController.swift in Sources */,
 				B70B93E61EFC5CEB00C512E2 /* SupportTicketViewController.swift in Sources */,
 				B70B93EA1EFD6F0800C512E2 /* SupporttTickerArrayClass.swift in Sources */,
 				B70B93E41EFC52AA00C512E2 /* ChangePasswordViewController.swift in Sources */,
 				B7BE89F91EFA1B46008AFAEE /* Locality.swift in Sources */,
 				B782B5581EF6E52500DED466 /* DashBoardViewController.swift in Sources */,
+				B70B93FD1F08F8AE00C512E2 /* SupprtListArrayClass.swift in Sources */,
 				B782B52E1EF42EF400DED466 /* AppDelegate.swift in Sources */,
 				B782B5551EF6A01700DED466 /* Config.swift in Sources */,
 				B70B93E21EFC4C1E00C512E2 /* CustomCellType.swift in Sources */,
@@ -394,7 +413,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Arunjit Kaur (5N58F3Z37S)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Arunjit Kaur (5N58F3Z37S)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 5N58F3Z37S;
@@ -477,7 +496,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Arunjit Kaur (5N58F3Z37S)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Arunjit Kaur (5N58F3Z37S)";
-				DEVELOPMENT_TEAM = 5N58F3Z37S;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/Alamofire\"",
@@ -504,7 +523,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Arunjit Kaur (5N58F3Z37S)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Arunjit Kaur (5N58F3Z37S)";
-				DEVELOPMENT_TEAM = 5N58F3Z37S;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$PODS_CONFIGURATION_BUILD_DIR/Alamofire\"",

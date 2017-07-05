@@ -12,4 +12,4 @@ class SupporttTickerArrayClass: NSObject {
     
     var categoryId : String?
     var categoryName : String?
-}
+    }
