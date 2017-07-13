@@ -12,14 +12,53 @@ import AVFoundation
 import Alamofire
 import SwiftyJSON
 
-class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollViewDelegate,UIImagePickerControllerDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UINavigationControllerDelegate, AVAudioPlayerDelegate, AVAudioRecorderDelegate,UIPickerViewDelegate,UIPickerViewDataSource{
+class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollViewDelegate,UIImagePickerControllerDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UINavigationControllerDelegate, AVAudioPlayerDelegate, AVAudioRecorderDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UITextViewDelegate{
 
     var videoUrl : URL?
     var imageArray = [UIImage]()
     var recordingSession: AVAudioSession!
     var audioRecorder: AVAudioRecorder!
+    var audioPlayer : AVAudioPlayer?
     var classTypeArray  = [ChildClassArrayClass]()
     
+    @IBAction func homeButtonAction(_ sender: UIButton) {
+        
+        let firstView:DashBoardViewController
+            = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Dashboard") as! DashBoardViewController
+        //            let firstView:HomeViewController = HomeViewController(nibName:"HomeViewController",bundle:Bundle.main)
+        var fcheck=Bool()
+        fcheck=false
+        let viewArray=self.navigationController?.viewControllers as NSArray!
+        if((viewArray) != nil){
+            if !((viewArray?.lastObject! as! UIViewController) .isKind(of: DashBoardViewController.self)){
+                
+                for views in self.navigationController?.viewControllers as NSArray!
+                {
+                    if((views as! UIViewController) .isKind(of: DashBoardViewController.self))
+                    {
+                        fcheck=true
+                        _ = navigationController?.popToViewController(views as! UIViewController, animated: false)
+                        
+                    }
+                }
+                if(fcheck==false){
+                    self.navigationController?.pushViewController(firstView, animated: true)
+                }
+            }
+            else{
+                
+                //reset button
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetStaticView"), object: nil)
+            }
+        }else{
+            appDelegate.navigationController?.pushViewController(firstView, animated: true)
+            // NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
+        }
+
+        
+    }
+    @IBOutlet weak var homeButton: UIButton!
     @IBAction func crossButtonAction(_ sender: UIButton) {
     }
     @IBOutlet weak var crossButton: UIButton!
@@ -48,8 +87,16 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
     @IBAction func audioSliderAction(_ sender: UISlider) {
     }
     @IBOutlet weak var audioSlider: UISlider!
+    @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var stopButton: UIButton!
+    @IBOutlet weak var playButton: UIButton!
     @IBAction func audioButtonAction(_ sender: UIButton) {
         
+        if audioRecorder?.isRecording == false{
+            playButton.isEnabled = false
+            stopButton.isEnabled = true
+            audioRecorder?.record()
+        }
     }
     @IBAction func videoShowingButtonAction(_ sender: UIButton) {
     }
@@ -102,7 +149,6 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
         datePicker.minimumDate = NSDate() as Date
         dateFormatter.dateStyle = DateFormatter.Style.short
         dateFormatter.dateFormat = "YYYY-MM-dd"
-       // self.timeLimitForOfferTextField.text = dateFormatter.string(from: datePicker.date)
         self.datePicker.isHidden = true
         
     }
@@ -120,11 +166,64 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
         print("\(timer)")
 
         self.addChildViewController(appDelegate.menuTableViewController)
-
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tap(gesture:)))
+        self.myScollView.addGestureRecognizer(tapGesture)
         // Do any additional setup after loading the view.
     }
+    func tap(gesture: UITapGestureRecognizer) {
+        notificaitonDateTextField.resignFirstResponder()
+        notificationMessageTextField.resignFirstResponder()
+        self.view.endEditing(true)
+        self.myScollView.endEditing(true)
+        //textField.resignFirstResponder()
+    }
+    //MARK:-Audio 
+    @IBAction func stopAudio(sender: AnyObject) {
+        
+        stopButton.isEnabled = false
+        playButton.isEnabled = true
+        recordButton.isEnabled = true
+        
+        if audioRecorder?.isRecording == true{
+            audioRecorder?.stop()
+        }else{
+            audioPlayer?.stop()
+        }
+    }
     
-    // Update Method 
+    @IBAction func playAudio(sender: AnyObject) {
+        
+        if audioRecorder?.isRecording == false{
+            stopButton.isEnabled = true
+            recordButton.isEnabled = false
+            //audioPlayer=AVAudioPlayer(contentsOf: audioRecorder?.url)
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: (audioRecorder?.url)!)
+                audioPlayer?.prepareToPlay()
+                audioPlayer?.play()
+            } catch {
+                print("error loading file")
+                // couldn't load file :(
+            }
+        }
+    }
+    
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
+        recordButton.isEnabled = true
+        stopButton.isEnabled = false
+    }
+    
+    func audioPlayerDecodeErrorDidOccur(player: AVAudioPlayer!, error: NSError!) {
+        print("Audio Play Decode Error")
+    }
+    
+    func audioRecorderDidFinishRecording(recorder: AVAudioRecorder!, successfully flag: Bool) {
+    }
+    
+    func audioRecorderEncodeErrorDidOccur(recorder: AVAudioRecorder!, error: NSError!) {
+        print("Audio Record Encode Error")
+    }
+    // Update Method
     
     
     func update(){
@@ -180,7 +279,7 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
         
         let dateFormatter: DateFormatter = DateFormatter()
         // Set date format
-        dateFormatter.dateFormat = "MM-dd-yyyy"
+        dateFormatter.dateFormat = "MM/dd/yyyy"
         // Apply date format
         let selectedDate: String = dateFormatter.string(from: sender.date)
         notificaitonDateTextField.text=selectedDate
@@ -208,9 +307,9 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage  {
             //  profileImageView.contentMode = .scaleAspectFit
             // profileImageView.image = pickedImage
-            DispatchQueue.global().async(execute: {
+            //DispatchQueue.global().async(execute: {
                 self.setImage(image: pickedImage)
-            })
+            //})
             
         }else  {
             let mediaType = info[UIImagePickerControllerMediaURL] as! URL
@@ -224,8 +323,12 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
     func  setImage(image: UIImage!)  {
         self.groupImage = image
         self.imageArray.append(self.groupImage!)
+        
+        if self.imageArray.count > 5 {
+            parentClass.showAlertWithApiMessage(message: "you can not select more than 5 images.")
+        }else {
         self.imageCollectionView.reloadData()
-        print("jkek \(self.groupImage!)")
+        }
     }
     
     // MARK:- Set Video Url
@@ -325,6 +428,16 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
         }
         return true
     }
+    
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        if textView.text == "Type Title Here" {
+            textView.text = ""
+           return true
+        }
+        return true
+    }
+    
+
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -605,38 +718,46 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
     var counter = 0
     var paramArray : NSMutableArray = []
     var jsonString : String?
-    
+    var notfId=0
     func uploadImageAPi(notificationId : Int){
         
         if currentReachabilityStatus != .notReachable {
             hudClass.showInView(view: self.view)
             let  urlString = "\(baseUrl)/iosImageUpload"
-           
-            
+            if((self.videoUrl) != nil){
+                
+                notfId=notificationId
+                self.uploadVideoApi(image: self.videoUrl!)
+            }
+            if((audioPlayer?.url) != nil){
+                
+                uploadSoundApi()
+            }
             for image in self.imageArray {
                 print(image)
                 let dict : NSMutableDictionary! = [:]
                 
-                let name = "ni_" + "\(notificationId)" + "_" + "\(self.schoolId!)" + "_" + "\(self.counter)" + ".png"
+                let name = "ni_" + "\(self.schoolId!)" + "_" + "\(notificationId)" + "_" + "\(self.counter)" + ".png"
                 
                 let imageData: NSData = UIImageJPEGRepresentation(image, 0.4)! as NSData
                 let imageStr = imageData.base64EncodedString(options:.lineLength64Characters)
                 let imagedata = imageStr
-                dict.setValue(name, forKey: "Name")
-                dict.setValue(imagedata, forKey: "Data")
+                dict.setValue(name, forKey: "name")
+                dict.setValue(imagedata, forKey: "data")
                self.paramArray.add(dict)
                 counter = counter + 1
             }
-            
-            print("paramArray :" ,paramArray)
+            //print(JSON(self.paramArray))
+            //print("paramArray :" ,paramArray)
             
                 let data = try? JSONSerialization.data(withJSONObject: self.paramArray, options: JSONSerialization.WritingOptions.prettyPrinted)
                 let jsonString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue) as String?
                 let url: NSURL = NSURL(string: urlString)!
                 let request:NSMutableURLRequest = NSMutableURLRequest(url:url as URL)
                 let bodyData = jsonString
+                //print(jsonString)
                 request.httpMethod = "POST"
-                request.addValue("text/plain", forHTTPHeaderField: "Content-Type")
+                request.addValue("application/json", forHTTPHeaderField: "Content-Type")
                // request .setValue(token, forHTTPHeaderField:"tokenValue")
                 request.httpBody = bodyData!.data(using: String.Encoding.utf8);
                 NSURLConnection.sendAsynchronousRequest(request as URLRequest, queue: OperationQueue.main)
@@ -645,7 +766,7 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
                     
                     let responseDic=try? JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
                     if((responseDic) != nil){
-                        print("\(String(describing: responseDic))")
+                        print(" fggdf \(String(describing: responseDic))")
                         
                         if(((responseDic?.value(forKey: "status"))! as! NSObject) as! Decimal==1){
                             hudClass.hide()
@@ -662,24 +783,109 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
             hudClass.hide()
             parentClass.showAlert()
         }
-        
-        
+    }
+    // upload video
+    func  uploadVideoApi(image : URL) {
+        if currentReachabilityStatus != .notReachable {
+            
+            hudClass.showInView(view: self.view)
+            
+            let URL = try! URLRequest(url: "http://justadmission.in/UploadFiles.ashx?SavePath=Upload/NotificationFiles/\(self.schoolId!)/", method: .post)
+            print("URLS : \(URL)")
+            //let name = "ni_" + "\(self.schoolId!)" + "_" + "\(notificationId)" + "_" + "\(self.counter)" + ".png"
+            let name = "nv_" + "\(self.schoolId!)" + "_" + "\(notfId)" + "_" + "\(self.counter)" + ".mp4"
+            
+            Alamofire.upload(multipartFormData: { (multipartFormData) in
+                multipartFormData.append(image, withName: name, fileName: name, mimeType: "mov/mp4/avi/MOV/MP4")
+                
+            }, with: URL, encodingCompletion: { (encodingResult) in
+                
+                switch encodingResult {
+                case .success(let upload, _, _):
+                    print("successessret")
+                    upload.responseString { response in
+                        print("request dfd \(response.request!)")
+                        print("response data \(response.data!)")
+                        print("response.result value \(String(describing: response.result.value))")
+                        switch  response.result {
+                        case .success(let datads) :
+                            print("dasdfkas \(datads)")
+                            let dsfs = datads.data(using: String.Encoding.utf8)!
+                            let json = JSON(data: dsfs)
+                            
+                        case .failure(let errordarta) :
+                            hudClass.hide()
+                            print("err0rdata \(errordarta)")
+                        }
+                    }
+                case .failure(let encodingError):
+                    hudClass.hide()
+                    parentClass.showAlertWithApiFailure()
+                    print(encodingError)
+                }
+            })
+        }else {
+            hudClass.hide()
+            parentClass.showAlert()
+        }
+    }
+    //upload sound
+    func  uploadSoundApi() {
+        if currentReachabilityStatus != .notReachable {
+            
+            //   let images   = UIImage(named : "\(self.groupImage!)")
+            //   print("images \(images)")
+            //  let   imagedata  = UIImageJPEGRepresentation(image, 0.2)
+            // print("imageDatadd \(imagedata!)")
+            hudClass.showInView(view: self.view)
+            
+            let URL = try! URLRequest(url: "http://justadmission.in/UploadFiles.ashx?SavePath=Upload/NotificationFiles/\(self.schoolId!)/", method: .post)
+            print("URLS : \(URL)")
+            //let name = "ni_" + "\(self.schoolId!)" + "_" + "\(notificationId)" + "_" + "\(self.counter)" + ".png"
+            let name = "na_" + "\(self.schoolId!)" + "_" + "\(notfId)" + "_" + "\(self.counter)" + ".mp3"
+            Alamofire.upload(multipartFormData: { (multipartFormData) in
+                multipartFormData.append(self.audioRecorder.url, withName: name, fileName: name, mimeType: "mov/mp4/avi/MOV/MP4/mp3")
+                
+            }, with: URL, encodingCompletion: { (encodingResult) in
+                
+                switch encodingResult {
+                case .success(let upload, _, _):
+                    print("successessret")
+                    upload.responseString { response in
+                        print("request dfd \(response.request!)")
+                        print("response data \(response.data!)")
+                        print("response.result value \(String(describing: response.result.value))")
+                        switch  response.result {
+                        case .success(let datads) :
+                            print("dasdfkas \(datads)")
+                            let dsfs = datads.data(using: String.Encoding.utf8)!
+                            let json = JSON(data: dsfs)
+                            
+                        case .failure(let errordarta) :
+                            hudClass.hide()
+                            print("err0rdata \(errordarta)")
+                        }
+                    }
+                case .failure(let encodingError):
+                    hudClass.hide()
+                    parentClass.showAlertWithApiFailure()
+                    print(encodingError)
+                }
+            })
+        }else {
+            hudClass.hide()
+            parentClass.showAlert()
+        }
     }
 
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

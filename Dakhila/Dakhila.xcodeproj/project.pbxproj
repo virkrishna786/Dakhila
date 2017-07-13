@@ -121,6 +121,7 @@
 		B782B52C1EF42EF400DED466 /* Dakhila */ = {
 			isa = PBXGroup;
 			children = (
+				B7E13A631F0EAA76006D8768 /* Rebecca */,
 				B782B53F1EF5AC1000DED466 /* SInglton */,
 				B782B5411EF5AC2C00DED466 /* Modal */,
 				B782B5421EF5AC2C00DED466 /* View */,
@@ -205,6 +206,13 @@
 			path = DashBoardHome;
 			sourceTree = "<group>";
 		};
+		B7E13A631F0EAA76006D8768 /* Rebecca */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Rebecca;
+			sourceTree = "<group>";
+		};
 		DC068C2E48CCFDA056A09F31 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -249,7 +257,8 @@
 				TargetAttributes = {
 					B782B5291EF42EF400DED466 = {
 						CreatedOnToolsVersion = 8.3.3;
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = 5N58F3Z37S;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -495,7 +504,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Arunjit Kaur (5N58F3Z37S)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Arunjit Kaur (5N58F3Z37S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -510,8 +519,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.app.maintain;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2abcd057-aa5c-43e6-a6f9-ab574e54d03e";
-				PROVISIONING_PROFILE_SPECIFIER = MART;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -522,7 +531,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Arunjit Kaur (5N58F3Z37S)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Arunjit Kaur (5N58F3Z37S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -536,8 +545,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.app.maintain;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2abcd057-aa5c-43e6-a6f9-ab574e54d03e";
-				PROVISIONING_PROFILE_SPECIFIER = MART;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

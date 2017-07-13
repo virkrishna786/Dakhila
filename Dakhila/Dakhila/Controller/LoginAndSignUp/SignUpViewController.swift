@@ -52,6 +52,7 @@ class SignUpViewController: UIViewController ,UITextFieldDelegate , UIPickerView
     @IBAction func playSchoolButttonAction(_ sender: UIButton) {
         self.playSchoolButton.setImage(UIImage(named:"radioFilledButton"), for: UIControlState.normal)
          self.daySchoolButton.setImage(UIImage(named:"radioBlankButton"), for: UIControlState.normal)
+        self.daysBoardingSchoolButotn.setImage(UIImage(named:"radioBlankButton"), for: UIControlState.normal)
          self.resedentailSchoolButton.setImage(UIImage(named:"radioBlankButton"), for: UIControlState.normal)
         self.schoolTypeText = "Play School"
         self.schoolTypeValue = "1"
@@ -592,6 +593,12 @@ class SignUpViewController: UIViewController ,UITextFieldDelegate , UIPickerView
             }
         }
         return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = schoolCOntactNumberTextField.text else { return true }
+        let newLength = text.characters.count + string.characters.count - range.length
+        return newLength <= 10 // Bool
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {

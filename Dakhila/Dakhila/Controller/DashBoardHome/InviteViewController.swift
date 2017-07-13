@@ -119,6 +119,12 @@ class InviteViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = numberTextfield.text else { return true }
+        let newLength = text.characters.count + string.characters.count - range.length
+        return newLength <= 10 // Bool
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
