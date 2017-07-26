@@ -11,22 +11,37 @@ import MobileCoreServices
 import AVFoundation
 import Alamofire
 import SwiftyJSON
+import AVKit
+import AVFoundation
 
-class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollViewDelegate,UIImagePickerControllerDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UINavigationControllerDelegate, AVAudioPlayerDelegate, AVAudioRecorderDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UITextViewDelegate{
+class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollViewDelegate,UIImagePickerControllerDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UINavigationControllerDelegate, AVAudioPlayerDelegate, AVAudioRecorderDelegate,UIPickerViewDelegate,UIPickerViewDataSource, AVPlayerViewControllerDelegate,UITextViewDelegate{
 
+    @IBOutlet weak var audioFileLabel: UILabel!
     var videoUrl : URL?
     var imageArray = [UIImage]()
     var recordingSession: AVAudioSession!
     var audioRecorder: AVAudioRecorder!
     var audioPlayer : AVAudioPlayer?
     var classTypeArray  = [ChildClassArrayClass]()
+    let date = Date()
+    let formatter = DateFormatter()
     
-    @IBAction func homeButtonAction(_ sender: UIButton) {
+    @IBAction func cancelButtonAction(_ sender: UIButton) {
+        self.notificationMessageTextField.text = ""
+        self.notificationTextField.text = ""
+        self.notificaitonDateTextField.text = ""
         
+    }
+    @IBOutlet weak var videoView: UIView!
+    @IBAction func photoDeleteButtonAction(_ sender: UIButton) {
+        self.imageArray.removeAll()
+        self.imageCollectionView.reloadData()
+        
+    }
+    @IBAction func homeButtonAction(_ sender: UIButton) {
         let firstView:DashBoardViewController
             = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "Dashboard") as! DashBoardViewController
-        //            let firstView:HomeViewController = HomeViewController(nibName:"HomeViewController",bundle:Bundle.main)
-        var fcheck=Bool()
+             var fcheck=Bool()
         fcheck=false
         let viewArray=self.navigationController?.viewControllers as NSArray!
         if((viewArray) != nil){
@@ -60,6 +75,7 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
     }
     @IBOutlet weak var homeButton: UIButton!
     @IBAction func crossButtonAction(_ sender: UIButton) {
+        self.audioFileLabel.isHidden = true
     }
     @IBOutlet weak var crossButton: UIButton!
     @IBOutlet weak var runningTimeLabel: UILabel!
@@ -81,7 +97,13 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
     }
     
     @IBAction func postButtonAction(_ sender: UIButton) {
-        self.postApiCall()
+        
+    if !(notificationTextField.text?.trimmingCharacters(in: .whitespaces).isEmpty)! &&  !(notificationMessageTextField.text?.trimmingCharacters(in: .whitespaces).isEmpty)!{
+            self.postApiCall()
+        } 
+        else{
+           parentClass.showAlertWithApiMessage(message: "Please fill all fields.")
+        }
     }
     @IBOutlet weak var timeLabel: UILabel!
     @IBAction func audioSliderAction(_ sender: UISlider) {
@@ -91,7 +113,6 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
     @IBAction func audioButtonAction(_ sender: UIButton) {
-        
         if audioRecorder?.isRecording == false{
             playButton.isEnabled = false
             stopButton.isEnabled = true
@@ -99,29 +120,127 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
         }
     }
     @IBAction func videoShowingButtonAction(_ sender: UIButton) {
+        
+        if self.videoUrl == nil{
+            parentClass.showAlertWithApiMessage(message: "Please add video from library.")
+        }else {
+        
+        self.videoView.isHidden = false
+        let player = AVPlayer(url: self.videoUrl!)
+        let playerController = AVPlayerViewController()
+            NotificationCenter.default.addObserver(self, selector: #selector(AppNotifierViewController.playerItemDidPlayToEndTime(note:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem)
+        playerController.player = player
+        
+        self.addChildViewController(playerController)
+        self.myScollView.addSubview(playerController.view)
+        playerController.view.frame = self.videoView.frame
+        player.play()
+        }
+    }
+    func getThumbnailImage(forUrl url: URL) -> UIImage? {
+        let asset: AVAsset = AVAsset(url: url)
+        let imageGenerator = AVAssetImageGenerator(asset: asset)
+        
+        do {
+            let thumbnailImage = try imageGenerator.copyCGImage(at: CMTimeMake(1, 60) , actualTime: nil)
+            return UIImage(cgImage: thumbnailImage)
+        } catch let error {
+            print(error)
+        }
+        
+        return nil
+    }
+    func playerItemDidPlayToEndTime(note: NSNotification){
+        //self.videoView.removeFromSuperview()
+       // self.dismiss(animated: true, completion: nil)
+        //let player =  AVPlayer()
+    }
+    
+    func playerViewControllerShouldAutomaticallyDismissAtPictureInPictureStart(_ playerViewController: AVPlayerViewController) -> Bool {
+        self.videoView.isHidden = true
+        return true
     }
     @IBOutlet weak var videoShwoingButton: UIButton!
     @IBAction func chooseVideoButtonAction(_ sender: UIButton) {
-        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
+        
+        let actionSheetController: UIAlertController = UIAlertController(title: "Alert", message: "Choose an option!", preferredStyle: .alert)
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Camera", style: .default) { action -> Void in
+            //Just dismiss the action sheet
+            self.openCamara()
+                    }
+        let addCamaraAction: UIAlertAction = UIAlertAction(title: " Video from Library", style: .default) { action -> Void in
+            //Just dismiss the action sheet
+           self.photoFromCamara()
+        }
+        actionSheetController.addAction(addCamaraAction)
+        actionSheetController.addAction(cancelAction)
+        self.present(actionSheetController, animated: true, completion: nil)
+
+    }
+    
+    func openCamara(){
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
             self.imagePicker.allowsEditing = false
+            self.imagePicker.delegate = self
+            self.imagePicker.sourceType = .camera
             self.imagePicker.mediaTypes = [kUTTypeMovie as String]
             present(imagePicker, animated: true, completion: nil)
         }else {
             self.noCamara()
         }
-
     }
-    @IBOutlet weak var imageCollectionView: UICollectionView!
-    @IBAction func camaraButtonAction(_ sender: UIButton) {
-        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+    
+    func photoFromCamara(){
+        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
             self.imagePicker.allowsEditing = false
-            self.imagePicker.sourceType = .photoLibrary
+            self.imagePicker.delegate = self
+            self.imagePicker.mediaTypes = [kUTTypeMovie as String]
             present(imagePicker, animated: true, completion: nil)
         }else {
             self.noCamara()
         }
+    }
+    @IBOutlet weak var imageCollectionView: UICollectionView!
+    @IBAction func camaraButtonAction(_ sender: UIButton) {
+        
+        let actionSheetController: UIAlertController = UIAlertController(title: "Alert", message: "Choose an option!", preferredStyle: .alert)
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Camera", style: .default) { action -> Void in
+            //Just dismiss the action sheet
+            self.openCamaraForPic()
+        }
+        let addCamaraAction: UIAlertAction = UIAlertAction(title: "Photo from Library", style: .default) { action -> Void in
+            //Just dismiss the action sheet
+            self.photoFromCamaraForPic()
+        }
+        actionSheetController.addAction(addCamaraAction)
+        actionSheetController.addAction(cancelAction)
+        self.present(actionSheetController, animated: true, completion: nil)
 
     }
+    
+    func openCamaraForPic(){
+                if UIImagePickerController.isSourceTypeAvailable(.camera) {
+                    self.imagePicker.delegate = self
+                    self.imagePicker.allowsEditing = false
+                    self.imagePicker.sourceType = .camera
+                    present(imagePicker, animated: true, completion: nil)
+                }else {
+                    self.noCamara()
+                }
+    }
+    
+    func photoFromCamaraForPic(){
+                if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+                    self.imagePicker.delegate = self
+                    self.imagePicker.allowsEditing = false
+                    self.imagePicker.sourceType = .photoLibrary
+                    present(imagePicker, animated: true, completion: nil)
+                }else {
+                    self.noCamara()
+                }
+        
+    }
+    
     @IBOutlet weak var notificaitonDateTextField: UITextField!
     @IBOutlet weak var classTextField: UITextField!
     @IBOutlet weak var notificationMessageTextField: UITextView!{
@@ -150,15 +269,26 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
         dateFormatter.dateStyle = DateFormatter.Style.short
         dateFormatter.dateFormat = "YYYY-MM-dd"
         self.datePicker.isHidden = true
-        
     }
 
     var schoolId : String?
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.audioFileLabel.isHidden = true
+
         imagePicker.delegate = self
+        self.videoView.isHidden = true
+        notificationMessageTextField.delegate = self
+        
         classArray=["Nursery","LKG","UKG"]
+        self.dateLabel.layer.borderWidth = 1
+        self.dateLabel.layer.borderColor = UIColor.black.cgColor
         classPickerView.frame.size.width=self.view.frame.size.width
+        
+        formatter.dateFormat = "dd MM yyyy"
+        let result = formatter.string(from: date)
+        dateLabel.text = "\(result)"
+        print("kjbk ",dateLabel.frame)
         
         let sid=defaults.value(forKey: "schoolId") as? String
         self.schoolId = sid
@@ -173,6 +303,7 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
     func tap(gesture: UITapGestureRecognizer) {
         notificaitonDateTextField.resignFirstResponder()
         notificationMessageTextField.resignFirstResponder()
+        self.videoView.isHidden = true
         self.view.endEditing(true)
         self.myScollView.endEditing(true)
         //textField.resignFirstResponder()
@@ -183,6 +314,8 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
         stopButton.isEnabled = false
         playButton.isEnabled = true
         recordButton.isEnabled = true
+        self.audioFileLabel.text = "File.mp3"
+        self.audioFileLabel.isHidden = false
         
         if audioRecorder?.isRecording == true{
             audioRecorder?.stop()
@@ -192,7 +325,6 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
     }
     
     @IBAction func playAudio(sender: AnyObject) {
-        
         if audioRecorder?.isRecording == false{
             stopButton.isEnabled = true
             recordButton.isEnabled = false
@@ -234,7 +366,7 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
             self.datePicker.addTarget(self, action: #selector(AppNotifierViewController.datePickerValueChanged(_:)), for: .valueChanged)
             self.myScollView.delegate = self
             self.datePicker.isHidden = true
-            self.myScollView.contentSize = CGSize(width: self.view.frame.size.width, height: self.view.frame.size.height + 3000)
+            self.myScollView.contentSize = CGSize(width: self.view.frame.size.width, height: self.view.frame.size.height + 2000)
             self.myScollView.isScrollEnabled = true
             self.classPickerView.isHidden = true
             self.imageCollectionView.register(UINib(nibName: "customCell", bundle: nil), forCellWithReuseIdentifier: "cellIdentifier")
@@ -314,18 +446,26 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
         }else  {
             let mediaType = info[UIImagePickerControllerMediaURL] as! URL
             print("mediaType",mediaType)
+            
             self.setVideo(video: mediaType)
         }
         dismiss(animated: true, completion: nil)
     }
     
     // MARK:- Set Image
+
     func  setImage(image: UIImage!)  {
         self.groupImage = image
         self.imageArray.append(self.groupImage!)
         
         if self.imageArray.count > 5 {
-            parentClass.showAlertWithApiMessage(message: "you can not select more than 5 images.")
+            DispatchQueue.main.async {
+                let alertVC = UIAlertController(title: "Alert", message: "you can not select more than 5 images.", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK",style:.default,handler: nil)
+                alertVC.addAction(okAction)
+                self.present(alertVC, animated: true, completion: nil)
+            }
+            
         }else {
         self.imageCollectionView.reloadData()
         }
@@ -335,8 +475,17 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
     
     func setVideo(video: URL!){
         self.videoUrl = video
-        print("video",video)
-        print("krishna")
+        let image=getThumbnailImage(forUrl: video)
+        let imageView=UIImageView()
+        imageView.frame=self.videoView.frame
+        imageView.image=image
+        myScollView.addSubview(imageView)
+        
+        //self.videoView.isHidden=false
+        //self.videoView.backgroundColor=UIColor.clear
+        //self.videoView.addSubview(imageView)
+        //self.videoView.bringSubview(toFront: imageView)
+
     }
     
     func noCamara(){
@@ -376,7 +525,6 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellIdentifier",
                                                       for: indexPath) as! CustomCellType
-        
         let data = imageArray[indexPath.row]
         cell.photoImageView.image =  data
         return cell
@@ -391,7 +539,6 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
         if textField == notificationTextField {
             myScollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
         }else if textField==notificaitonDateTextField {
-            
             print("testing")
         }
     }
@@ -407,7 +554,6 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if textField == notificaitonDateTextField  {
-            
             self.datePicker.backgroundColor=UIColor.orange
             self.datePicker.isHidden = false
             self.classPickerView.isHidden=true
@@ -415,7 +561,6 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
             return false
         }
         else if textField == classTextField {
-            
             //self.datePicker.backgroundColor=UIColor.orange
             self.datePicker.isHidden = true
             self.classPickerView.backgroundColor=UIColor.orange
@@ -430,11 +575,15 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
     }
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        if textView.text == "Type Title Here" {
-            textView.text = ""
+        if textView.text == "Type Text Here" {
+             textView.text = ""
            return true
         }
         return true
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        self.notificationMessageTextField.resignFirstResponder()
     }
     
 
@@ -449,7 +598,6 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
     
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        
         return classTypeArray[row].className
     }
     
@@ -480,11 +628,8 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
                         hudClass.hide()
                         let result = JSON(response.result.value!)
                         //  let JSON = result as! NSDictionary
-                        
                         print("result %@",response.result.value! )
-                        
-                        let responseCode =   "200"//result["ResponseCode"].string
-                        //print("response message \(responseCode!)")
+                        let responseCode =   "200"
                         
                         if responseCode == "200" {
                             hudClass.hide()
@@ -516,7 +661,6 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
                             
                             hudClass.hide()
                             parentClass.showAlertWithApiMessage(message: "Some thing went worng")
-                            
                         }
                         
                     }else {
@@ -525,17 +669,13 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
                     }
             }
             
-            
         }else {
             hudClass.hide()
             parentClass.showAlert()
         }
-        
-        
     }
     
     // Post notifier api hit 
-   
     
     func postApiCall(){
         
@@ -555,7 +695,6 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
                 "BroadcastDate" : dateString,
                 ]
 
-            
             print("dfd \(parameter)")
             
             Alamofire.request(urlString, method: .post, parameters: parameter)
@@ -569,7 +708,6 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
                         hudClass.hide()
                         let result = response.result.value
                         let json = JSON(result!)
-                        
                         print("result %@",response.result.value! )
                         let responseCode = json["NotificationId"].int
                         
@@ -578,23 +716,25 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
                             let okAction = UIAlertAction(title: "OK",style:.default,handler: nil)
                             alertVC.addAction(okAction)
                             self.present(alertVC, animated: true, completion: nil)
- 
-                            
                         }else {
                             hudClass.hide()
                             print("success")
+                            self.notificationMessageTextField.text = ""
+                            self.notificationTextField.text = ""
+                            self.notificaitonDateTextField.text = ""
                             let responseMessage = json["ResponseText"].string
                             let notificationId = "\(json["NotificationId"])"
                             print("response message \(String(describing: responseMessage))")
                             print("\(String(describing: notificationId))")
                             let alertVC = UIAlertController(title: "Alert", message: "Your Notification has been created.", preferredStyle: .alert)
                             let okAction = UIAlertAction(title: "OK",style:.default,handler: { UIAlertAction in
-                            self.uploadImageAPi(notificationId: Int(notificationId)!)
-                                
+                                if notificationId == "0"{
+                                }else {
+                                    self.uploadImageAPi(notificationId: Int(notificationId)!)
+                                }
                             })
                             alertVC.addAction(okAction)
                             self.present(alertVC, animated: true, completion: nil)
-                            
                         }
                         
                     }else {
@@ -611,122 +751,88 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
         
         
     }
-// app notification
-//    
-//    func postNotifyApiMethod() {
-//        
-//        if currentReachabilityStatus != .notReachable {
-//            let headers: HTTPHeaders = [
-//                "Accept": "application/json"
-//            ]
-//            let notificationTitle = notificationTextField.text!
-//            let notificationMessage = notificationMessageTextField.text!
-//            let classString  = classTextField.text!
-//            let dateString = notificaitonDateTextField.text!
-//            
-//            let parameter = ["SchoolId": "\(self.schoolId!)",
-//                             "Title": notificationTitle,
-//                             "ClassId": classString,
-//                             "Message" : notificationMessage,
-//                             "BroadcastDate" : dateString,
-//                                        ]
-//            
-//            print("param : \(parameter)")
-//            var  image = UIImage(named: "\(String(describing: self.groupImage))")
-//            if image ==  nil {
-//                image = UIImage(named: "aboutUs")
-//            }else {
-//                image = UIImage(named: "\(String(describing: self.groupImage))")
-//            }
-//            
-//            // let image = UIImage(named: "\(self.groupImage)")
-//            // let image = UIImage(named : "aboutUs")
-//            let   imagedata  = UIImageJPEGRepresentation(image!, 0.2)
-//            hudClass.showInView(view: self.view)
-//            
-//            let URL = try! URLRequest(url: "\(baseUrl)CreateSchoolNotification", method: .post, headers: headers)
-//            
-//            Alamofire.upload(multipartFormData: { (multipartFormData) in
-//                multipartFormData.append(imagedata!, withName: "profile_pic", fileName: "krish.jpg", mimeType: "image/png")
-//                
-//                for (key, value) in parameter {
-//                    multipartFormData.append((value.data(using: String.Encoding.utf8)!), withName: key)
-//                }        }, with: URL, encodingCompletion: { (encodingResult) in
-//                    
-//                    switch encodingResult {
-//                    case .success(let upload, _, _):
-//                        print("s")
-//                        upload.responseString {
-//                            response in
-//                            print(response.request! )  // original URL request
-//                            print(response.response! ) // URL response
-//                            print(response.data! )     // server data
-//                            print(response.result)   // result of response serialization
-//                            
-//                            hudClass.hide()
-//                            switch response.result  {
-//                            case .success(let datads) :
-//                                print("dasdfkas \(datads)")
-//                                let dsfs = datads.data(using: String.Encoding.utf8)!
-//                                let json = JSON(data: dsfs)
-//                                //     let responseCode = json["CruzSortMe_app"].dictionary
-//                                //     print("response code \(responseCode)")
-//                                
-//                                let resData = json["CruzSortMe_app"].dictionary
-//                                print("resData \(String(describing: resData))")
-//                                
-//                                let responseMessage = resData?["res_msg"]!.string
-//                                print("response message \(String(describing: responseMessage))")
-//                                
-//                                if responseMessage == "signup Successfully" {
-//                                    hudClass.hide()
-//                                    print("save successFully")
-//                                    let userIdString = resData?["user_id"]!.string
-//                                    let userName = resData?["username"]!.string
-//                                    let profileImageString = resData?["profile_image"]!.string
-//                                    print("userdefaultData \(String(describing: userIdString)) \(String(describing: userName)) \(String(describing: profileImageString))")
-//                                    defaults.set(profileImageString!, forKey: "profile_image")
-//                                    defaults.set(userName!, forKey: "user_name")
-//                                    defaults.set(userIdString!, forKey: "userId")
-//                                    self.performSegue(withIdentifier: "homeView", sender: self)
-//                                }else {
-//                                    hudClass.hide()
-//                                    
-//                                    let alertVC = UIAlertController(title: "Alert", message: "Some thing went wrong", preferredStyle: .alert)
-//                                    let okAction = UIAlertAction(title: "OK",style:.default,handler: nil)
-//                                    alertVC.addAction(okAction)
-//                                    self.present(alertVC, animated: true, completion: nil)
-//                                }
-//                                
-//                            case .failure(let errordarta) :
-//                                hudClass.hide()
-//                                print("err0rdata \(errordarta)")
-//                            }
-//                        }
-//                    case .failure(let encodingError):
-//                        hudClass.hide()
-//                        parentClass.showAlert()
-//                        print(encodingError)
-//                    }
-//            })
-//            
-//        }else {
-//            parentClass.showAlert()
-//        }
-//    }
     
+    
+    // final upload of document 
+    
+    
+    func finalUploadOfDoucment(notificationId: Int ,fileType:String , filePath: String){
+        
+        if currentReachabilityStatus != .notReachable {
+            hudClass.showInView(view: self.view)
+            let  urlString = "\(baseUrl)/SaveNotificationFilesPath"
+            
+            
+            let parameter = ["NotificationId": "\(notificationId)",
+                "FilePath": filePath,
+                "FileType": fileType
+                ]
+            
+            print("dfd \(parameter)")
+            
+            Alamofire.request(urlString, method: .post, parameters: parameter)
+                .responseJSON { response in
+                    print("Success: \(response.result.isSuccess)")
+                    //print("Response String:", response.result.value!)
+                    
+                    //to get JSON return value
+                    
+                    if  response.result.isSuccess {
+                        hudClass.hide()
+                        let result = response.result.value
+                        let json = JSON(result!)
+                        print("result %@",response.result.value! )
+                        let responseCode = json["NotificationId"].int
+                        
+                        if responseCode == 0 {
+                            let alertVC = UIAlertController(title: "Alert", message: "Some thing went wrong.", preferredStyle: .alert)
+                            let okAction = UIAlertAction(title: "OK",style:.default,handler: nil)
+                            alertVC.addAction(okAction)
+                            self.present(alertVC, animated: true, completion: nil)
+                        }else {
+                            hudClass.hide()
+                            print("success")
+                            let responseMessage = json["ResponseText"].string
+                            let notificationId = "\(json["NotificationId"])"
+                            print("response message \(String(describing: responseMessage))")
+                            print("\(String(describing: notificationId))")
+//                            let alertVC = UIAlertController(title: "Alert", message: "Your imag.", preferredStyle: .alert)
+//                            let okAction = UIAlertAction(title: "OK",style:.default,handler: { UIAlertAction in
+//                               
+//                            })
+//                            alertVC.addAction(okAction)
+//                            self.present(alertVC, animated: true, completion: nil)
+                        }
+                        
+                    }else {
+                        hudClass.hide()
+                        //parentClass.showAlertWithApiFailure()
+                    }
+            }
+            
+            
+        }else {
+            hudClass.hide()
+            parentClass.showAlert()
+        }
+        
+        
+    }
+
     var counter = 0
     var paramArray : NSMutableArray = []
     var jsonString : String?
-    var notfId=0
+    var notfId : Int?
+    
     func uploadImageAPi(notificationId : Int){
         
+        notfId=notificationId
+
         if currentReachabilityStatus != .notReachable {
             hudClass.showInView(view: self.view)
             let  urlString = "\(baseUrl)/iosImageUpload"
             if((self.videoUrl) != nil){
                 
-                notfId=notificationId
                 self.uploadVideoApi(image: self.videoUrl!)
             }
             if((audioPlayer?.url) != nil){
@@ -735,16 +841,15 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
             }
             for image in self.imageArray {
                 print(image)
-                let dict : NSMutableDictionary! = [:]
-                
+               // let dict : NSMutableDictionary! = [:]
                 let name = "ni_" + "\(self.schoolId!)" + "_" + "\(notificationId)" + "_" + "\(self.counter)" + ".png"
-                
-                let imageData: NSData = UIImageJPEGRepresentation(image, 0.4)! as NSData
-                let imageStr = imageData.base64EncodedString(options:.lineLength64Characters)
-                let imagedata = imageStr
-                dict.setValue(name, forKey: "name")
-                dict.setValue(imagedata, forKey: "data")
-               self.paramArray.add(dict)
+                self.uploadImageApi(image: image , nameString: name)
+//                let imageData: NSData = UIImageJPEGRepresentation(image, 0.4)! as NSData
+//                let imageStr = imageData.base64EncodedString(options:.lineLength64Characters)
+//                let imagedata = imageStr
+//                dict.setValue(name, forKey: "name")
+//                dict.setValue(imagedata, forKey: "data")
+//               self.paramArray.add(dict)
                 counter = counter + 1
             }
             //print(JSON(self.paramArray))
@@ -787,13 +892,12 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
     // upload video
     func  uploadVideoApi(image : URL) {
         if currentReachabilityStatus != .notReachable {
-            
             hudClass.showInView(view: self.view)
             
             let URL = try! URLRequest(url: "http://justadmission.in/UploadFiles.ashx?SavePath=Upload/NotificationFiles/\(self.schoolId!)/", method: .post)
             print("URLS : \(URL)")
             //let name = "ni_" + "\(self.schoolId!)" + "_" + "\(notificationId)" + "_" + "\(self.counter)" + ".png"
-            let name = "nv_" + "\(self.schoolId!)" + "_" + "\(notfId)" + "_" + "\(self.counter)" + ".mp4"
+            let name = "nv_" + "\(self.schoolId!)" + "_" + "\(notfId!)" + "_" + "\(self.counter)" + ".MOV"
             
             Alamofire.upload(multipartFormData: { (multipartFormData) in
                 multipartFormData.append(image, withName: name, fileName: name, mimeType: "mov/mp4/avi/MOV/MP4")
@@ -809,9 +913,14 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
                         print("response.result value \(String(describing: response.result.value))")
                         switch  response.result {
                         case .success(let datads) :
+                            hudClass.hide()
                             print("dasdfkas \(datads)")
                             let dsfs = datads.data(using: String.Encoding.utf8)!
                             let json = JSON(data: dsfs)
+                            print("JSOn " ,json)
+                            let   filePath = String(describing: ((json.arrayObject?[0])! as! NSDictionary).value(forKey: "URL")!)
+                            print("sfs \(String(describing: ((json.arrayObject?[0])! as! NSDictionary).value(forKey: "URL")))")
+                            self.finalUploadOfDoucment(notificationId: self.notfId!, fileType: "video", filePath: filePath)
                             
                         case .failure(let errordarta) :
                             hudClass.hide()
@@ -829,6 +938,63 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
             parentClass.showAlert()
         }
     }
+    
+    // MARK:- Upload Image 
+    
+    
+    func  uploadImageApi(image : UIImage ,nameString: String) {
+        if currentReachabilityStatus != .notReachable {
+            
+            //  let images   = UIImage(named : "\(self.groupImage!)")
+            //  print("images \(images)")
+            let   imagedata  = UIImageJPEGRepresentation(image, 0.2)
+            print("imageDatadd \(imagedata!)")
+            hudClass.showInView(view: self.view)
+            
+            let URL = try! URLRequest(url:  "http://justadmission.in/UploadFiles.ashx?SavePath=Upload/NotificationFiles/\(self.schoolId!)/", method: .post)
+            print("URLS : \(URL)")
+            
+            Alamofire.upload(multipartFormData: { (multipartFormData) in
+                multipartFormData.append(imagedata!, withName: nameString, fileName: nameString, mimeType: "image/png/jpeg/jpg")
+                
+            }, with: URL, encodingCompletion: { (encodingResult) in
+                
+                switch encodingResult {
+                case .success(let upload, _, _):
+                    print("successessret")
+                    upload.responseString { response in
+                        print("request dfd \(response.request!)")
+                        print("response data \(response.data!)")
+                        print("response.result value \(String(describing: response.result.value))")
+                        switch  response.result {
+                        case .success(let datads) :
+                            
+                            let dsfs = datads.data(using: String.Encoding.utf8)!
+                            let json = JSON(data: dsfs)
+                            print("JSOn " ,json)
+                         let   filePath = String(describing: ((json.arrayObject?[0])! as! NSDictionary).value(forKey: "URL")!)
+                            print("sfs \(String(describing: ((json.arrayObject?[0])! as! NSDictionary).value(forKey: "URL")))")
+                            
+                        self.finalUploadOfDoucment(notificationId: self.notfId!, fileType: "image", filePath: filePath)
+//
+                            
+                        case .failure(let errordarta) :
+                            hudClass.hide()
+                            print("err0rdata \(errordarta)")
+                        }
+                    }
+                case .failure(let encodingError):
+                    hudClass.hide()
+                    parentClass.showAlertWithApiFailure()
+                    print(encodingError)
+                }
+            })
+        }else {
+            hudClass.hide()
+            parentClass.showAlert()
+        }
+    }
+
     //upload sound
     func  uploadSoundApi() {
         if currentReachabilityStatus != .notReachable {
@@ -842,7 +1008,7 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
             let URL = try! URLRequest(url: "http://justadmission.in/UploadFiles.ashx?SavePath=Upload/NotificationFiles/\(self.schoolId!)/", method: .post)
             print("URLS : \(URL)")
             //let name = "ni_" + "\(self.schoolId!)" + "_" + "\(notificationId)" + "_" + "\(self.counter)" + ".png"
-            let name = "na_" + "\(self.schoolId!)" + "_" + "\(notfId)" + "_" + "\(self.counter)" + ".mp3"
+            let name = "na_" + "\(self.schoolId!)" + "_" + "\(notfId!)" + "_" + "\(self.counter)" + ".mp3"
             Alamofire.upload(multipartFormData: { (multipartFormData) in
                 multipartFormData.append(self.audioRecorder.url, withName: name, fileName: name, mimeType: "mov/mp4/avi/MOV/MP4/mp3")
                 
@@ -860,6 +1026,11 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
                             print("dasdfkas \(datads)")
                             let dsfs = datads.data(using: String.Encoding.utf8)!
                             let json = JSON(data: dsfs)
+                            print("JSOn " ,json)
+                            let   filePath = String(describing: ((json.arrayObject?[0])! as! NSDictionary).value(forKey: "URL")!)
+                            print("sfs \(String(describing: ((json.arrayObject?[0])! as! NSDictionary).value(forKey: "URL")))")
+                            
+                            self.finalUploadOfDoucment(notificationId: self.notfId!, fileType: "audio", filePath: filePath)
                             
                         case .failure(let errordarta) :
                             hudClass.hide()
@@ -878,8 +1049,8 @@ class AppNotifierViewController: UIViewController,UITextFieldDelegate ,UIScrollV
         }
     }
 
-
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.videoView.isHidden = true
         self.view.endEditing(true)
         
     }

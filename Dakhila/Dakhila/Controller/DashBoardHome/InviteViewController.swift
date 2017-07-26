@@ -9,8 +9,28 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import Contacts
 
-class InviteViewController: UIViewController {
+class InviteViewController: UIViewController , UITableViewDelegate,UITableViewDataSource{
+    
+    var contactArray  = [ContactArray]()
+    var numberArray = [String]()
+    @IBAction func addButtonAction(_ sender: UIButton) {
+        self.mobileTableView.isHidden = true
+        let dataStrig = self.numberArray.joined(separator: ",")
+        let sdfs =  dataStrig.replacingOccurrences(of: "+91", with:"")
+        self.numberTextfield.text = sdfs
+    }
+    
+    
+    @IBAction func contactListBiuttonAction(_ sender: UIButton) {
+        self.mobileTableView.reloadData()
+        self.mobileTableView.isHidden = false
+    }
+    @IBOutlet weak var mobileTableView: UITableView!
+  //  @IBOutlet weak var mobileTextField: UITextField!
+    var timer = Timer()
+    
     var boolValue = 0
     @IBAction func menuButtonAction(_ sender: UIButton) {
         if boolValue == 0 {
@@ -29,8 +49,7 @@ class InviteViewController: UIViewController {
     @IBAction func contactListButtonAction(_ sender: UIButton) {
     }
         
-    @IBAction func addButtonAction(_ sender: UIButton) {
-    }
+
     @IBOutlet weak var numberTextfield: UITextField!
     
     @IBAction func submitButtonAction(_ sender: UIButton) {
@@ -48,10 +67,104 @@ class InviteViewController: UIViewController {
         super.viewDidLoad()
         let userId = defaults.value(forKey: "schoolId") as? String
         self.schoolId = userId
+        self.mobileTableView.isHidden = true
+        timer = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector:  #selector(InviteViewController.fetchContacts), userInfo: nil, repeats: false)
         self.addChildViewController(appDelegate.menuTableViewController)
 
         // Do any additional setup after loading the view.
     }
+    
+    
+    func fetchContacts(){
+        
+        let store = CNContactStore()
+        store.requestAccess(for: .contacts, completionHandler: {
+            granted, error in
+            guard granted else {
+                let alert = UIAlertController(title: "Can't access contact", message: "Please go to Settings -> MyApp to enable contact permission", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                return
+            }
+            
+            let keysToFetch = [CNContactFormatter.descriptorForRequiredKeys(for: .fullName), CNContactPhoneNumbersKey] as [Any]
+            let request = CNContactFetchRequest(keysToFetch: keysToFetch as! [CNKeyDescriptor])
+            var cnContacts = [CNContact]()
+            
+            do {
+                try store.enumerateContacts(with: request){
+                    (contact, cursor) -> Void in
+                    cnContacts.append(contact)
+                }
+            } catch let error {
+                NSLog("Fetch contact error: \(error)")
+            }
+            
+            NSLog(">>>> Contact list:")
+            for contact in cnContacts {
+                let myDataArray = ContactArray()
+                let fullName = CNContactFormatter.string(from: contact, style: .fullName) ?? "No Name"
+                NSLog("fullName \(fullName):  phonenumer\(contact.phoneNumbers.description)")
+                let phoneNUmber = contact.phoneNumbers
+                print("dfds",phoneNUmber)
+                
+                for phone in contact.phoneNumbers{
+                    let phones = phone.value as CNPhoneNumber
+                    let digits = phones.value(forKey: "digits") as! String
+                    print("df",digits)
+                    myDataArray.contactName = fullName
+                    myDataArray.phoneNumber = digits
+                    self.contactArray.append(myDataArray)
+                    //                    let sortedContactArray = self.contactArray.sort{ ($0.contactName)! < ($1.phoneNumber)! }
+                    //                    self.contactArray.removeAll()
+                    //                    self.contactArray.append(contentsOf: sortedContactArray)
+                    
+                }
+            }
+            DispatchQueue.main.async() {
+                // Do stuff to UI
+                self.mobileTableView.reloadData()
+            }
+        })
+        
+        
+    }
+    
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.contactArray.count
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath)
+        
+        let dataArray = self.contactArray[indexPath.row]
+        cell.textLabel?.text = dataArray.contactName!
+        cell.detailTextLabel?.text = dataArray.phoneNumber!
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        let data = self.contactArray[indexPath.row]
+        if cell?.accessoryType == .checkmark{
+            cell?.accessoryType = .none
+            self.numberArray.remove(at: indexPath.row)
+            print("sds",numberArray)
+        }else {
+            cell?.accessoryType = .checkmark
+            self.numberArray.append(data.phoneNumber!)
+            print("fdfdf",numberArray)
+            
+        }
+        
+    }
+
     
     func apiCall(){
         
@@ -72,7 +185,7 @@ class InviteViewController: UIViewController {
             Alamofire.request(urlString, method: .post, parameters: parameter)
                 .responseJSON { response in
                     print("Success: \(response.result.isSuccess)")
-                    print("Response String: \(response.result.value)")
+                   // print("Response String: \(response.result.value)")
                     
                     //to get JSON return value
                     

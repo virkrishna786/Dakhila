@@ -26,27 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dakhila/Controller/LoginAndSignUp/SignUpViewController.swift"
-            timestampString = "521569040.160648"
+            timestampString = "522693278.947396"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
-            landmarkName = "registerButtonAction(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Dakhila/Controller/LoginAndSignUp/SignUpViewController.swift"
-            timestampString = "521569040.160648"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "318"
-            endingLineNumber = "318"
+            startingLineNumber = "308"
+            endingLineNumber = "308"
             landmarkName = "selectDropDownMenu()"
             landmarkType = "7">
          </BreakpointContent>
@@ -58,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dakhila/Controller/DashBoardHome/SupportTicketViewController.swift"
-            timestampString = "520710184.176497"
+            timestampString = "521663646.522466"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
             landmarkName = "gestureFunction()"
             landmarkType = "7">
          </BreakpointContent>
@@ -74,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dakhila/Controller/DashBoardHome/SupportTicketViewController.swift"
-            timestampString = "520710184.176497"
+            timestampString = "521663646.522466"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "95"
-            endingLineNumber = "95"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
             landmarkName = "SupportTicketViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -90,13 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dakhila/Controller/DashBoardHome/AppNotifierViewController.swift"
-            timestampString = "521575478.547563"
+            timestampString = "522695839.038191"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "391"
-            endingLineNumber = "391"
-            landmarkName = "textFieldDidBeginEditing(_:)"
-            landmarkType = "7">
+            startingLineNumber = "1091"
+            endingLineNumber = "1091">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -106,13 +88,60 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dakhila/Controller/DashBoardHome/AppNotifierViewController.swift"
-            timestampString = "521575478.547563"
+            timestampString = "522695839.038191"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
-            landmarkName = "audioButtonAction(_:)"
+            startingLineNumber = "1015"
+            endingLineNumber = "1015"
+            landmarkName = "uploadSoundApi()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Dakhila.AppNotifierViewController.uploadSoundApi () -&gt; ()"
+                  moduleName = "Dakhila"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/saurabhmishra/Dakhila1/Dakhila/Dakhila/Controller/DashBoardHome/AppNotifierViewController.swift"
+                  timestampString = "522697971.8555"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1015"
+                  endingLineNumber = "1015"
+                  offsetFromSymbolStart = "3169">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Dakhila.AppNotifierViewController.(uploadSoundApi () -&gt; ()).(closure #1)"
+                  moduleName = "Dakhila"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/saurabhmishra/Dakhila1/Dakhila/Dakhila/Controller/DashBoardHome/AppNotifierViewController.swift"
+                  timestampString = "522697971.857618"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1015"
+                  endingLineNumber = "1015"
+                  offsetFromSymbolStart = "356">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Dakhila.AppNotifierViewController.(uploadSoundApi () -&gt; ()).(closure #2)"
+                  moduleName = "Dakhila"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/saurabhmishra/Dakhila1/Dakhila/Dakhila/Controller/DashBoardHome/AppNotifierViewController.swift"
+                  timestampString = "522697971.859817"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1017"
+                  endingLineNumber = "1017"
+                  offsetFromSymbolStart = "27">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -122,27 +151,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dakhila/Controller/DashBoardHome/AppNotifierViewController.swift"
-            timestampString = "521575478.547563"
+            timestampString = "522695839.038191"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "194"
-            endingLineNumber = "194"
-            landmarkName = "playAudio(sender:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Dakhila/Controller/DashBoardHome/AppNotifierViewController.swift"
-            timestampString = "521575478.547563"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "834"
-            endingLineNumber = "834"
+            startingLineNumber = "1007"
+            endingLineNumber = "1007"
             landmarkName = "uploadSoundApi()"
             landmarkType = "7">
          </BreakpointContent>
@@ -154,13 +167,45 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dakhila/Controller/DashBoardHome/AppNotifierViewController.swift"
-            timestampString = "521575478.547563"
+            timestampString = "522695839.038191"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "722"
-            endingLineNumber = "722"
-            landmarkName = "uploadImageAPi(notificationId:)"
+            startingLineNumber = "743"
+            endingLineNumber = "743"
+            landmarkName = "postApiCall()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Dakhila.AppNotifierViewController.postApiCall () -&gt; ()"
+                  moduleName = "Dakhila"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/saurabhmishra/Dakhila1/Dakhila/Dakhila/Controller/DashBoardHome/AppNotifierViewController.swift"
+                  timestampString = "522697971.871305"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "744"
+                  endingLineNumber = "744"
+                  offsetFromSymbolStart = "4504">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Dakhila.AppNotifierViewController.(postApiCall () -&gt; ()).(closure #1)"
+                  moduleName = "Dakhila"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/saurabhmishra/Dakhila1/Dakhila/Dakhila/Controller/DashBoardHome/AppNotifierViewController.swift"
+                  timestampString = "522697971.873473"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "744"
+                  endingLineNumber = "744"
+                  offsetFromSymbolStart = "9361">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -170,12 +215,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Dakhila/Controller/DashBoardHome/AppNotifierViewController.swift"
-            timestampString = "521575478.547563"
+            timestampString = "522695208.012918"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "758"
-            endingLineNumber = "758"
-            landmarkName = "uploadImageAPi(notificationId:)"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
+            landmarkName = "postButtonAction(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -185,13 +230,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Dakhila/Controller/DashBoardHome/AppNotifierViewController.swift"
-            timestampString = "521575478.547563"
+            filePath = "Dakhila/Controller/LoginAndSignUp/SignUpViewController.swift"
+            timestampString = "522697620.788846"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "750"
-            endingLineNumber = "750"
-            landmarkName = "uploadImageAPi(notificationId:)"
+            startingLineNumber = "546"
+            endingLineNumber = "546"
+            landmarkName = "textFieldShouldBeginEditing(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Dakhila/Controller/LoginAndSignUp/SignUpViewController.swift"
+            timestampString = "522697642.243083"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "544"
+            endingLineNumber = "544"
+            landmarkName = "textFieldShouldBeginEditing(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

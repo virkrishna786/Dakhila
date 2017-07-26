@@ -22,7 +22,6 @@ class DashBoardViewController: UIViewController {
     
     @IBOutlet weak var profielCompleteNessLabel: UILabel!
     
-    
     @IBOutlet weak var admissionLeadsLabel: UILabel!
     
     @IBOutlet weak var jdApplicationsLabel: UILabel!
@@ -39,8 +38,6 @@ class DashBoardViewController: UIViewController {
     
     @IBOutlet weak var advertisementGraphLabel: UILabel!
     
-    
-    
     var boolValue = 0
     @IBAction func menuButtonAction(_ sender: UIButton) {
         if boolValue == 0 {
@@ -55,12 +52,151 @@ class DashBoardViewController: UIViewController {
         }
 
     }
+    
+    @IBAction func accountTypeButtonAction(_ sender: UIButton) {
+        let firstView:AlertCustomViewController
+            = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "alert") as! AlertCustomViewController
+        firstView.sceenshotgImage = parentClass.screenShot()
+        appDelegate.navigationController?.pushViewController(firstView, animated: false)
+    }
+    @IBAction func threeSixtyDegreeButtonAction(_ sender: UIButton) {
+        
+    }
+    @IBAction func schoolOffersButtonAction(_ sender: UIButton) {
+        let firstView:AlertCustomViewController
+            = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "alert") as! AlertCustomViewController
+        firstView.sceenshotgImage = parentClass.screenShot()
+        appDelegate.navigationController?.pushViewController(firstView, animated: false)
+    }
+    @IBAction func profileCompleteNessButtonAction(_ sender: UIButton) {
+        let firstView:AlertCustomViewController
+            = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "alert") as! AlertCustomViewController
+        firstView.sceenshotgImage = parentClass.screenShot()
+        appDelegate.navigationController?.pushViewController(firstView, animated: false)
+    }
+    @IBAction func admissionLeadsButtonAction(_ sender: UIButton) {
+        let firstView:AlertCustomViewController
+            = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "alert") as! AlertCustomViewController
+        firstView.sceenshotgImage = parentClass.screenShot()
+        appDelegate.navigationController?.pushViewController(firstView, animated: false)
+    }
+    
+    @IBAction func jdApplicationButtonAction(_ sender: UIButton) {
+        let firstView:AlertCustomViewController
+            = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "alert") as! AlertCustomViewController
+        firstView.sceenshotgImage = parentClass.screenShot()
+        appDelegate.navigationController?.pushViewController(firstView, animated: false)
+    }
+    
+    @IBAction func eventConsentDetailButtonAction(_ sender: UIButton) {
+        let firstView:AlertCustomViewController
+            = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "alert") as! AlertCustomViewController
+        firstView.sceenshotgImage = parentClass.screenShot()
+        appDelegate.navigationController?.pushViewController(firstView, animated: false)
+    }
+    
+    @IBAction func admissionAlertButtonAction(_ sender: UIButton) {
+        let firstView: AdmissionAlertViewController
+            = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "admissionAlert") as! AdmissionAlertViewController
+        //            let firstView:HomeViewController = HomeViewController(nibName:"HomeViewController",bundle:Bundle.main)
+        var fcheck=Bool()
+        fcheck=false
+        let viewArray=self.navigationController?.viewControllers as NSArray!
+        if((viewArray) != nil){
+            if !((viewArray?.lastObject! as! UIViewController) .isKind(of: AdmissionAlertViewController.self)){
+                
+                for views in self.navigationController?.viewControllers as NSArray!
+                {
+                    if((views as! UIViewController) .isKind(of: AdmissionAlertViewController.self))
+                    {
+                        fcheck=true
+                        _ = navigationController?.popToViewController(views as! UIViewController, animated: false)
+                    }
+                }
+                if(fcheck==false){
+                    
+                    self.navigationController?.pushViewController(firstView, animated: true)
+                }
+            }
+            else{
+                
+                //reset button
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetStaticView"), object: nil)
+            }
+        }
+        else{
+            
+            //reset button
+            appDelegate.navigationController?.pushViewController(firstView, animated: true)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
+        }
+        
 
+    }
+
+    @IBAction func jdSearchButtonAction(_ sender: UIButton) {
+        let firstView:AlertCustomViewController
+            = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "alert") as! AlertCustomViewController
+        firstView.sceenshotgImage = parentClass.screenShot()
+        appDelegate.navigationController?.pushViewController(firstView, animated: false)
+    }
+    
+    @IBAction func parentNotificationButtonAction(_ sender: UIButton) {
+        let firstView:AppNotifierViewController
+            = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "appNotify") as! AppNotifierViewController
+        //            let firstView:HomeViewController = HomeViewController(nibName:"HomeViewController",bundle:Bundle.main)
+        var fcheck=Bool()
+        fcheck=false
+        let viewArray=self.navigationController?.viewControllers as NSArray!
+        if((viewArray) != nil){
+            if !((viewArray?.lastObject! as! UIViewController) .isKind(of: AppNotifierViewController.self)){
+                for views in self.navigationController?.viewControllers as NSArray!
+                {
+                    if((views as! UIViewController) .isKind(of: AppNotifierViewController.self))
+                    {
+                        fcheck=true
+                        _ = navigationController?.popToViewController(views as! UIViewController, animated: false)
+                    }
+                }
+                if(fcheck==false){
+                    
+                    self.navigationController?.pushViewController(firstView, animated: true)
+                }
+            }
+            else{
+                
+                //reset button
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetStaticView"), object: nil)
+            }
+        }
+        else{
+            
+            appDelegate.navigationController?.pushViewController(firstView, animated: true)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
+        }
+
+    }
+    
+    
+    
+    @IBAction func advertisementGraphButtonAction(_ sender: UIButton) {
+        let firstView:AlertCustomViewController
+            = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "alert") as! AlertCustomViewController
+        firstView.sceenshotgImage = parentClass.screenShot()
+        appDelegate.navigationController?.pushViewController(firstView, animated: false)    }
+    @IBAction func advertisementButtonAction(_ sender: UIButton) {
+        let firstView:AlertCustomViewController
+            = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "alert") as! AlertCustomViewController
+        firstView.sceenshotgImage = parentClass.screenShot()
+        appDelegate.navigationController?.pushViewController(firstView, animated: false)
+    }
+    
     var schoolType : String?
     var schoolId : String?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         let userId = defaults.value(forKey: "schoolId") as? String
         self.schoolId = userId
       //  print("user %@" ,userId!)

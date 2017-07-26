@@ -9,12 +9,6 @@
 import UIKit
 
 class SupprtListArrayClass: NSObject {
-    var ticketId : String?
+    var categoryId : String?
     var categoryName : String?
-    var dateString : String?
-    var queryString : String?
-    var replyString : String?
-    var repliedByString : String?
-    var statusString : String?
-
-}
+   }

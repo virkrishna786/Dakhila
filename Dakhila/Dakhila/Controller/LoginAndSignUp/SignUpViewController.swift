@@ -73,7 +73,7 @@ class SignUpViewController: UIViewController ,UITextFieldDelegate , UIPickerView
         self.daySchoolButton.setImage(UIImage(named:"radioBlankButton"), for: UIControlState.normal)
         self.playSchoolButton.setImage(UIImage(named:"radioBlankButton"), for: UIControlState.normal)
         self.resedentailSchoolButton.setImage(UIImage(named:"radioBlankButton"), for: UIControlState.normal)
-        self.schoolTypeText = "Day Boarding  School"
+        self.schoolTypeText = "Day Boarding School"
         self.schoolTypeValue = "3"
 
     }
@@ -84,7 +84,7 @@ class SignUpViewController: UIViewController ,UITextFieldDelegate , UIPickerView
         self.daySchoolButton.setImage(UIImage(named:"radioBlankButton"), for: UIControlState.normal)
         self.playSchoolButton.setImage(UIImage(named:"radioBlankButton"), for: UIControlState.normal)
         self.daysBoardingSchoolButotn.setImage(UIImage(named:"radioBlankButton"), for: UIControlState.normal)
-        self.schoolTypeText = "Resedential School"
+        self.schoolTypeText = "Residential School"
         self.schoolTypeValue = "4"
 
         
@@ -267,16 +267,6 @@ class SignUpViewController: UIViewController ,UITextFieldDelegate , UIPickerView
         
     }
     
-//    func gestureFunction1(){
-//        self.schoolNameTextField.resignFirstResponder()
-//        self.schoolEmailIdTextField.resignFirstResponder()
-//        self.schoolCOntactNumberTextField.resignFirstResponder()
-//        self.stateTextField.resignFirstResponder()
-//        self.cityTextField.resignFirstResponder()
-//        self.localityTextField.resignFirstResponder()
-//        self.pickerView.isHidden = true
-//        
-//    }
 
     //MARK : Seclect State Api
     func selectDropDownMenu(){
@@ -410,12 +400,10 @@ class SignUpViewController: UIViewController ,UITextFieldDelegate , UIPickerView
                     }
             }
             
-            
         }else {
             hudClass.hide()
             parentClass.showAlert()
         }
-        
         
     }
 //MARK : -  select localit api
@@ -526,9 +514,7 @@ class SignUpViewController: UIViewController ,UITextFieldDelegate , UIPickerView
                 }else {
                     return   cityArray[row].cityName!
                 }
-                
             }else {
-                
                 return  stateArray[row].stateName!
             }
         }else {
@@ -551,12 +537,10 @@ class SignUpViewController: UIViewController ,UITextFieldDelegate , UIPickerView
     }
     
     // TextField Delegate method 
-    
     func textFieldDidEndEditing(_ textField: UITextField) {
-        
-        
     }
     
+ 
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         
         if textField == stateTextField {
@@ -565,7 +549,7 @@ class SignUpViewController: UIViewController ,UITextFieldDelegate , UIPickerView
             self.localityTextField.text = ""
 
             self.selectDropDownMenu()
-            return false
+            return true
 
         }else if textField == cityTextField {
             
@@ -573,32 +557,40 @@ class SignUpViewController: UIViewController ,UITextFieldDelegate , UIPickerView
             print("data", data)
             
             if data == "" {
-                return false
+                return true
               }else {
-             self.checkTextField = 2
+            self.checkTextField = 2
             self.localityTextField.text = ""
             self.selectCityInStateAPi(stateId: self.stateIdString!)
-            return false
+                return true
             }
 
         }else if textField == localityTextField {
             let localityData = "\(cityTextField.text!)"
             if localityData == "" {
-                return false
+                return true
             }else {
             self.checkTextField = 3
             self.selectLocalityInCityAPi(cityId: self.cityIdString!)
             print("Krishna")
-            return false
+                return true
             }
+        }else {
+        
         }
         return true
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let text = schoolCOntactNumberTextField.text else { return true }
-        let newLength = text.characters.count + string.characters.count - range.length
-        return newLength <= 10 // Bool
+        if textField == schoolCOntactNumberTextField {
+            guard let text = schoolCOntactNumberTextField.text else { return true }
+            let newLength = text.characters.count + string.characters.count - range.length
+            return newLength <= 10
+        }else {
+            return true
+            
+        }
+        // Bool
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -625,9 +617,9 @@ class SignUpViewController: UIViewController ,UITextFieldDelegate , UIPickerView
             let schoolNameString = "\(schoolNameTextField.text!)"
             let schoolEmailString = "\(schoolEmailIdTextField.text!)"
             let schoolContactNumebr = "\(schoolCOntactNumberTextField.text!)"
-            let stateIdString = "\(self.stateTextField.text!)"
-            let cityIdString = "\(self.cityTextField.text!)"
-            let localityString = "\(self.localityTextField.text!)"
+            let stateIdString = "\(self.stateIdString!)"
+            let cityIdString = "\(self.cityIdString!)"
+            let localityString = "\(self.localityIdString!)"
             
             
             let  parameter = ["schoolTypeValu" : self.schoolTypeValue!,
@@ -686,7 +678,7 @@ class SignUpViewController: UIViewController ,UITextFieldDelegate , UIPickerView
                         }else if responseCode == "500" {
                             hudClass.hide()
                             
-                            let alertVC = UIAlertController(title: "Alert", message: "Please enter valid email and password", preferredStyle: .alert)
+                            let alertVC = UIAlertController(title: "Alert", message: "It seems you are already registered with us !", preferredStyle: .alert)
                             let okAction = UIAlertAction(title: "OK",style:.default,handler: nil)
                             alertVC.addAction(okAction)
                             self.present(alertVC, animated: true, completion: nil)
@@ -720,7 +712,7 @@ class SignUpViewController: UIViewController ,UITextFieldDelegate , UIPickerView
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+       // textField.resignFirstResponder()
         return true
     }
     

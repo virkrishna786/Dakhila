@@ -12,13 +12,12 @@ import  SwiftyJSON
 import Kingfisher
 let mySpecialNotificationKey = "com.andrewcbancroft.specialNotificationKey"
 
-
 class MenuTVC: UITableViewController {
  
     let LeftMenuWidth = 100.0
     var headerView:UIView?
     var  imageIcon=UIButton()
-    var SA_Choice = ["App Notifier","360 Banner","Events","Add Offers","Admission Advantage","Admission Leads","Admission Form List","Invite Parents","Advertisements","Support Ticket","Admission Alert","Change Password","Logout",""]
+    var SA_Choice = ["Parents Connect","360 Banner","Events","Add Offers","Admission Advantage","Admission Leads","Admission Form List","Invite Parents","Advertisements","Support Ticket","Admission Alert","Change Password","Logout",""]
     var SA_Icons = ["app-notifier","virtual-tour","events","add-offers","admission-advantage","admission-leads","admission-form-list","invite-parents","advertisements-nav","support-ticket","admission-alert","change-password","logout",""]
    var  nameLabel=UILabel()
     override func viewDidLoad() {
@@ -33,7 +32,6 @@ class MenuTVC: UITableViewController {
         setSideMenuOutSide()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellIdentifier")
         NotificationCenter.default.addObserver(self, selector: #selector(MenuTVC.actOnSpecialNotification), name: NSNotification.Name(rawValue: mySpecialNotificationKey), object: nil)
-
     }
     
     func actOnSpecialNotification() {
@@ -47,14 +45,11 @@ class MenuTVC: UITableViewController {
         customView.frame = CGRect(x:200, y: self.tableView.frame.origin.y-20, width: self.view.frame.size.width, height: self.tableView.frame.size.height)
         customView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
         self.view.addSubview(customView)
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        
         DispatchQueue.main.async(){
-            //code
             self.tableView.reloadData()
         }
     }
@@ -230,7 +225,6 @@ class MenuTVC: UITableViewController {
                     }
                 }
                 else{
-                    
                     //reset button
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
                      NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetStaticView"), object: nil)
@@ -242,27 +236,74 @@ class MenuTVC: UITableViewController {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
             }
         }else if (indexPath.row == 1) {
-           
+            
+            hideMenu()
+            let firstView:ThreeSixtyBannerViewController
+                = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "three") as! ThreeSixtyBannerViewController
+            //            let firstView:HomeViewController = HomeViewController(nibName:"HomeViewController",bundle:Bundle.main)
+            var fcheck=Bool()
+            fcheck=false
+            let viewArray=self.navigationController?.viewControllers as NSArray!
+            if((viewArray) != nil){
+                if !((viewArray?.lastObject! as! UIViewController) .isKind(of: ThreeSixtyBannerViewController.self)){
+                    for views in self.navigationController?.viewControllers as NSArray!
+                    {
+                        if((views as! UIViewController) .isKind(of: ThreeSixtyBannerViewController.self))
+                        {
+                            fcheck=true
+                            _ = navigationController?.popToViewController(views as! UIViewController, animated: false)
+                        }
+                    }
+                    if(fcheck==false){
+                        
+                        self.navigationController?.pushViewController(firstView, animated: true)
+                    }
+                }
+                else{
+                    //reset button
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetStaticView"), object: nil)
+                }
+            }
+            else{
+                
+                appDelegate.navigationController?.pushViewController(firstView, animated: true)
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
+            }
             
         }else if indexPath.row == 2 {
-           // tableView.allowsSelection = false
             cell?.selectionStyle = .none
-             parentClass.showAlertWithApiMessage(message: "To use this functionality Please login via web application.")
+            let firstView:AlertCustomViewController
+                = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "alert") as! AlertCustomViewController
+            firstView.sceenshotgImage = parentClass.screenShot()
+            appDelegate.navigationController?.pushViewController(firstView, animated: false)
             
         }else if (indexPath.row == 3) {
             cell?.selectionStyle = .none
-             parentClass.showAlertWithApiMessage(message: "To use this functionality Please login via web application.")
+            let firstView:AlertCustomViewController
+                = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "alert") as! AlertCustomViewController
+            firstView.sceenshotgImage = parentClass.screenShot()
+            appDelegate.navigationController?.pushViewController(firstView, animated: false)
         }else if indexPath.row == 4 {
             cell?.selectionStyle = .none
-             parentClass.showAlertWithApiMessage(message: "To use this functionality Please login via web application.")
+            let firstView:AlertCustomViewController
+                = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "alert") as! AlertCustomViewController
+            firstView.sceenshotgImage = parentClass.screenShot()
+            appDelegate.navigationController?.pushViewController(firstView, animated: false)
             
         }else if indexPath.row == 5{
             cell?.selectionStyle = .none
-             parentClass.showAlertWithApiMessage(message: "To use this functionality Please login via web application.")
+            let firstView:AlertCustomViewController
+                = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "alert") as! AlertCustomViewController
+            firstView.sceenshotgImage = parentClass.screenShot()
+            appDelegate.navigationController?.pushViewController(firstView, animated: false)
             
         }else if indexPath.row == 6{
             cell?.selectionStyle = .none
-             parentClass.showAlertWithApiMessage(message: "To use this functionality Please login via web application.")
+            let firstView:AlertCustomViewController
+                = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "alert") as! AlertCustomViewController
+            firstView.sceenshotgImage = parentClass.screenShot()
+            appDelegate.navigationController?.pushViewController(firstView, animated: false)
             
         }else if (indexPath.row == 7){
             
@@ -303,7 +344,10 @@ class MenuTVC: UITableViewController {
             
         }else if indexPath.row == 8 {
             cell?.selectionStyle = .none
-            parentClass.showAlertWithApiMessage(message: "To use this functionality Please login via web application.")
+            let firstView:AlertCustomViewController
+                = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "alert") as! AlertCustomViewController
+            firstView.sceenshotgImage = parentClass.screenShot()
+            appDelegate.navigationController?.pushViewController(firstView, animated: false)
             
         }else if indexPath.row == 9 {
             
@@ -452,22 +496,18 @@ class MenuTVC: UITableViewController {
                     //reset button
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetStaticView"), object: nil)
-
                 }
             }
             else{
-                
                 //reset button
                 appDelegate.navigationController?.pushViewController(firstView, animated: true)
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "resetMenuButton"), object: nil)
             }
             parentClass.logout()
         }
-    
     }
     
     // Override to support rearranging the table view.
-
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         
     }

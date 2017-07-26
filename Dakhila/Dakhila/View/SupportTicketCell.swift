@@ -10,7 +10,15 @@ import UIKit
 
 class SupportTicketCell: UITableViewCell {
 
-    @IBOutlet weak var categoryLabel: UILabel!
+    @IBOutlet weak var RepliedDateLabel: UILabel!
+    @IBOutlet weak var repliedByLabel: UILabel!
+    @IBOutlet weak var replyLabel: UILabel!
+    @IBOutlet weak var queryLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var TIcketCategoryLabel: UILabel!
+   
+    @IBOutlet weak var TicketCategoryWritingSupport: UILabel!
+    @IBOutlet weak var ticketIdLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

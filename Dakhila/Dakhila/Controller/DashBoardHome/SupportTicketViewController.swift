@@ -53,8 +53,9 @@ class SupportTicketViewController: UIViewController ,UITextFieldDelegate , UITab
         }
     }
     
-    var supportCategoryArray  = [SupporttTickerArrayClass]()
-    var supportTicketArray = [SupprtListArrayClass]()
+    var supportCategoryArray  = [SupprtListArrayClass]()
+    var supportTicketArray = [SupporttTickerArrayClass]()
+    
     var schoolId : String?
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,7 +76,7 @@ class SupportTicketViewController: UIViewController ,UITextFieldDelegate , UITab
         self.supportTableView.isHidden = true
         self.supportTicketGet()
 
-        // self.imageCollectionView.register(UINib(nibName: "customCell", bundle: nil), forCellWithReuseIdentifier: "cellIdentifier")
+// self.imageCollectionView.register(UINib(nibName: "customCell", bundle: nil), forCellWithReuseIdentifier: "cellIdentifier")
         
 //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ChangePasswordViewController.gestureFunction))
 //        tapGesture.delegate = self
@@ -150,7 +151,7 @@ class SupportTicketViewController: UIViewController ,UITextFieldDelegate , UITab
                             
                         }else if responseCode == "500"{
                             
-                            parentClass.showAlertWithApiMessage(message: "Support Tciket not generated.")
+                            parentClass.showAlertWithApiMessage(message: "Support Ticket not generated.")
                             
                         }else {
                             hudClass.hide()
@@ -259,7 +260,7 @@ class SupportTicketViewController: UIViewController ,UITextFieldDelegate , UITab
                     print("Success: \(response.result.isSuccess)")
                     print("Response String: \(String(describing: response.result.value))")
                     
-                    //to get JSON return value
+                    // to get JSON return value
                     
                     if  response.result.isSuccess {
                         hudClass.hide()
@@ -268,12 +269,11 @@ class SupportTicketViewController: UIViewController ,UITextFieldDelegate , UITab
                        // let JSON = result as! NSDictionary
                         
                         let responseCode = result["ResponseCode"].string
-                        
                         if responseCode == "200" {
                             hudClass.hide()
                             let resposneArray = result["SupportTicketCategory"].array
                             for data in resposneArray! {
-                                let dataArrayClass = SupporttTickerArrayClass()
+                                let dataArrayClass = SupprtListArrayClass()
                                 dataArrayClass.categoryId = data["categoryId"].string
                                 dataArrayClass.categoryName  = data["categoryName"].string
                                 self.supportCategoryArray.append(dataArrayClass)
@@ -330,15 +330,21 @@ class SupportTicketViewController: UIViewController ,UITextFieldDelegate , UITab
                             let resposneArray = result["SchoolSupportTicketRepliedList"].array
                             for data in resposneArray! {
                                 let dataArrayClass = SupporttTickerArrayClass()
-                                dataArrayClass.categoryId = data["TicketId"].string
+                                dataArrayClass.TickerId = data["TicketID"].int
                                 dataArrayClass.categoryName  = data["CategoryName"].string
-                                self.supportCategoryArray.append(dataArrayClass)
+                                dataArrayClass.dateString = data["Date"].string
+                                dataArrayClass.queryString = data["Query"].string
+                                dataArrayClass.replyString = data["Reply"].string
+                                dataArrayClass.repliedDate = data["RepliedDate"].string
+                                dataArrayClass.repliedByString = data["RepliedBy"].string
+                                dataArrayClass.statusString = data["Status"].string
+                                self.supportTicketArray.append(dataArrayClass)
                             }
                             
                             DispatchQueue.main.async {
                                 self.supportTableView.reloadData()
                                 self.supportTableView.isHidden = false
-                               // self.supportTableView.frame = CGRect(x: 5, y: , width: <#T##CGFloat#>, height: <#T##CGFloat#>)
+                               
                             }
                             
                         }else if responseCode == "500"{
@@ -378,20 +384,26 @@ class SupportTicketViewController: UIViewController ,UITextFieldDelegate , UITab
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = UITableViewCell()
         if tableView == cvategoryTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath)
             let eventData = supportCategoryArray[indexPath.row]
             cell.textLabel?.text = eventData.categoryName!
             return cell
-        }else if tableView == supportTableView{
+        }else if tableView == supportTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ticketCell", for: indexPath) as! SupportTicketCell
             let eventData = supportTicketArray[indexPath.row]
-            cell.categoryLabel.text = eventData.categoryName!
+            cell.TIcketCategoryLabel.text = "Ticket Category"
+            cell.TicketCategoryWritingSupport.text = eventData.categoryName!
+            cell.ticketIdLabel.text = "Ticket ID:" + "\(eventData.TickerId!)"
+            cell.dateLabel.text = eventData.dateString!
+            cell.queryLabel.text = eventData.queryString!
+            cell.replyLabel.text = eventData.replyString
+            cell.repliedByLabel.text = eventData.repliedByString
+            cell.RepliedDateLabel.text = eventData.repliedDate
+            
             return cell
         }
-        
        return cell
     }
     
@@ -399,13 +411,12 @@ class SupportTicketViewController: UIViewController ,UITextFieldDelegate , UITab
         if tableView == cvategoryTableView{
             return 50
         }else if tableView == supportTableView{
-            return 250
+            return 350
         }
         return 30
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         if tableView == cvategoryTableView{
             let data  = supportCategoryArray[indexPath.row]
             self.categoryTextField.text = data.categoryName!
@@ -413,7 +424,6 @@ class SupportTicketViewController: UIViewController ,UITextFieldDelegate , UITab
         }else if tableView == supportTableView {
             
         }
-       
     }
 
 

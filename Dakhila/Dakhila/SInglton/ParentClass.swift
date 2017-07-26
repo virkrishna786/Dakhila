@@ -82,6 +82,20 @@ class ParentClass : NSObject {
             UIApplication.shared.keyWindow?.rootViewController?.present(alertView, animated: true, completion: nil)
         }
     
+    
+    //MARK: ScreenShot
+    func screenShot() -> UIImage{
+        
+        let layer = UIApplication.shared.keyWindow!.layer
+        let scale = UIScreen.main.scale
+        UIGraphicsBeginImageContextWithOptions(layer.frame.size, false, scale);
+        layer.render(in: UIGraphicsGetCurrentContext()!)
+        let screenshot = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return screenshot!
+        //reservation.imageScreen=screenshot
+    }
+    
   
     func showAlert(){
         let Alert = ParentClass()

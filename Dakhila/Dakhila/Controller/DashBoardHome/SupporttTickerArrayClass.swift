@@ -10,6 +10,13 @@ import UIKit
 
 class SupporttTickerArrayClass: NSObject {
     
-    var categoryId : String?
+    var TickerId : Int?
     var categoryName : String?
-    }
+    var dateString : String?
+    var queryString : String?
+    var replyString : String?
+    var statusString : String?
+    var repliedByString : String?
+    var repliedDate : String?
+   
+}

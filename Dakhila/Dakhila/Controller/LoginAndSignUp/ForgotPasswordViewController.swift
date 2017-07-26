@@ -40,7 +40,6 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
         super.viewDidLoad()
         
         self.emailTextField.delegate = self
-        
         self.emailTextField.attributedPlaceholder = NSAttributedString(string: "Your-Email",
                                                                        attributes: [NSForegroundColorAttributeName: UIColor.lightGray])
         
@@ -68,21 +67,17 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
     
     func apiCall(){
         if currentReachabilityStatus != .notReachable {
-            
             hudClass.showInView(view: self.view)
-            
-            self.urlString = "\(baseUrl)/ForgetPassword"
-            
+            self.urlString = "\(baseUrl)/SchoolForgotPassword"
             let userString = "\(emailTextField.text!)"
             let  parameter = ["EmailId" : userString
             ]
-            
             print("dfd \(parameter)")
             
             Alamofire.request(self.urlString!, method: .post, parameters: parameter)
                 .responseJSON { response in
                     print("Success: \(response.result.isSuccess)")
-                    print("Response String: \(response.result.value)")
+                    print("Response String: \(String(describing: response.result.value))")
                     
                     //to get JSON return value
                     
@@ -91,13 +86,13 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
                         let result = response.result.value
                         let JSON = result as! NSDictionary
                         
-                        let responseCode = JSON["Message"] as! String
+                        let responseCode = JSON["ReturnMessage"] as! String
                         
-                        if responseCode == "Sent OPT in Your Email ID" {
+                        if responseCode == "Please Check your E-Mail ID for further instructions.." {
                             hudClass.hide()
                             self.emailTextField.text = ""
                             self.emailTextField.resignFirstResponder()
-                            let alertVC = UIAlertController(title: "Alert", message: "An OTP will be sent to your registered email Id.", preferredStyle: .alert)
+                            let alertVC = UIAlertController(title: "Alert", message: "Please Check your E-Mail ID for further instructions..", preferredStyle: .alert)
                             alertVC.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {(action: UIAlertAction!) in self.myFunc()}))
                             self.present(alertVC, animated: true, completion: nil)
                             
@@ -123,8 +118,6 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
                         parentClass.showAlertWithApiFailure()
                     }
             }
-            
-            
         }else {
             hudClass.hide()
             parentClass.showAlert()
@@ -133,7 +126,7 @@ class ForgotPasswordViewController: UIViewController,UITextFieldDelegate {
     
     func myFunc(){
         
-        self.performSegue(withIdentifier: "recoveryView", sender: self)
+       // self.performSegue(withIdentifier: "recoveryView", sender: self)
         
     }
     

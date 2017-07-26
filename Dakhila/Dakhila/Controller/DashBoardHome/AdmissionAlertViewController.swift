@@ -13,8 +13,10 @@ import  SwiftyJSON
 class AdmissionAlertViewController: UIViewController {
     
     var flagValue : Bool?
+    var dateValue : String?
     @IBAction func validToButtonAction(_ sender: UIButton) {
             self.datePicker.isHidden = false
+            self.dateValue = "1"
     }
     @IBOutlet weak var myScroolView: UIScrollView!
     @IBAction func datePickerViewAction(_ sender: UIDatePicker) {
@@ -27,6 +29,11 @@ class AdmissionAlertViewController: UIViewController {
     }
 
     @IBAction func submitButton(_ sender: UIButton) {
+        if newsTitleTextField.text == "" || descriptionTextView.text == "" {
+            parentClass.showAlertWithApiMessage(message: "Please enter text.")
+        }else {
+        self.apiCall()
+        }
     }
     @IBOutlet weak var descriptionTextView: UITextView!{
         didSet{
@@ -43,14 +50,19 @@ class AdmissionAlertViewController: UIViewController {
         dateFormatter.dateStyle = DateFormatter.Style.short
         dateFormatter.dateFormat = "YYYY-MM-dd"
        // self.timeLimitForOfferTextField.text = dateFormatter.string(from: datePicker.date)
-        self.validToButton.setTitle(dateFormatter.string(from: datePicker.date), for: UIControlState.normal)
-        self.datePicker.isHidden = true
         
+        if self.dateValue == "1" {
+        self.validToButton.setTitle(dateFormatter.string(from: datePicker.date), for: UIControlState.normal)
+        }else {
+          self.validFronButton.setTitle(dateFormatter.string(from: datePicker.date), for: UIControlState.normal)
+        }
+        self.datePicker.isHidden = true
     }
 
     @IBOutlet weak var validToButton: UIButton!
     @IBAction func validFromButtonAction(_ sender: UIButton) {
         self.datePicker.isHidden = false
+        self.dateValue = "0"
     }
     @IBOutlet weak var validFronButton: UIButton!
     @IBOutlet weak var newsTitleTextField: UITextField!
@@ -94,10 +106,16 @@ class AdmissionAlertViewController: UIViewController {
         
         if currentReachabilityStatus != .notReachable {
             hudClass.showInView(view: self.view)
-            let urlString = "\(baseUrl)/ChangePassword"
+            let urlString = "\(baseUrl)/SchoolAdmissionAlert"
             let newPasswordString = "\(newsTitleTextField.text!)"
-            let parameter = ["OldPassword" : "",
-                "NewPassword" :"\(newPasswordString)",
+            let validTodate = self.validToButton.titleLabel?.text!
+            let validFromdate = self.validFronButton.titleLabel?.text!
+            let dataDesc = "\(self.descriptionTextView.text!)"
+            let parameter = ["SchoolId" : "\(self.schoolId!)",
+                "NewsTitle" : newPasswordString,
+                "ValidFrom": validFromdate!,
+                "ValidTo" : validTodate!,
+                "NewsDescription" : dataDesc
             ]
             print("dfd \(parameter)")
             
@@ -117,7 +135,7 @@ class AdmissionAlertViewController: UIViewController {
                         if responseCode == "200" {
                             hudClass.hide()
                             
-                            let alertVC = UIAlertController(title: "Alert", message: "Your password has been changed successfully", preferredStyle: .alert)
+                            let alertVC = UIAlertController(title: "Alert", message: "Your  has been successfully created Admission Alert", preferredStyle: .alert)
                             alertVC.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {(action: UIAlertAction!) in self.myFunc()}))
                             self.present(alertVC, animated: true, completion: nil)
                             

@@ -61,28 +61,30 @@ class ChangePasswordViewController: UIViewController ,UITextFieldDelegate{
         myScrollView.endEditing(true)
     }
 
-    
+    // 11864
     func apiCall(){
         
         if currentReachabilityStatus != .notReachable {
             hudClass.showInView(view: self.view)
-            let urlString = "\(baseUrl)/ChangePassword"
+            let urlString = "\(baseUrl)/SchoolChangePassword"
             
             let otpString = "\(otpTextField.text!)"
             let passwordString = "\(passwordTextField.text!)"
             let newPasswordString = "\(confirmPasswordTextField.text!)"
             
-            let parameter = ["OldPassword" : "\(passwordString)",
-                "NewPassword" :"\(newPasswordString)",
-                "EmailId" : "\(otpString)"
+            let parameter = ["Oldpassword" : "\(otpString)",
+                "newpassword" :"\(passwordString)",
+                "ConfirmPassword" : "\(newPasswordString)",
+                "SchoolId" : "\(self.schoolId!)"
             ]
             
+            // newPasswordString
             print("dfd \(parameter)")
             
             Alamofire.request(urlString, method: .post, parameters: parameter)
                 .responseJSON { response in
                     print("Success: \(response.result.isSuccess)")
-                    print("Response String: \(response.result.value)")
+                   // print("Response String: \(response.result.value)")
                     
                     //to get JSON return value
                     
@@ -96,7 +98,11 @@ class ChangePasswordViewController: UIViewController ,UITextFieldDelegate{
                         if responseCode == "200" {
                             hudClass.hide()
                             
-                            let alertVC = UIAlertController(title: "Alert", message: "Your password has been changed successfully", preferredStyle: .alert)
+                            let alertVC = UIAlertController(title: "Alert", message: "Your Password have been Updated.", preferredStyle: .alert)
+                            self.otpTextField.text = ""
+                            self.passwordTextField.text = ""
+                            self.confirmPasswordTextField.text = ""
+
                             alertVC.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {(action: UIAlertAction!) in self.myFunc()}))
                             self.present(alertVC, animated: true, completion: nil)
                             
@@ -165,7 +171,7 @@ class ChangePasswordViewController: UIViewController ,UITextFieldDelegate{
             myScrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
             
         }else {
-            myScrollView.setContentOffset(CGPoint(x: 0, y: 150), animated: true)
+            myScrollView.setContentOffset(CGPoint(x: 0, y: 100), animated: true)
         }
     }
     
